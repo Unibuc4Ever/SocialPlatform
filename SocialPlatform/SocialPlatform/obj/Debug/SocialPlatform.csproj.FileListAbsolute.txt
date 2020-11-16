@@ -106,3 +106,6 @@ C:\Users\pusca\Desktop\Projects\SocialPlatform\SocialPlatform\SocialPlatform\obj
 C:\Users\pusca\Desktop\Projects\SocialPlatform\SocialPlatform\SocialPlatform\obj\Debug\SocialPlatform.csproj.CopyComplete
 C:\Users\pusca\Desktop\Projects\SocialPlatform\SocialPlatform\SocialPlatform\obj\Debug\SocialPlatform.dll
 C:\Users\pusca\Desktop\Projects\SocialPlatform\SocialPlatform\SocialPlatform\obj\Debug\SocialPlatform.pdb
+C:\Users\pusca\Desktop\Projects\SocialPlatform\SocialPlatform\SocialPlatform\obj\Debug\SocialPlatform.Migrations.InitialCreate.resources
+C:\Users\pusca\Desktop\Projects\SocialPlatform\SocialPlatform\SocialPlatform\obj\Debug\SocialPlatform.csproj.GenerateResource.cache
+C:\Users\pusca\Desktop\Projects\SocialPlatform\SocialPlatform\SocialPlatform\obj\Debug\SocialPlatform.Migrations.addfirstname.resources

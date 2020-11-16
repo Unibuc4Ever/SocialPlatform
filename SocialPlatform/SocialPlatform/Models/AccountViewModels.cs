@@ -64,6 +64,10 @@ namespace SocialPlatform.Models
 
     public class RegisterViewModel
     {
+        [Required(ErrorMessage = "Trebuie sa ai un First Name.")]
+        [StringLength(30, ErrorMessage = "First name prea lung, trebuie sa aiba sub 30 caractere.")]
+        public string firstName { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
