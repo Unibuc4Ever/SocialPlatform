@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Collections.Generic;
 
 namespace SocialPlatform.Models
 {
@@ -10,6 +11,8 @@ namespace SocialPlatform.Models
     public class ApplicationUser : IdentityUser
     {
         public string firstName { get; set; }
+
+        public virtual ICollection<ApplicationUser> friendRequests { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
