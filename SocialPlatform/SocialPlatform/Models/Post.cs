@@ -16,7 +16,11 @@ namespace SocialPlatform.Models
 
         // Should  be foreign key? Check
         public virtual ApplicationUser author { get; set; }
+
+        [Required(ErrorMessage = "Trebuie sa aveti un titlu!")]
         public string title { get; set; }
+        
+        [Required(ErrorMessage = "Trebuie sa aveti un continut!")]
         public string text { get; set; }
 
         // Foreign key catre wall-ul in care este Post-ul

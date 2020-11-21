@@ -1,0 +1,19 @@
+﻿@model SocialPlatform.Models.Post
+@using Microsoft.AspNet.Identity
+@{
+	ViewBag.Title = "Show";
+}
+
+<h2>Show</h2>
+
+@Html.Partial("ShowPost", @Model)
+
+@if (Model.author.Id == User.Identity.GetUserId())
+{
+	<a class="btn btn-sm btn-success" href="/Posts/Edit/@Model.ID">Editaza</a>
+
+	<form method="post" action="/Posts/Delete/@Model.ID">
+		@Html.HttpMethodOverride(HttpVerbs.Delete)
+		<button class="btn btn-sm btn-danger" type="submit">Sterge</button>
+	</form>
+}
