@@ -14,6 +14,8 @@ namespace SocialPlatform.Models
         public string firstName { get; set; }
         public string lastName { get; set; }
 
+        public virtual Wall wall { get; set; }
+
         // Catre cine am dat friend request, si neacceptate
         public virtual ICollection<ApplicationUser> sentFriendRequests { get; set; }
         // Cine mi-a cerut mie prietenia, si nu am acceptat
@@ -35,7 +37,14 @@ namespace SocialPlatform.Models
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext,
+                SocialPlatform.Migrations.Configuration>("DefaultConnection"));
         }
+
+        public DbSet<Wall> Walls { get; set; }
+        public DbSet<Post> Posts { get; set; }
+        public DbSet<Group> Groups { get; set; }
+        public DbSet<Comment> Comments { get; set; }
 
         public static ApplicationDbContext Create()
         {

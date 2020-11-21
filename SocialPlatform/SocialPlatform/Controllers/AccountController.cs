@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
@@ -17,6 +18,8 @@ namespace SocialPlatform.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+
+        private static ApplicationDbContext db = new ApplicationDbContext();
 
         public AccountController()
         {
@@ -151,10 +154,25 @@ namespace SocialPlatform.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, firstName = model.firstName };
+                var user = new ApplicationUser { UserName = model.Email, 
+                    Email = model.Email, 
+                    firstName = model.firstName,
+                };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    Wall userWall = new Wall
+                    {
+                        backgroundColor = Color.Red,
+                        type = Wall.WType.UserW
+                    };
+
+                    db.Walls.Add(userWall);
+                    db.SaveChanges();
+
+                    user.wall = db.Walls.Find(userWall.ID);
+                    db.SaveChanges();
+
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
