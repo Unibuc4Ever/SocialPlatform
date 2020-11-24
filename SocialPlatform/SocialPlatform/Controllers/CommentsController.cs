@@ -26,7 +26,7 @@ namespace SocialPlatform.Controllers
             {
                 if (ModelState.IsValid)
                 {
-                    comment.Post = db.Posts.Find(post_id);
+                    comment.post = db.Posts.Find(post_id);
                     db.Comments.Add(comment);
                     db.SaveChanges();
                     TempData["message"] = "Commentul a fost adaugat!";

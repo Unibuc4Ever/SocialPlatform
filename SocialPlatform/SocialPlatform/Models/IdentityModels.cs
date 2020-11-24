@@ -15,7 +15,12 @@ namespace SocialPlatform.Models
         public string firstName { get; set; }
         public string lastName { get; set; }
 
+        // The personal wall
+        [InverseProperty("owner")]
         public virtual Wall wall { get; set; }
+
+        [InverseProperty("author")]
+        public ICollection<Comment> comments;
 
         // Catre cine am dat friend request, si neacceptate
         [InverseProperty("receivedFriendRequests")]
@@ -26,8 +31,11 @@ namespace SocialPlatform.Models
 
 
         // Cine sunt prietenii mei
-        // TODO
+        [InverseProperty("friendOf")]
         public virtual ICollection<ApplicationUser> friends { get; set; }
+
+        [InverseProperty("friends")]
+        public virtual ICollection<ApplicationUser> friendOf { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

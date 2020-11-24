@@ -11,13 +11,19 @@ namespace SocialPlatform.Models
     {
         [Key]
         public int ID { get; set; }
+
+        [Required]
         public DateTime createdAt { get; set; }
 
-        public virtual ApplicationUser author { get; set; }
+        [Required(ErrorMessage = "Comentul nu poate fii gol")]
         public string text { get; set; }
 
+        [Required]
+        public virtual ApplicationUser author { get; set; }
+        
+
         // Foreign key catre Post-ul in care este Comment-ul
-        [InverseProperty("comments")]
-        public virtual Post Post { get; set; }
+        [Required]
+        public virtual Post post { get; set; }
     }
 }

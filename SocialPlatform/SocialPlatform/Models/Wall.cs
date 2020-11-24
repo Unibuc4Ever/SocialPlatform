@@ -22,5 +22,8 @@ namespace SocialPlatform.Models
 
         public WType type { get; set; }
         public Color backgroundColor { get; set; }
+
+        [Required]
+        public virtual ApplicationUser owner { get; set; }
     }
 }
