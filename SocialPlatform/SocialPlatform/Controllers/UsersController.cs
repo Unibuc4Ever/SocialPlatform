@@ -39,7 +39,7 @@ namespace SocialPlatform.Controllers
                     // ApplicationUser other = userManager.FindById(fr.otherID);
                     ApplicationUser other = db.Users.Find(fr.otherID);
                     user.sentFriendRequests.Add(other);
-                    other.receivedFriendRequests.Add(user);
+                    // other.receivedFriendRequests.Add(user);
 
                     db.SaveChanges();
                   
@@ -90,7 +90,7 @@ namespace SocialPlatform.Controllers
                     user.friends.Add(other);
                     other.friends.Add(user);
                     user.receivedFriendRequests.Remove(other);
-                    other.sentFriendRequests.Remove(user);
+                    //other.sentFriendRequests.Remove(user);
                     db.SaveChanges();
 
                     return RedirectToAction("ReceivedFriendRequests");
@@ -117,7 +117,7 @@ namespace SocialPlatform.Controllers
                 if (user.receivedFriendRequests.Contains(other))
                 {
                     user.receivedFriendRequests.Remove(other);
-                    other.sentFriendRequests.Remove(user);
+                    //other.sentFriendRequests.Remove(user);
                     db.SaveChanges();
 
                     return RedirectToAction("ReceivedFriendRequests");
@@ -144,7 +144,7 @@ namespace SocialPlatform.Controllers
                 if (user.sentFriendRequests.Contains(other))
                 {
                     user.sentFriendRequests.Remove(other);
-                    other.receivedFriendRequests.Remove(user);
+                    //other.receivedFriendRequests.Remove(user);
                     db.SaveChanges();
 
                     return RedirectToAction("SentFriendRequests");

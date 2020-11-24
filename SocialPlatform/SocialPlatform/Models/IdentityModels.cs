@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SocialPlatform.Models
 {
@@ -17,10 +18,15 @@ namespace SocialPlatform.Models
         public virtual Wall wall { get; set; }
 
         // Catre cine am dat friend request, si neacceptate
+        [InverseProperty("receivedFriendRequests")]
         public virtual ICollection<ApplicationUser> sentFriendRequests { get; set; }
         // Cine mi-a cerut mie prietenia, si nu am acceptat
+        [InverseProperty("sentFriendRequests")]
         public virtual ICollection<ApplicationUser> receivedFriendRequests { get; set; }
+
+
         // Cine sunt prietenii mei
+        // TODO
         public virtual ICollection<ApplicationUser> friends { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)

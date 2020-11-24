@@ -11,7 +11,7 @@ namespace SocialPlatform.Models
     {
         [Key]
         public int ID { get; set; }
-        
+
         public DateTime createdAt { get; set; }
 
         // Should  be foreign key? Check
@@ -19,11 +19,14 @@ namespace SocialPlatform.Models
 
         [Required(ErrorMessage = "Trebuie sa aveti un titlu!")]
         public string title { get; set; }
-        
+
         [Required(ErrorMessage = "Trebuie sa aveti un continut!")]
         public string text { get; set; }
 
         // Foreign key catre wall-ul in care este Post-ul
         public virtual Wall wall { get; set; }
+
+        [InverseProperty("post")]
+        public virtual ICollection<Comment> comments { get; set; }
     }
 }
