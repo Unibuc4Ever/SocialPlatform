@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Identity;
+using System.Data.Entity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using SocialPlatform.Models;
 using System;
@@ -30,17 +31,23 @@ namespace SocialPlatform.Controllers
         [Authorize]
         public ActionResult New()
         {
-            Post post = new Post();
+            PostForm post = new PostForm();
             return View(post);
         }
 
         [HttpPost]
         [Authorize]
-        public ActionResult New(Post post)
+        public ActionResult New(PostForm postForm)
         {
-            post.createdAt = DateTime.Now;
-            post.author = db.Users.Find(User.Identity.GetUserId());
-            post.wall = post.author.wall;
+            var user = db.Users.Find(User.Identity.GetUserId());
+            Post post = new Post
+            {
+                createdAt = DateTime.Now,
+                author = user,
+                wall = user.wall,
+                title = postForm.title,
+                text = postForm.text
+            };
 
             try
             {
@@ -53,11 +60,13 @@ namespace SocialPlatform.Controllers
                     return RedirectToAction("Index");
                 }
                 else
-                    return View(post);
+                {
+                    return View(postForm);
+                }
             }
             catch (Exception)
             {
-                return View(post);
+                return View(postForm);
             }
         }
 
@@ -67,6 +76,8 @@ namespace SocialPlatform.Controllers
             try
             {
                 Post post = db.Posts.Find(id);
+                var coms = db.Comments.Where(x => x.post.ID == post.ID).ToList();
+                post.comments = coms;
                 return View(post);
             } catch (Exception)
 			{
@@ -82,7 +93,10 @@ namespace SocialPlatform.Controllers
                 if (post.author.Id != User.Identity.GetUserId())
                     throw new Exception();
 
-                return View(post);
+                return View(new PostForm { 
+                    text = post.text,
+                    title = post.title
+                });
             } catch (Exception)
 			{
                 throw new HttpException(403, "Post does not exist or you don't have the required permissons!");
@@ -91,25 +105,23 @@ namespace SocialPlatform.Controllers
 
         [HttpPut]
         [Authorize]
-        public ActionResult Edit(Post new_post)
+        public ActionResult Edit(int id, PostForm new_post)
         {
             try
             {
                 if (ModelState.IsValid)
                 {
-                    Post old_post = db.Posts.Find(new_post.ID);
+                    Post old_post = db.Posts.Find(id);
+                   
+                    if (old_post.author.Id != User.Identity.GetUserId())
+                        throw new Exception();
+                    old_post.text = new_post.text;
+                    old_post.title = new_post.title;
 
-                    if (TryUpdateModel(old_post))
-                    {
-                        if (old_post.author.Id != User.Identity.GetUserId())
-                            throw new Exception();
-                        old_post.text = new_post.text;
-                        old_post.title = new_post.title;
-
-                        db.SaveChanges();
-                        TempData["message"] = "Articolul a fost modificat!";
-                        return RedirectToAction("Index");
-                    }
+                    db.SaveChanges();
+                    TempData["message"] = "Articolul a fost modificat!";
+                    return RedirectToAction("Index");
+                   
                 }
                 return View(new_post);
             }

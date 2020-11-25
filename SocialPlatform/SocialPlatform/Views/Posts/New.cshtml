@@ -1,4 +1,4 @@
-﻿@model SocialPlatform.Models.Post
+﻿@model SocialPlatform.Models.PostForm
 
 @{
 	ViewBag.Title = "New";
@@ -19,7 +19,7 @@
 	@Html.Label("text", "Continut Articol")
 	<br />
 	@Html.TextArea("text", null, new { @class = "form-control" })
-	@Html.ValidationMessage("text", null, new { @class = "text-danger" })
+	@Html.ValidationMessageFor(m => m.text, null, new { @class = "text-danger" })
 	<br />
 	<br />
 

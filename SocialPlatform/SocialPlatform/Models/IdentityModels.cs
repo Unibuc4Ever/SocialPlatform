@@ -5,6 +5,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace SocialPlatform.Models
 {
@@ -15,12 +16,11 @@ namespace SocialPlatform.Models
         public string firstName { get; set; }
         public string lastName { get; set; }
 
-        // The personal wall
         [InverseProperty("owner")]
         public virtual Wall wall { get; set; }
 
         [InverseProperty("author")]
-        public ICollection<Comment> comments;
+        public virtual ICollection<Comment> comments { get; set; }
 
         // Catre cine am dat friend request, si neacceptate
         [InverseProperty("receivedFriendRequests")]

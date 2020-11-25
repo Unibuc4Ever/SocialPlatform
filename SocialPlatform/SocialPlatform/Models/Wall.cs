@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Drawing;
 using System.Linq;
 using System.Web;
@@ -18,12 +19,17 @@ namespace SocialPlatform.Models
         }
 
         [Key]
-        public int ID { get; set; }
+        [ForeignKey("owner")]
+        public string ID { get; set; }
 
         public WType type { get; set; }
         public Color backgroundColor { get; set; }
 
-        [Required]
+        
+        //[Required]
+        //[ForeignKey("owner")]
+        //public string owner_ID { get; set; }
+
         public virtual ApplicationUser owner { get; set; }
     }
 }

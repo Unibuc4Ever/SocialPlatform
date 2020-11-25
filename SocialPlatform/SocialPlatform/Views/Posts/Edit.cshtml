@@ -1,4 +1,4 @@
-﻿@model SocialPlatform.Models.Post
+﻿@model SocialPlatform.Models.PostForm
 
 @{
 	ViewBag.Title = "Edit";
@@ -9,7 +9,7 @@
 {
 	@Html.HttpMethodOverride(HttpVerbs.Put)
 	<br />
-	@Html.HiddenFor(m => m.ID)
+	@*@Html.HiddenFor(m => m.ID)*@
 
 	@Html.Label("title", "Titlu Articol")
 	<br />
@@ -19,7 +19,7 @@
 	<br />
 	@Html.Label("text", "Continut Articol")
 	<br />
-	@Html.Editor("text", new { htmlAttributes = new { @class = "form-control" } })
+	@Html.EditorFor(m => m.text, new { htmlAttributes = new { @class = "form-control" } })
 	@Html.ValidationMessage("text", null, new { @class = "text-danger" })
 	<br />
 	<br />
