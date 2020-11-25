@@ -21,27 +21,27 @@
 
 @foreach (ApplicationUser user in Model)
 {
-	<p>Nume: @user.firstName @user.lastName</p>
+	<p>Nume: @user.FirstName @user.LastName</p>
 	<p>ID: @user.Id</p>
 	<h4>Friends</h4>
 	<ul>
-		@foreach (ApplicationUser friend in user.friends)
+		@foreach (ApplicationUser friend in user.Friends)
 		{
-			<li>@friend.firstName @friend.lastName  --  @friend.Id</li>
+			<li>@friend.FirstName @friend.LastName  --  @friend.Id</li>
 		}
 	</ul>
 	<h4>Sent requests</h4>
 	<ul>
-		@foreach (ApplicationUser friend in user.sentFriendRequests)
+		@foreach (ApplicationUser friend in user.SentFriendRequests)
 		{
-			<li>@friend.firstName @friend.lastName  --  @friend.Id</li>
+			<li>@friend.FirstName @friend.LastName  --  @friend.Id</li>
 		}
 	</ul>
 	<h4>Received Requests</h4>
 	<ul>
-		@foreach (ApplicationUser friend in user.receivedFriendRequests)
+		@foreach (ApplicationUser friend in user.ReceivedFriendRequests)
 		{
-			<li>@friend.firstName @friend.lastName  --  @friend.Id</li>
+			<li>@friend.FirstName @friend.LastName  --  @friend.Id</li>
 		}
 	</ul>
 	<hr />
@@ -60,7 +60,7 @@
 			@Html.DisplayNameFor(model => model.Email)
 		</th>
 		<th>
-			@Html.DisplayNameFor(model => model.firstName)
+			@Html.DisplayNameFor(model => model.FirstName)
 		</th>
 		<th>
 			@Html.DisplayNameFor(model => model.EmailConfirmed)
@@ -105,7 +105,7 @@
 				@Html.DisplayFor(modelItem => item.Email)
 			</td>
 			<td>
-				@Html.DisplayFor(modelItem => item.firstName)
+				@Html.DisplayFor(modelItem => item.FirstName)
 			</td>
 			<td>
 				@Html.DisplayFor(modelItem => item.EmailConfirmed)

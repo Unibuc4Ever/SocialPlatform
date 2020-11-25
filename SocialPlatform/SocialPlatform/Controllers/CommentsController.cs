@@ -11,33 +11,93 @@ namespace SocialPlatform.Controllers
 {
     public class CommentsController : Controller
     {
-        private static ApplicationDbContext db = new ApplicationDbContext();
-        private static UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new
-             UserStore<ApplicationUser>(db));
-
         [HttpPost]
         [Authorize]
-        public ActionResult New(int post_id, Comment comment)
+        public ActionResult New(int id, Comment comment)
         {
-            comment.createdAt = DateTime.Now;
-            comment.author = db.Users.Find(User.Identity.GetUserId());
-
+            ApplicationDbContext db = new ApplicationDbContext();
             try
             {
-                if (ModelState.IsValid)
-                {
-                    comment.post = db.Posts.Find(post_id);
-                    db.Comments.Add(comment);
-                    db.SaveChanges();
-                    TempData["message"] = "Commentul a fost adaugat!";
-                }
+                Post post = db.Posts.Find(id);
+                if (post == null)
+                    throw new Exception();
+
+                var user = db.Users.Find(User.Identity.GetUserId());
+                comment.User = user;
+
+                comment.CreatedAt = DateTime.Now;
+                comment.PostId = id;
+
+                db.Comments.Add(comment);
+                db.SaveChanges();
+                TempData["message"] = "Commentul a fost adaugat!";
+            }
+            catch (Exception) { } 
+            return RedirectToAction("Show", "Posts", new { id = id });
+        }
+
+        [HttpGet]
+        [Authorize]
+        public ActionResult Edit(int id)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            try
+			{
+                Comment comm = db.Comments.Find(id);
+                if (comm.UserId != User.Identity.GetUserId())
+                    throw new Exception();
+
+                return View(comm);
+			}
+            catch(Exception)
+			{
+                return RedirectToAction("Show", "Posts", new { id = id });
+            }
+		}
+
+        [HttpPut]
+        [Authorize]
+        public ActionResult Edit(Comment comm)
+		{
+            ApplicationDbContext db = new ApplicationDbContext();
+            try
+            {
+                Comment old_comm = db.Comments.Find(comm.CommentId);
+                if (old_comm.UserId != User.Identity.GetUserId())
+                    throw new Exception();
+
+                old_comm.Content = comm.Content;
+                db.SaveChanges();
+
+                return RedirectToAction("Show", "Posts", new { id = old_comm.PostId });
             }
             catch (Exception)
             {
-                Console.WriteLine("Bad things happen in Philadelphia");
+                return View(comm);
             }
-            return RedirectToRoute("/Posts/Show/" + post_id);
         }
 
+        [HttpDelete]
+        [Authorize]
+        public ActionResult Delete(int id)
+		{
+            ApplicationDbContext db = new ApplicationDbContext();
+            try
+            {
+                Comment comm = db.Comments.Find(id);
+                if (comm.UserId != User.Identity.GetUserId())
+                    throw new Exception();
+
+                int PostId = comm.PostId;
+                db.Comments.Remove(comm);
+                db.SaveChanges();
+
+                return RedirectToAction("Show", "Posts", new { id = PostId });
+            }
+            catch (Exception)
+            {
+                return RedirectToAction("Index", "Posts");
+            }
+        }
     }
 }
