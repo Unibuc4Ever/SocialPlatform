@@ -14,14 +14,14 @@ namespace SocialPlatform.Models
 
         public DateTime createdAt { get; set; }
 
-        // Not required as if the user gets deleted, then Required wall gets deleted
-        public virtual ApplicationUser author { get; set; }
-
         [Required(ErrorMessage = "Trebuie sa aveti un titlu!")]
         public string title { get; set; }
 
         [Required(ErrorMessage = "Trebuie sa aveti un continut!")]
         public string text { get; set; }
+        
+        // Not required as if the user gets deleted, then Required wall gets deleted
+        public virtual ApplicationUser author { get; set; }
 
         [Required]
         public virtual Wall wall { get; set; }

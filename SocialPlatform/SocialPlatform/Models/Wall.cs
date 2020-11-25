@@ -30,6 +30,8 @@ namespace SocialPlatform.Models
         //[ForeignKey("owner")]
         //public string owner_ID { get; set; }
 
+        // [Required]   /// De ce daca pun asta crapa la creearea Wall-ului ?
+        // Pai daca depinde de primary key, clar exista mereu....
         public virtual ApplicationUser owner { get; set; }
     }
 }
