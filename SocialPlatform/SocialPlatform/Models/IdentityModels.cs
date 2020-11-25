@@ -16,8 +16,7 @@ namespace SocialPlatform.Models
         public string firstName { get; set; }
         public string lastName { get; set; }
 
-        [InverseProperty("owner")]
-        public virtual Wall wall { get; set; }
+        //public Wall wall { get; set; }
 
         [InverseProperty("author")]
         public virtual ICollection<Comment> comments { get; set; }

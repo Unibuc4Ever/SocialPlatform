@@ -19,7 +19,7 @@ namespace SocialPlatform.Models
         }
 
         [Key]
-        [ForeignKey("owner")]
+        [ForeignKey("ApplicationUser")]
         public string ID { get; set; }
 
         // Wall type
@@ -30,14 +30,8 @@ namespace SocialPlatform.Models
         [Required]
         public Int32 colorArgb
         {
-            get
-            {
-                return backgroundColor.ToArgb();
-            }
-            set
-            {
-                backgroundColor = Color.FromArgb(value);
-            }
+            get { return backgroundColor.ToArgb(); }
+            set { backgroundColor = Color.FromArgb(value); }
         }
 
         [NotMapped]
@@ -48,6 +42,6 @@ namespace SocialPlatform.Models
 
         // [Required]   /// De ce daca pun asta crapa la creearea Wall-ului ?
         // Pai daca depinde de primary key, clar exista mereu....
-        public virtual ApplicationUser owner { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
     }
 }

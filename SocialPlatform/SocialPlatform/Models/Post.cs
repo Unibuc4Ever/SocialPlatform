@@ -25,7 +25,10 @@ namespace SocialPlatform.Models
         //[Required]
         public virtual ApplicationUser author { get; set; }
 
-        [Required]
+        [Required] // Eu vreau acest required
+        public string wall_ID { get; set; }
+        
+        [ForeignKey("wall_ID")]
         public virtual Wall wall { get; set; }
 
         [InverseProperty("post")]

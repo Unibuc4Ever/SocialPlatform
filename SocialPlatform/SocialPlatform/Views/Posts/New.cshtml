@@ -1,29 +1,32 @@
-﻿@model SocialPlatform.Models.PostForm
-
+﻿@model SocialPlatform.Models.Post
+@using Microsoft.AspNet.Identity;
 @{
-	ViewBag.Title = "New";
+    ViewBag.Title = "New";
 }
 
 <h2>Adaugare articol</h2>
 
 @using (Html.BeginForm(actionName: "New", controllerName: "Posts"))
 {
-	@Html.ValidationSummary(false, "", new { @class = "text-danger" })
-	@Html.Label("title", "Titlu Articol")
-	<br />
-	@Html.TextBox("title", null, new { @class = "form-control" })
-	@Html.ValidationMessageFor(m => m.title, null, new { @class = "text-danger" })
-	<br />
-	<br />
+    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
 
-	@Html.Label("text", "Continut Articol")
-	<br />
-	@Html.TextArea("text", null, new { @class = "form-control" })
-	@Html.ValidationMessageFor(m => m.text, null, new { @class = "text-danger" })
-	<br />
-	<br />
+    @Html.HiddenFor(m => m.wall_ID)
 
-	<button class="btn btn-sm btn-success" type="submit">Adauga articol</button>
+    @Html.Label("title", "Titlu Articol")
+    <br />
+    @Html.TextBox("title", null, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.title, null, new { @class = "text-danger" })
+    <br />
+    <br />
+
+    @Html.Label("text", "Continut Articol")
+    <br />
+    @Html.TextArea("text", null, new { @class = "form-control" })
+    @Html.ValidationMessageFor(m => m.text, null, new { @class = "text-danger" })
+    <br />
+    <br />
+
+    <button class="btn btn-sm btn-success" type="submit">Adauga articol</button>
 }
 
 

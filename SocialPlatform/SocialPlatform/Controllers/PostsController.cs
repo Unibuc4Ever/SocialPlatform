@@ -31,20 +31,20 @@ namespace SocialPlatform.Controllers
         [Authorize]
         public ActionResult New()
         {
-            PostForm post = new PostForm();
+            Post post = new Post { wall = db.Walls.Find(User.Identity.GetUserId()) };
             return View(post);
         }
 
         [HttpPost]
         [Authorize]
-        public ActionResult New(PostForm postForm)
+        public ActionResult New(Post postForm)
         {
             var user = db.Users.Find(User.Identity.GetUserId());
             Post post = new Post
             {
                 createdAt = DateTime.Now,
                 author = user,
-                wall = user.wall,
+                wall_ID = user.Id,
                 title = postForm.title,
                 text = postForm.text
             };
@@ -93,10 +93,7 @@ namespace SocialPlatform.Controllers
                 if (post.author.Id != User.Identity.GetUserId())
                     throw new Exception();
 
-                return View(new PostForm { 
-                    text = post.text,
-                    title = post.title
-                });
+                return View(post);
             } catch (Exception)
 			{
                 throw new HttpException(403, "Post does not exist or you don't have the required permissons!");
@@ -105,10 +102,12 @@ namespace SocialPlatform.Controllers
 
         [HttpPut]
         [Authorize]
-        public ActionResult Edit(int id, PostForm new_post)
+        public ActionResult Edit(int id, Post new_post)
         {
             try
             {
+                
+
                 if (ModelState.IsValid)
                 {
                     Post old_post = db.Posts.Find(id);
