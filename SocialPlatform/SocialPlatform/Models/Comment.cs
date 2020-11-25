@@ -13,7 +13,7 @@ namespace SocialPlatform.Models
 
         public DateTime CreatedAt { get; set; }
 
-        [Required(ErrorMessage = "Comentul nu poate fii gol")]
+        [Required(ErrorMessage = "Comentul nu poate fii gol!")]
         public string Content { get; set; }
 
         public string UserId { get; set; }

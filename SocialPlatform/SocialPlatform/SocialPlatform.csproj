@@ -253,6 +253,7 @@
     <Content Include="Views\Users\ReceivedFriendRequests.cshtml" />
     <Content Include="Views\Users\Friends.cshtml" />
     <Content Include="Views\Comments\Edit.cshtml" />
+    <Content Include="Views\Users\Home.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

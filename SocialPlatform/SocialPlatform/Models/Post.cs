@@ -12,7 +12,6 @@ namespace SocialPlatform.Models
         [Key]
         public int PostId { get; set; }
 
-        [Required]
         public DateTime CreatedAt { get; set; }
 
         [Required(ErrorMessage = "Trebuie sa aveti un titlu!")]
