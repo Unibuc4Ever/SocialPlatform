@@ -11,7 +11,7 @@ namespace SocialPlatform.Migrations
         {
             AutomaticMigrationsEnabled = true;
             AutomaticMigrationDataLossAllowed = true;
-            ContextKey = "SocialPlatform.Models.ApplicationDbContext";
+            ContextKey = "SocialPlatform.ApplicationDbContext";
         }
 
         protected override void Seed(SocialPlatform.Models.ApplicationDbContext context)

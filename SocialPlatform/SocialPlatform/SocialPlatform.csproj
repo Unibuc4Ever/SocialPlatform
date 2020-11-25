@@ -168,33 +168,23 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PostsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202011161243382_InitialCreate.cs" />
-    <Compile Include="Migrations\202011161243382_InitialCreate.Designer.cs">
-      <DependentUpon>202011161243382_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202011161326129_add-firstname.cs" />
-    <Compile Include="Migrations\202011161326129_add-firstname.Designer.cs">
-      <DependentUpon>202011161326129_add-firstname.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202011161429167_add-friendrequest.cs" />
-    <Compile Include="Migrations\202011161429167_add-friendrequest.Designer.cs">
-      <DependentUpon>202011161429167_add-friendrequest.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202011161545121_More-friendrequest-fields.cs" />
-    <Compile Include="Migrations\202011161545121_More-friendrequest-fields.Designer.cs">
-      <DependentUpon>202011161545121_More-friendrequest-fields.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\FrontendForms.cs" />
+    <Compile Include="Models\Group.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Post.cs" />
+    <Compile Include="Models\Wall.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
@@ -256,9 +246,18 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Users\FriendRequest.cshtml" />
+    <Content Include="Views\Posts\Index.cshtml" />
+    <Content Include="Views\Shared\ShowPost.cshtml" />
+    <Content Include="Views\Posts\New.cshtml" />
+    <Content Include="Views\Posts\Show.cshtml" />
+    <Content Include="Views\Posts\Edit.cshtml" />
+    <Content Include="Views\Users\SentFriendRequests.cshtml" />
+    <Content Include="Views\Users\ReceivedFriendRequests.cshtml" />
+    <Content Include="Views\Users\Friends.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Comments\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -272,20 +271,6 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202011161243382_InitialCreate.resx">
-      <DependentUpon>202011161243382_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202011161326129_add-firstname.resx">
-      <DependentUpon>202011161326129_add-firstname.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202011161429167_add-friendrequest.resx">
-      <DependentUpon>202011161429167_add-friendrequest.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202011161545121_More-friendrequest-fields.resx">
-      <DependentUpon>202011161545121_More-friendrequest-fields.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,0 +1,40 @@
+﻿@using SocialPlatform.Models
+
+@model ApplicationUser
+
+@{
+	ViewBag.Title = "Sent Friend Requests";
+}
+
+<h2>Received Friend Requests</h2>
+
+<h3>@TempData["message"]</h3>
+
+<a class="btn btn-sm btn-success" href="/Users/Index">Index</a>
+<a class="btn btn-sm btn-success" href="/Users/SentFriendRequests">Sent Friend Requests</a>
+<a class="btn btn-sm btn-success" href="/Users/Friends">Friends</a>
+
+<br />
+<br />
+
+
+@foreach (ApplicationUser user in Model.receivedFriendRequests)
+{
+	<h3>ID</h3>
+	<p>@user.Id</p>
+	<h3>Email</h3>
+	<p>@user.Email</p>
+	<h3>Name</h3>
+	<p>@user.firstName @user.lastName</p>
+
+	<form method="post" action="/Users/AcceptFriendRequest/@user.Id">
+		@Html.HttpMethodOverride(HttpVerbs.Put)
+		<button class="btn btn-sm btn-success" type="submit">Accept Request</button>
+	</form>
+	<form method="post" action="/Users/DeclineFriendRequest/@user.Id">
+		@Html.HttpMethodOverride(HttpVerbs.Put)
+		<button class="btn btn-sm btn-danger" type="submit">Decline Request</button>
+	</form>
+
+	<hr />
+}

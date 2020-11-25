@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
 
 namespace SocialPlatform.Models
 {
@@ -14,12 +16,25 @@ namespace SocialPlatform.Models
         public string firstName { get; set; }
         public string lastName { get; set; }
 
+        //public Wall wall { get; set; }
+
+        [InverseProperty("author")]
+        public virtual ICollection<Comment> comments { get; set; }
+
         // Catre cine am dat friend request, si neacceptate
+        [InverseProperty("receivedFriendRequests")]
         public virtual ICollection<ApplicationUser> sentFriendRequests { get; set; }
         // Cine mi-a cerut mie prietenia, si nu am acceptat
+        [InverseProperty("sentFriendRequests")]
         public virtual ICollection<ApplicationUser> receivedFriendRequests { get; set; }
+
+
         // Cine sunt prietenii mei
+        [InverseProperty("friendOf")]
         public virtual ICollection<ApplicationUser> friends { get; set; }
+
+        [InverseProperty("friends")]
+        public virtual ICollection<ApplicationUser> friendOf { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
@@ -35,7 +50,14 @@ namespace SocialPlatform.Models
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
+            Database.SetInitializer(new MigrateDatabaseToLatestVersion<ApplicationDbContext,
+                SocialPlatform.Migrations.Configuration>("DefaultConnection"));
         }
+
+        public DbSet<Wall> Walls { get; set; }
+        public DbSet<Post> Posts { get; set; }
+        public DbSet<Group> Groups { get; set; }
+        public DbSet<Comment> Comments { get; set; }
 
         public static ApplicationDbContext Create()
         {
