@@ -145,7 +145,6 @@ namespace SocialPlatform.Controllers
             return View();
         }
 
-        //
         // POST: /Account/Register
         [HttpPost]
         [AllowAnonymous]
@@ -168,7 +167,7 @@ namespace SocialPlatform.Controllers
                     Wall userWall = new Wall
                     {
                         ID = UserManager.FindByEmail(model.Email).Id,
-                        backgroundColor = Color.Red,
+                        // backgroundColor = Color.Red, // now it has default value
                         type = Wall.WType.UserW
                     };
 

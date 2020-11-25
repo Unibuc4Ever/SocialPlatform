@@ -12,6 +12,7 @@ namespace SocialPlatform.Models
         [Key]
         public int ID { get; set; }
 
+        [Required]
         public DateTime createdAt { get; set; }
 
         [Required(ErrorMessage = "Trebuie sa aveti un titlu!")]
@@ -21,6 +22,7 @@ namespace SocialPlatform.Models
         public string text { get; set; }
         
         // Not required as if the user gets deleted, then Required wall gets deleted
+        //[Required]
         public virtual ApplicationUser author { get; set; }
 
         [Required]

@@ -22,13 +22,29 @@ namespace SocialPlatform.Models
         [ForeignKey("owner")]
         public string ID { get; set; }
 
+        // Wall type
+        [Required]
         public WType type { get; set; }
-        public Color backgroundColor { get; set; }
+
+        // Color of the wall
+        [Required]
+        public Int32 colorArgb
+        {
+            get
+            {
+                return backgroundColor.ToArgb();
+            }
+            set
+            {
+                backgroundColor = Color.FromArgb(value);
+            }
+        }
+
+        [NotMapped]
+        public Color backgroundColor { get; set; } = Color.Blue;
 
         
-        //[Required]
-        //[ForeignKey("owner")]
-        //public string owner_ID { get; set; }
+        // Owner of the wall
 
         // [Required]   /// De ce daca pun asta crapa la creearea Wall-ului ?
         // Pai daca depinde de primary key, clar exista mereu....

@@ -18,7 +18,7 @@ namespace SocialPlatform.Models
         [Required(ErrorMessage = "Comentul nu poate fii gol")]
         public string text { get; set; }
 
-        [Required]
+        [Required]  //Not required, if author gets deleted, wall -> Post -> Comment gets deleted
         public virtual ApplicationUser author { get; set; }
         
 
