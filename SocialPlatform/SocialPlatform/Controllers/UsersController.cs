@@ -14,7 +14,7 @@ namespace SocialPlatform.Controllers
         private static ApplicationDbContext db = new ApplicationDbContext();
         private static UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new
             UserStore<ApplicationUser>(db));
-        // GET: Users
+        // GET: Users  Ar trebui stearsa chestia asta
         public ActionResult Index()
         {
             return View(db.Users);

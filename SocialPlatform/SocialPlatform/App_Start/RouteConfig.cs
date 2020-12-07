@@ -18,6 +18,12 @@ namespace SocialPlatform
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Users", action = "Index", id = UrlParameter.Optional }
             );
+
+            routes.MapRoute(
+                name: "DeclineFriendRequest",
+                url: "Users/FriendRequest/Decline/{id}",
+                defaults: new {controller = "Users", action = "DeclineFriendRequest"}    
+           );
         }
     }
 }
