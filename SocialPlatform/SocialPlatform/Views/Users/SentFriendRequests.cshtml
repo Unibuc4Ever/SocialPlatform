@@ -11,7 +11,7 @@
 <h3>@TempData["message"]</h3>
 
 <a class="btn btn-sm btn-success" href="/Users/Index">Index</a>
-<a class="btn btn-sm btn-success" href="/Users/ReceivedFriendRequests">Received Friend Requests</a>
+<a class="btn btn-sm btn-success" href=@Url.RouteUrl("ReceivedFriendRequests")>Received Friend Requests</a>
 <a class="btn btn-sm btn-success" href="/Users/Friends">Friends</a>
 
 <br />
@@ -27,7 +27,7 @@
 	<h3>Name</h3>
 	<p>@user.FirstName @user.LastName</p>
 
-	<form method="post" action="/Users/CancelFriendRequest/@user.Id">
+	<form method="post" action="/Users/FriendRequest/Cancel/@user.Id">
 		@Html.HttpMethodOverride(HttpVerbs.Put)
 		<button class="btn btn-sm btn-danger" type="submit">Cancel Request</button>
 	</form>
