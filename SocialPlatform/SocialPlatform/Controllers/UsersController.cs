@@ -15,7 +15,7 @@ namespace SocialPlatform.Controllers
         public ActionResult Index()
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return View(db.Users);
+            return View(db.Users.Find(User.Identity.GetUserId()));
 		}
 
         // GET: MakeFriendship
