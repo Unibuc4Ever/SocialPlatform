@@ -18,14 +18,14 @@
 <br />
 
 
-@foreach (ApplicationUser user in Model.friends)
+@foreach (ApplicationUser user in Model.Friends)
 {
 	<h3>ID</h3>
 	<p>@user.Id</p>
 	<h3>Email</h3>
 	<p>@user.Email</p>
 	<h3>Name</h3>
-	<p>@user.firstName @user.lastName</p>
+	<p>@user.FirstName @user.LastName</p>
 
 	<form method="post" action="/Users/Unfriend/@user.Id">
 		@Html.HttpMethodOverride(HttpVerbs.Put)

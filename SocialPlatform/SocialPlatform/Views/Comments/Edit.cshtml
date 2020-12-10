@@ -1,0 +1,22 @@
+﻿@model SocialPlatform.Models.Comment
+
+@{
+	ViewBag.Title = "Edit";
+}
+
+<h3>What do you want to change your comment into?</h3>
+
+@using (Html.BeginForm(actionName: "Edit", controllerName: "Comments"))
+{
+	@Html.HttpMethodOverride(HttpVerbs.Put)
+	<br />
+	@Html.HiddenFor(m => m.CommentId)
+
+	@Html.Label("Content", "Continut Comment")
+	<br />
+	@Html.EditorFor(m => m.Content)
+	@Html.ValidationMessage("Content", null, new { @class = "text-danger" })
+	<br />
+	<br />
+	<button class="btn btn-sm btn-success" type="submit">Modifica articol</button>
+}

@@ -9,21 +9,17 @@ namespace SocialPlatform.Models
 {
     public class Comment
     {
-        [Key]
-        public int ID { get; set; }
+        public int CommentId { get; set; }
 
-        [Required]
-        public DateTime createdAt { get; set; }
+        public DateTime CreatedAt { get; set; }
 
-        [Required(ErrorMessage = "Comentul nu poate fii gol")]
-        public string text { get; set; }
+        [Required(ErrorMessage = "Comentul nu poate fii gol!")]
+        public string Content { get; set; }
 
-        [Required]  //Not required, if author gets deleted, wall -> Post -> Comment gets deleted
-        public virtual ApplicationUser author { get; set; }
-        
+        public string UserId { get; set; }
+        public virtual ApplicationUser User { get; set; }
 
-        // Foreign key catre Post-ul in care este Comment-ul
-        [Required]
-        public virtual Post post { get; set; }
+        public int PostId { get; set; }
+        public virtual Post Post { get; set; }
     }
 }
