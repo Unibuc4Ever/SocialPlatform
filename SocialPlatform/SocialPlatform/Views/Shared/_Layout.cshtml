@@ -17,14 +17,14 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @Html.ActionLink("Social Platform", "Index", "Users", new { area = "" }, new { @class = "navbar-brand" })
+                @Html.ActionLink("Social Platform", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
 				<ul class="nav navbar-nav">
 					@if (User.Identity.IsAuthenticated)
 					{
-						<li>@Html.ActionLink("Home Page", "Home", "Users")</li>
-						<li>@Html.ActionLink("List Users", "Index", "Users")</li>
+						<li>@Html.ActionLink("Home Page", "Index", "Users")</li>
+						@*<li>@Html.ActionLink("List Users", "Index", "Users")</li>*@
 						<li>@Html.ActionLink("Friend Request", "FriendRequest", "Users")</li>
 						<li>@Html.ActionLink("News Feed", "Index", "Posts") </li>
 						<li>@Html.ActionLink("New Post", "New", "Posts")</li>

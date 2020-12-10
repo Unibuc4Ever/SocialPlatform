@@ -14,18 +14,13 @@ namespace SocialPlatform.Controllers
         private static ApplicationDbContext db = new ApplicationDbContext();
         private static UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new
             UserStore<ApplicationUser>(db));
-        // GET: Users
-        public ActionResult Home()
-        {
-            ApplicationUser user = db.Users.Find(User.Identity.GetUserId());
-            return View(user);
-        }
 
         [Authorize]
         public ActionResult Index()
 		{
-            return View(db.Users);
-		}
+            ApplicationUser user = db.Users.Find(User.Identity.GetUserId());
+            return View(user);
+        }
 
         // GET: MakeFriendship
         [Authorize]
