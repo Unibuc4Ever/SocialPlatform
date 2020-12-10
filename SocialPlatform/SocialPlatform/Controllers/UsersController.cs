@@ -14,37 +14,33 @@ namespace SocialPlatform.Controllers
         private static ApplicationDbContext db = new ApplicationDbContext();
         private static UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new
             UserStore<ApplicationUser>(db));
-        // GET: Users
-        public ActionResult Home()
-        {
-            ApplicationUser user = db.Users.Find(User.Identity.GetUserId());
-            return View(user);
-        }
 
         [Authorize]
         public ActionResult Index()
 		{
-            return View(db.Users);
-		}
+            ApplicationUser user = db.Users.Find(User.Identity.GetUserId());
+            return View(user);
+        }
 
         // GET: MakeFriendship
+        // Should be deleted this controller
         [Authorize]
-        public ActionResult FriendRequest()
+        public ActionResult AddFriendRequest()
         {
-            return View(new FriendRequest());
+            return View();
         }
 
         // POST: MakeFriendship
         [HttpPost]
         [Authorize]
-        public ActionResult FriendRequest(FriendRequest fr)
+        public ActionResult AddFriendRequest(string otherID)
         {
             ApplicationUser user = userManager.FindById(User.Identity.GetUserId());
             try
             {
                 if (ModelState.IsValid)
                 {
-                    ApplicationUser other = db.Users.Find(fr.OtherId);
+                    ApplicationUser other = db.Users.Find(otherID);
                     if (other == null)
                         throw new Exception();
 
@@ -57,7 +53,8 @@ namespace SocialPlatform.Controllers
             }
             catch (Exception)
             {
-                return View(fr);
+                ModelState.AddModelError("otherID", "ID of the friend is not valid");
+                return View();
             }
         }
 
@@ -84,12 +81,12 @@ namespace SocialPlatform.Controllers
 
         [HttpPut]
         [Authorize]
-        public ActionResult AcceptFriendRequest(string id)
+        public ActionResult AcceptFriendRequest(string otherID)
         {
             ApplicationUser user = userManager.FindById(User.Identity.GetUserId());
             try
             {
-                ApplicationUser other = db.Users.Find(id);
+                ApplicationUser other = db.Users.Find(otherID);
                 if (user.ReceivedFriendRequests.Contains(other))
                 {
                     user.Friends.Add(other);
@@ -104,12 +101,12 @@ namespace SocialPlatform.Controllers
 
         [HttpPut]
         [Authorize]
-        public ActionResult DeclineFriendRequest(string id)
+        public ActionResult DeclineFriendRequest(string otherID)
         {
             ApplicationUser user = userManager.FindById(User.Identity.GetUserId());
             try
             {
-                ApplicationUser other = db.Users.Find(id);
+                ApplicationUser other = db.Users.Find(otherID);
                 if (user.ReceivedFriendRequests.Contains(other))
                 {
                     user.ReceivedFriendRequests.Remove(other);
@@ -122,12 +119,12 @@ namespace SocialPlatform.Controllers
 
         [HttpPut]
         [Authorize]
-        public ActionResult CancelFriendRequest(string id)
+        public ActionResult CancelFriendRequest(string otherID)
         {
             ApplicationUser user = userManager.FindById(User.Identity.GetUserId());
             try
             {
-                ApplicationUser other = db.Users.Find(id);
+                ApplicationUser other = db.Users.Find(otherID);
                 if (user.SentFriendRequests.Contains(other))
                 {
                     user.SentFriendRequests.Remove(other);
@@ -140,12 +137,12 @@ namespace SocialPlatform.Controllers
 
         [HttpPut]
         [Authorize]
-        public ActionResult Unfriend(string id)
+        public ActionResult Unfriend(string otherID)
         {
             ApplicationUser user = userManager.FindById(User.Identity.GetUserId());
             try
             {
-                ApplicationUser other = db.Users.Find(id);
+                ApplicationUser other = db.Users.Find(otherID);
                 if (user.Friends.Contains(other))
                 {
                     user.Friends.Remove(other);
