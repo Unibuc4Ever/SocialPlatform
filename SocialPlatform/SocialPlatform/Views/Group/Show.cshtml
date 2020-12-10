@@ -1,0 +1,49 @@
+﻿@model SocialPlatform.Models.Group
+
+@using Microsoft.AspNet.Identity
+
+@{
+
+}
+
+<h1>Detalii Grup</h1>
+
+<h2>Group name: @Model.Name</h2>
+<h2>Owner: @Model.User.FirstName @Model.User.LastName</h2>
+<h2>WallId: @Model.WallId</h2>
+
+@if (Model.User.Id == User.Identity.GetUserId())
+{
+	<a class="btn btn-sm btn-success" href="/Groups/Edit/@Model.GroupId">Editaza</a>
+	<div style="display: inline-block; float : left">
+		<form method="post" action="/Groups/Delete/@Model.GroupId">
+			@Html.HttpMethodOverride(HttpVerbs.Delete)
+			<button class="btn btn-sm btn-danger" type="submit">Sterge</button>
+		</form>
+	</div>
+}
+
+<h2>Members:</h2>
+<ul>
+	@foreach (var user in Model.Members)
+	{
+		<li>@user.FirstName @user.LastName</li>
+	}
+</ul>
+
+<h2>Posts:</h2>
+@foreach (var post in Model.Wall.Posts)
+{
+	@Html.Partial("ShowPost", post)
+	@if (post.User.Id == User.Identity.GetUserId())
+	{
+		<a class="btn btn-sm btn-success" href="/Posts/Edit/@post.PostId">Editaza</a>
+		<div style="display: inline-block; float : left">
+			<form method="post" action="/Posts/Delete/@post.PostId">
+				@Html.HttpMethodOverride(HttpVerbs.Delete)
+				<button class="btn btn-sm btn-danger" type="submit">Sterge</button>
+			</form>
+		</div>
+	}
+	<hr />
+}

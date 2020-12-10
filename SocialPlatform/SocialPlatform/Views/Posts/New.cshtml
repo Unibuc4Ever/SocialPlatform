@@ -10,6 +10,8 @@
 {
     @Html.ValidationSummary(false, "", new { @class = "text-danger" })
 
+    @Html.HiddenFor(m => m.WallId)
+
     @Html.Label("Title", "Titlu Articol")
     <br />
     @Html.TextBox("Title", null, new { @class = "form-control" })

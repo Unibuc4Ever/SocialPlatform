@@ -17,8 +17,8 @@ namespace SocialPlatform
 
             routes.MapRoute(
                 name: "NewPost",
-                url: "Posts/New",
-                defaults: new { controller = "Posts", action = "New" }
+                url: "Posts/New/{WallId}",
+                defaults: new { controller = "Posts", action = "New", WallId = UrlParameter.Optional }
             );
 
             routes.MapRoute(
@@ -97,11 +97,41 @@ namespace SocialPlatform
                 defaults: new { controller = "Users", action = "CancelFriendRequest" }
             );
 
+            routes.MapRoute(
+                name: "NewGroup",
+                url: "Groups/New",
+                defaults: new { controller = "Group", action = "New" }
+            );
+
+            routes.MapRoute(
+                name: "MyGroups",
+                url: "Groups",
+                defaults: new { controller = "Group", action = "Index" }
+            );
+
+            routes.MapRoute(
+                name: "EditGroup",
+                url: "Groups/Edit/{Id}",
+                defaults: new { controller = "Group", action = "Edit" }
+            );
+
+            routes.MapRoute(
+                name: "DeleteGroup",
+                url: "Groups/Delete/{Id}",
+                defaults: new { controller = "Group", action = "Delete" }
+            );
+
+            routes.MapRoute(
+                name: "ShowGroup",
+                url: "Groups/Show/{Id}",
+                defaults: new { controller = "Group", action = "Show" }
+            );
+
 
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Admin", action = "Index", id = UrlParameter.Optional }
             );
         }
     }
