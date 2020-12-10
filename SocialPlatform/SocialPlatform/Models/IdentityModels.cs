@@ -12,12 +12,20 @@ namespace SocialPlatform.Models
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
+        // Wall-ul userului
+        public int? WallId { get; set; }
+        public virtual Wall Wall { get; set; }
+
         // Adaugam atribute specifice userilor
         public string FirstName { get; set; }
         public string LastName { get; set; }
 
         public virtual ICollection<Post> Posts { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
+
+        // Grupurile din care fac parte
+        [InverseProperty("Members")]
+        public virtual ICollection<Group> Groups { get; set; }
 
         // Catre cine am dat friend request, si neacceptate
         [InverseProperty("ReceivedFriendRequests")]
@@ -56,6 +64,8 @@ namespace SocialPlatform.Models
 
         public DbSet<Post> Posts { get; set; }
         public DbSet<Comment> Comments { get; set; }
+        public DbSet<Wall> Walls { get; set; }
+        public DbSet<Group> Groups { get; set; }
 
         public static ApplicationDbContext Create()
         {

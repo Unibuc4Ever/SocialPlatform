@@ -12,10 +12,6 @@ namespace SocialPlatform.Controllers
 {
     public class PostsController : Controller
     {
-        private static ApplicationDbContext db1 = new ApplicationDbContext();
-        private static UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new
-             UserStore<ApplicationUser>(db1));
-
         // GET: Post
         [Authorize]
         public ActionResult Index()
@@ -25,14 +21,17 @@ namespace SocialPlatform.Controllers
             // din baza de date care sunt pe un wall
             // la care avem acces (suntem prieteni).
             ViewBag.Posts = db.Posts;
-            return View();
+            return View(db.Users.Find(User.Identity.GetUserId()));
         }
 
         // HttpGet
         [Authorize]
-        public ActionResult New()
+        public ActionResult New(int WallId)
         {
-            return View(new Post());
+            Post post = new Post();
+            post.WallId = WallId;
+
+            return View(post);
         }
 
         [HttpPost]
@@ -44,13 +43,18 @@ namespace SocialPlatform.Controllers
             post.UserId = user.Id;
             post.CreatedAt = DateTime.Now;
 			post.Comments = new HashSet<Comment>();
-
+         
             try
             {
+                post.Wall = db.Walls.Find(post.WallId);
                 if (ModelState.IsValid)
                 {
                     db.Posts.Add(post);
                     db.SaveChanges();
+                    post.Wall.Posts.Add(post);
+
+                    db.SaveChanges();
+
                     TempData["message"] = "Postul a fost adaugat!";
 
                     return RedirectToAction("Index");
@@ -65,12 +69,10 @@ namespace SocialPlatform.Controllers
         [Authorize]
         public ActionResult Show(int id)
         {
-            var db1 = new ApplicationDbContext();
+            var db = new ApplicationDbContext();
             try
             {
-                Post post = db1.Posts.Find(id);
-                // var coms = db.Comments.Where(x => x.post.ID == post.ID).ToList();
-                // post.comments = coms;
+                Post post = db.Posts.Find(id);
                 return View(post);
             } catch (Exception)
 			{

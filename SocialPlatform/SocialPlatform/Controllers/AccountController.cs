@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Globalization;
 using System.Linq;
@@ -159,23 +160,23 @@ namespace SocialPlatform.Controllers
                     FirstName = model.FirstName,
                     LastName = model.LastName
                 };
- 
+                
+
                 var result = UserManager.Create(user, model.Password);
                 db.SaveChanges();
                 if (result.Succeeded)
                 {
-                    /* Wall userWall = new Wall
-                    {
-                        ID = UserManager.FindByEmail(model.Email).Id,
-                        // backgroundColor = Color.Red, // now it has default value
-                        type = Wall.WType.UserW,
-                    };
-
+                    Wall userWall = new Wall();
+                    userWall.Posts = new HashSet<Post>();
                     db.Walls.Add(userWall);
                     db.SaveChanges();
 
-                    ApplicationUser u = db.Walls.Find(userWall.ID).ApplicationUser;
-                    string s = u.Id;*/
+                    user.Wall = userWall;
+                    db.SaveChanges();
+                    UserManager.Update(user);
+
+                    Console.WriteLine(user.WallId);
+                    Console.WriteLine(user.Wall.WallId);
 
                     SignInManager.SignIn(user, isPersistent: false, rememberBrowser: false);
 
