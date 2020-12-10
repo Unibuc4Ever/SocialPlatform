@@ -11,16 +11,12 @@ namespace SocialPlatform.Controllers
 {
     public class UsersController : Controller
     {
-        private static ApplicationDbContext db = new ApplicationDbContext();
-        private static UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new
-            UserStore<ApplicationUser>(db));
-
         [Authorize]
         public ActionResult Index()
-		{
-            ApplicationUser user = db.Users.Find(User.Identity.GetUserId());
-            return View(user);
-        }
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            return View(db.Users.Find(User.Identity.GetUserId()));
+		}
 
         // GET: MakeFriendship
         // Should be deleted this controller
@@ -35,7 +31,10 @@ namespace SocialPlatform.Controllers
         [Authorize]
         public ActionResult AddFriendRequest(string otherID)
         {
-            ApplicationUser user = userManager.FindById(User.Identity.GetUserId());
+            ApplicationDbContext db = new ApplicationDbContext();
+            UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>
+                (new UserStore<ApplicationUser>(db));
+        ApplicationUser user = userManager.FindById(User.Identity.GetUserId());
             try
             {
                 if (ModelState.IsValid)
@@ -62,6 +61,9 @@ namespace SocialPlatform.Controllers
         [Authorize]
         public ActionResult SentFriendRequests()
         {
+            ApplicationDbContext db = new ApplicationDbContext();
+            UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>
+                (new UserStore<ApplicationUser>(db));
             return View(userManager.FindById(User.Identity.GetUserId()));
         }
 
@@ -69,6 +71,9 @@ namespace SocialPlatform.Controllers
         [Authorize]
         public ActionResult ReceivedFriendRequests()
         {
+            ApplicationDbContext db = new ApplicationDbContext();
+            UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>
+                (new UserStore<ApplicationUser>(db));
             return View(userManager.FindById(User.Identity.GetUserId()));
         }
 
@@ -76,6 +81,9 @@ namespace SocialPlatform.Controllers
         [Authorize]
         public ActionResult Friends()
         {
+            ApplicationDbContext db = new ApplicationDbContext();
+            UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>
+                (new UserStore<ApplicationUser>(db));
             return View(userManager.FindById(User.Identity.GetUserId()));
         }
 
@@ -83,6 +91,9 @@ namespace SocialPlatform.Controllers
         [Authorize]
         public ActionResult AcceptFriendRequest(string otherID)
         {
+            ApplicationDbContext db = new ApplicationDbContext();
+            UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>
+                (new UserStore<ApplicationUser>(db));
             ApplicationUser user = userManager.FindById(User.Identity.GetUserId());
             try
             {
@@ -103,6 +114,9 @@ namespace SocialPlatform.Controllers
         [Authorize]
         public ActionResult DeclineFriendRequest(string otherID)
         {
+            ApplicationDbContext db = new ApplicationDbContext();
+            UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>
+                (new UserStore<ApplicationUser>(db));
             ApplicationUser user = userManager.FindById(User.Identity.GetUserId());
             try
             {
@@ -121,6 +135,9 @@ namespace SocialPlatform.Controllers
         [Authorize]
         public ActionResult CancelFriendRequest(string otherID)
         {
+            ApplicationDbContext db = new ApplicationDbContext();
+            UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>
+                (new UserStore<ApplicationUser>(db));
             ApplicationUser user = userManager.FindById(User.Identity.GetUserId());
             try
             {
@@ -139,6 +156,9 @@ namespace SocialPlatform.Controllers
         [Authorize]
         public ActionResult Unfriend(string otherID)
         {
+            ApplicationDbContext db = new ApplicationDbContext();
+            UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>
+                (new UserStore<ApplicationUser>(db));
             ApplicationUser user = userManager.FindById(User.Identity.GetUserId());
             try
             {
