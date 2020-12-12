@@ -43,6 +43,9 @@ namespace SocialPlatform.Models
         public virtual ICollection<ApplicationUser> FriendOf { get; set; }
 
 
+        // Like-urile mele
+        public virtual ICollection<Like> Likes { get; set; }
+
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
@@ -66,6 +69,7 @@ namespace SocialPlatform.Models
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Wall> Walls { get; set; }
         public DbSet<Group> Groups { get; set; }
+        public DbSet<Like> Likes { get; set; }
 
         public static ApplicationDbContext Create()
         {

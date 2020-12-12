@@ -1,9 +1,52 @@
 ﻿@model SocialPlatform.Models.Post
+@using SocialPlatform.Models;
+
+@{ 
+    var db = new ApplicationDbContext();
+	var userId = User.Identity.GetUserId();
+}
 
 @using Microsoft.AspNet.Identity
 @{
 	ViewBag.Title = "Show";
 }
+
+<script>
+    function sendLikeForm(postId) {
+		$.ajax({
+			url: "/Likes/New",
+			type: 'POST',
+			contentType: 'application/json',
+			data: JSON.stringify({
+				PostId: postId,
+				type: "like"
+			}),
+			success: function () {
+				location.reload();
+			},
+            error: function (jqXHR, exception) {
+                alert('Error message. Failed my Like');
+            }
+        });
+	}
+
+    function sendUnLikeForm(likeId) {
+        $.ajax({
+            url: "/Likes/Delete",
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                LikeId: likeId
+            }),
+            success: function () {
+				location.reload();
+            },
+            error: function (jqXHR, exception) {
+                alert('Error message. Failed my Like');
+            }
+        });
+    }
+</script>
 
 <h2>Show  <a class="btn btn-primary" href="/Posts">Inapoi la News Feed</a></h2>
 
@@ -11,18 +54,36 @@
 
 	@Html.Partial("ShowPost", Model)
 
-	<div class="panel-footer">
-		@if (Model.User.Id == User.Identity.GetUserId())
-		{
-			<a class="btn btn-sm btn-success" href="/Posts/Edit/@Model.PostId">Editaza</a>
-			<div style="display: inline-block; float : left">
-				<form method="post" action="/Posts/Delete/@Model.PostId">
-					@Html.HttpMethodOverride(HttpVerbs.Delete)
-					<button class="btn btn-sm btn-danger" type="submit">Sterge</button>
-				</form>
-			</div>
+    <div class="panel-footer">
+		@{
+			var Likes = db.Likes.Where(l => (l.UserId == userId && l.PostId == Model.PostId));
+			if (Likes.Count() > 0) {
+			<button onclick="sendUnLikeForm(@Likes.First().LikeId)" class="btn btn-warning">
+				UnLike
+			</button>
+			}
+			else
+			{
+			<button onclick="sendLikeForm(@Model.PostId)" class="btn btn-warning">
+				Like
+			</button>
+			}
+			<p>Likes: @Model.Likes.Count()</p>
 		}
-	</div>
+
+        @if (Model.User.Id == User.Identity.GetUserId())
+        {
+            
+            <br />
+            <a class="btn btn-sm btn-success" href="/Posts/Edit/@Model.PostId">Editaza</a>
+            <div style="display: inline-block; float : left">
+                <form method="post" action="/Posts/Delete/@Model.PostId">
+                    @Html.HttpMethodOverride(HttpVerbs.Delete)
+                    <button class="btn btn-sm btn-danger" type="submit">Sterge</button>
+                </form>
+            </div>
+        }
+    </div>
 </div>
 
 <div style="position: center">

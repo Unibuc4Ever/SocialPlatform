@@ -30,5 +30,8 @@ namespace SocialPlatform.Models
         // Where the post was posted.
         public int WallId { get; set; }
         public virtual Wall Wall { get; set; }
+
+        // Ce like-uri are
+        public virtual ICollection<Like> Likes { get; set; }
     }
 }
