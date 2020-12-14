@@ -98,6 +98,12 @@ namespace SocialPlatform
             );
 
             routes.MapRoute(
+                name: "Unfriend",
+                url: "Users/Friends/Unfriend/{otherID}",
+                defaults: new { controller = "Users", action = "Unfriend" }
+            );
+
+            routes.MapRoute(
                 name: "NewGroup",
                 url: "Groups/New",
                 defaults: new { controller = "Group", action = "New" }
