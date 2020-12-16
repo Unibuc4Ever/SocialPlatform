@@ -111,8 +111,14 @@ namespace SocialPlatform
 
             routes.MapRoute(
                 name: "MyGroups",
-                url: "Groups",
+                url: "Groups/My",
                 defaults: new { controller = "Group", action = "Index" }
+            );
+
+            routes.MapRoute(
+                name: "AllGroups",
+                url: "Groups/All",
+                defaults: new { controller = "Group", action = "Explore" }
             );
 
             routes.MapRoute(
@@ -137,7 +143,7 @@ namespace SocialPlatform
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Admin", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Users", action = "Index", id = UrlParameter.Optional }
             );
         }
     }
