@@ -1,23 +1,25 @@
-﻿@model SocialPlatform.Models.ApplicationUser
+﻿@using SocialPlatform.Models
+@using System.Data.Entity
+@model ICollection<Post>
+
 
 @{
 	ViewBag.Title = "Index";
 }
 
 <h1>@ViewBag.Message</h1>
-<h2>News Feed <a class="btn btn-primary" href="/Posts/New/@Model.WallId">Creeaza Post</a></h2>
 <br />
 <br />
 
-@foreach (SocialPlatform.Models.Post post in ViewBag.Posts)
+@foreach (SocialPlatform.Models.Post post in Model)
 {
 	<div class="panel panel-default">
 
-		@Html.Partial("ShowPost", post)
-
-		<div class="panel-footer">
-			<a class=" btn btn-sm btn btn-success" href="/Posts/Show/@post.PostId">Afisare post</a>
-		</div>
+		@{
+			ViewBag.ShowViewPostButton = true;
+			@Html.Partial("ShowPost", post);
+			ViewBag.ShowViewPostButton = false;
+		}
 	</div>
 }
 

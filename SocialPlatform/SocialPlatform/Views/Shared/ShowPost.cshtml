@@ -88,7 +88,7 @@
 			var Likes = db.Likes.Where(l => (l.UserId == userId && l.PostId == Model.PostId));
 			if (Likes.Count() > 0)
 			{
-				<a onclick="javascript:sendUnLikeForm(@Likes.First().LikeId)" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" style="color: cornflowerblue">
+				<a onclick="javascript:sendUnLikeForm(@Likes.First().LikeId)" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" style="color: cornflowerblue; background-color: rgba(174, 242, 248, 20); border-radius:5px;">
 					@Model.Likes.Count() Likes
 				</a>
 			}
@@ -99,8 +99,18 @@
 				</a>
 			}
 		}
-		<button>idk</button>
-	</div>
+		@if (ViewBag.ShowViewPostButton == true)
+		{
+			<a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="/Posts/Show/@Model.PostId">View</a>
+		}
+		@if (Model.UserId == userId)
+		{
+			<a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="/Posts/Edit/@Model.PostId">Edit</a>
+			<form action="/Posts/Delete/@Model.PostId" method="post">
+				@Html.HttpMethodOverride(HttpVerbs.Delete)
+				<button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" type="submit">Delete</button>
+			</form>
+		}
 	<div class="mdl-card__menu">
 		<button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
 			<i class="material-icons">share</i>
