@@ -11,43 +11,6 @@
 	ViewBag.Title = "Show";
 }
 
-<script>
-    function sendLikeForm(postId) {
-		$.ajax({
-			url: "/Likes/New",
-			type: 'POST',
-			contentType: 'application/json',
-			data: JSON.stringify({
-				PostId: postId,
-				type: "like"
-			}),
-			success: function () {
-				location.reload();
-			},
-            error: function (jqXHR, exception) {
-                alert('Error message. Failed my Like');
-            }
-        });
-	}
-
-    function sendUnLikeForm(likeId) {
-        $.ajax({
-            url: "/Likes/Delete",
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify({
-                LikeId: likeId
-            }),
-            success: function () {
-				location.reload();
-            },
-            error: function (jqXHR, exception) {
-                alert('Error message. Failed my Like');
-            }
-        });
-    }
-</script>
-
 <h2>Show  <a class="btn btn-primary" href="/Posts">Inapoi la News Feed</a></h2>
 
 <div class="panel panel-default" style="background-color:azure">
@@ -55,21 +18,7 @@
 	@Html.Partial("ShowPost", Model)
 
     <div class="panel-footer">
-		@{
-			var Likes = db.Likes.Where(l => (l.UserId == userId && l.PostId == Model.PostId));
-			if (Likes.Count() > 0) {
-			<button onclick="sendUnLikeForm(@Likes.First().LikeId)" class="btn btn-warning">
-				UnLike
-			</button>
-			}
-			else
-			{
-			<button onclick="sendLikeForm(@Model.PostId)" class="btn btn-warning">
-				Like
-			</button>
-			}
-			<p>Likes: @Model.Likes.Count()</p>
-		}
+		
 
         @if (Model.User.Id == User.Identity.GetUserId())
         {

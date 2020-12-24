@@ -1,53 +1,104 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNet.Identity
+@using SocialPlatform.Models
+
+
+@{
+	int? wallid = null;
+}
+
+@if (User.Identity.IsAuthenticated)
+{
+	var db = new ApplicationDbContext();
+	var user = db.Users.Find(User.Identity.GetUserId());
+	wallid = user.WallId;
+}
+
+<!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>@ViewBag.Title - My ASP.NET Application</title>
-<!--	Styles.Render("~/Content/css")
-	Scripts.Render("~/bundles/modernizr")-->
 
 	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
-	<script defer src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-
+	<script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	@Styles.Render("~/Content/css")
+	@Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="navbar navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                @Html.ActionLink("Social Platform", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
-            </div>
-            <div class="navbar-collapse collapse">
-				<ul class="nav navbar-nav">
+	<!-- Uses a header that contracts as the page scrolls down. -->
+	<style>
+		.demo-layout-waterfall .mdl-layout__header-row .mdl-navigation__link:last-of-type {
+			padding-right: 0;
+		}
+	</style>
+
+	<div class="demo-layout-waterfall mdl-layout mdl-js-layout">
+		<header class="mdl-layout__header mdl-layout__header--waterfall">
+			<!-- Top row, always visible -->
+			<div class="mdl-layout__header-row">
+				<!-- Title -->
+				<span class="mdl-layout-title">Social Platform</span>
+				<div class="mdl-layout-spacer"></div>
+				<div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
+                      mdl-textfield--floating-label mdl-textfield--align-right">
+					<label class="mdl-button mdl-js-button mdl-button--icon"
+						   for="waterfall-exp">
+						<i class="material-icons">search</i>
+					</label>
+					<div class="mdl-textfield__expandable-holder">
+						<input class="mdl-textfield__input" type="text" name="sample"
+							   id="waterfall-exp">
+					</div>
+				</div>
+			</div>
+			<!-- Bottom row, not visible on scroll -->
+			<div class="mdl-layout__header-row">
+				<div class="mdl-layout-spacer"></div>
+				<!-- Navigation -->
+				<nav class="mdl-navigation">
 					@if (User.Identity.IsAuthenticated)
 					{
-						<li>@Html.ActionLink("Home Page", "Index", "Users")</li>
-						@*<li>@Html.ActionLink("List Users", "Index", "Users")</li>*@
-						<li>@Html.ActionLink("Add Friend Req.", "AddFriendRequest", "Users")</li>
-						<li>@Html.ActionLink("News Feed", "Index", "Posts") </li>
-						<li>@Html.ActionLink("New Post", "New", "Posts")</li>
+						<a class="mdl-navigation__link" href="/Users">Home</a>
+						<a class="mdl-navigation__link" href="/Posts">News Feed</a>
+						<a class="mdl-navigation__link" href="/Posts/Explore">Explore</a>
+						<a class="mdl-navigation__link" href="/Posts/New/@wallid">Create Post</a>
+						<a class="mdl-navigation__link" href="javascript:document.getElementById('logoutForm').submit()">
+							Sign Out
+						</a>
+						<div style="display:none">@Html.Partial("_LoginPartial")</div>
 					}
-				</ul>
-                @Html.Partial("_LoginPartial")
-            </div>
-        </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - SocialPlatform</p>
-        </footer>
-    </div>
+					else
+					{
+						<a class="mdl-navigation__link" href="/Account/Register">Register</a>
+						<a class="mdl-navigation__link" href="/Account/Login">Login</a>
+					}
+				</nav>
+			</div>
+		</header>
+		<div class="mdl-layout__drawer">
+			<span class="mdl-layout-title">Shortcuts</span>
+			<nav class="mdl-navigation">
+				<a class="mdl-navigation__link" href="">My Groups</a>
+				<a class="mdl-navigation__link" href="">My Friends</a>
+				<a class="mdl-navigation__link" href="">My Wall</a>
+				<a class="mdl-navigation__link" href="">Settings</a>
+			</nav>
+		</div>
+		<main class="mdl-layout__content">
+			<div class="page-content">
+				@RenderBody()
+				<hr />
+				<footer>
+					<p>&copy; @DateTime.Now.Year - SocialPlatform</p>
+				</footer>
+			</div>
+		</main>
+	</div>
 
-    @Scripts.Render("~/bundles/jquery")
-    @Scripts.Render("~/bundles/bootstrap")
-    @RenderSection("scripts", required: false)
+	@Scripts.Render("~/bundles/jquery")
+	@RenderSection("scripts", required: false)
 </body>
 </html>

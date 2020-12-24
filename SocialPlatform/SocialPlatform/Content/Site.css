@@ -1,9 +1,6 @@
 ﻿body {
-    padding-top: 50px;
-    padding-bottom: 20px;
 }
 
-/* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
@@ -22,3 +19,10 @@ select,
 textarea {
     max-width: 280px;
 }
+
+/* Added by us below */
+
+.demo-layout-waterfall .mdl-layout__header-row .mdl-navigation__link:last-of-type {
+    padding-right: 0;
+}
+
