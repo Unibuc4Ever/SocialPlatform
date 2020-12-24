@@ -57,7 +57,7 @@ namespace SocialPlatform.Controllers
 
                     TempData["message"] = "Postul a fost adaugat!";
 
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Show", new { id = post.PostId });
                 }
             }
             catch (Exception e) {
@@ -114,7 +114,7 @@ namespace SocialPlatform.Controllers
 
                     db.SaveChanges();
                     TempData["message"] = "Articolul a fost modificat!";
-                    return RedirectToAction("Index");
+                    return RedirectToAction("Show", new { id = new_post.PostId });
                 }
                 else
                     return View(new_post);

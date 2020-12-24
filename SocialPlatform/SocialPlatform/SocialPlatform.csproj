@@ -261,6 +261,7 @@
     <Content Include="Views\Group\New.cshtml" />
     <Content Include="Views\Group\Show.cshtml" />
     <Content Include="Views\Group\Edit.cshtml" />
+    <Content Include="Views\Group\Explore.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
