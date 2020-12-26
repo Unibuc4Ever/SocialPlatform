@@ -22,7 +22,56 @@ textarea {
 
 /* Added by us below */
 
+/* For cards representing posts */
 .demo-layout-waterfall .mdl-layout__header-row .mdl-navigation__link:last-of-type {
     padding-right: 0;
 }
 
+.demo-card-wide.mdl-card {
+    width: 512px;
+}
+
+.demo-card-wide > .mdl-card__title {
+    color: #fff;
+    height: 176px;
+    background: url("/Content/Images/nature.jpg") center / cover;
+}
+
+.demo-card-wide > .mdl-card__menu {
+    color: #fff;
+}
+
+/* For cards representing groups */
+.demo-card-event.mdl-card {
+    width: 256px;
+    height: 256px;
+    background: #3E4EB8;
+}
+
+.demo-card-event > .mdl-card__actions {
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.demo-card-event > .mdl-card__title {
+    align-items: flex-start;
+}
+
+    .demo-card-event > .mdl-card__title > h4 {
+        margin-top: 0;
+    }
+
+.demo-card-event > .mdl-card__actions {
+    display: flex;
+    box-sizing: border-box;
+    align-items: center;
+}
+
+.demo-card-event > .mdl-card__actions > .material-icons {
+    padding-right: 10px;
+}
+
+.demo-card-event > .mdl-card__title,
+.demo-card-event > .mdl-card__actions,
+.demo-card-event > .mdl-card__actions > .mdl-button {
+    color: #fff;
+}

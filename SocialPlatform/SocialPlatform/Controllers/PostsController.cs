@@ -12,6 +12,12 @@ namespace SocialPlatform.Controllers
 {
     public class PostsController : Controller
     {
+        // Returns the list of posts visible which are:
+        // 1. Made by me
+        // 2. Made by a friend
+        // 3. Posted on my wall
+        // 4. Posted on a friend's wall
+        // 5. Posted in a group I am part of
         // GET: Post
         [Authorize]
         public ActionResult Index()
@@ -34,6 +40,8 @@ namespace SocialPlatform.Controllers
             return View(posts.ToList());
         }
 
+        // Returns all the posts
+        // TODO: Return only public posts.
         [Authorize]
         public ActionResult Explore()
         {
