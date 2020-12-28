@@ -9,10 +9,18 @@ namespace SocialPlatform.Controllers
 {
     public class SearchController : Controller
     {
+        public ActionResult Index(string query)
+        {
+            var db = new ApplicationDbContext();
+            
+
+            return View();
+        }
+
         // GET: Search
         // Search the word id.
         // If id is null, then redirect to default
-        public ActionResult Index(string query)
+        public ActionResult Old (string query)
         {
             var db = new ApplicationDbContext();
             if (query == null)
@@ -44,8 +52,8 @@ namespace SocialPlatform.Controllers
         public ActionResult PagedGroups(string query, int cnt, int lastWallID)
         {
             var db = new ApplicationDbContext();
-            db.Configuration.LazyLoadingEnabled = false;
-            db.Configuration.ProxyCreationEnabled = false;
+            //db.Configuration.LazyLoadingEnabled = false;
+            //db.Configuration.ProxyCreationEnabled = false;
 
             var groups = db.Groups.Where(group =>
                 group.Name.Contains(query)).ToList();
@@ -59,9 +67,26 @@ namespace SocialPlatform.Controllers
             var index = groups.FindIndex(gr => gr.WallId == lastWallID) + 1;
             cnt = Math.Min(cnt, groups.Count() - index);
 
+            var selectedGroups = groups.GetRange(index, cnt);
+
+            int nextWallID = -1;
+            if (selectedGroups.Count() > 0)
+                nextWallID = selectedGroups.Last().WallId;
+
+            var transformedGroups = new List<dynamic>();
+            selectedGroups.ForEach(delegate (Group gr) {
+                transformedGroups.Add( new {
+                    Name = gr.Name,
+                    GroupID = gr.GroupId,
+                    WallID = gr.WallId,
+                    MemberCount = gr.Members.Count()
+                });
+            });
+
             return Json(
                 new { 
-                    groups = groups.GetRange(index, cnt) 
+                    groups = transformedGroups,
+                    lastWallID = nextWallID
                 }, 
                 JsonRequestBehavior.AllowGet
             );
