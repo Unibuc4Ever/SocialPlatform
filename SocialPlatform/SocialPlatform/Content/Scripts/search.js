@@ -22,6 +22,7 @@ function updateNextGroupsURL(groups_resp) {
 function createGroupElement(groupInfo) {
     var element = document.createElement('div');
     element.className = 'demo-card-event mdl-card mdl-shadow--2dp';
+    element.setAttribute('style', 'margin-bottom: 1em');
     htmlText = `
         <div class="mdl-card__title mdl-card--expand">
         <h4>
