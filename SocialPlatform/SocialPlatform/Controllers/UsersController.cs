@@ -123,7 +123,7 @@ namespace SocialPlatform.Controllers
             return View(userManager.FindById(User.Identity.GetUserId()));
         }
 
-        [HttpPut]
+        [AcceptVerbs(HttpVerbs.Put | HttpVerbs.Post)]
         [Authorize]
         public ActionResult AcceptFriendRequest(string otherID)
         {
@@ -146,7 +146,7 @@ namespace SocialPlatform.Controllers
             return RedirectToAction("ReceivedFriendRequests");
         }
 
-        [HttpPut]
+        [AcceptVerbs(HttpVerbs.Put | HttpVerbs.Post)]
         [Authorize]
         public ActionResult DeclineFriendRequest(string otherID)
         {
@@ -167,7 +167,7 @@ namespace SocialPlatform.Controllers
             return RedirectToAction("ReceivedFriendRequests");
         }
 
-        [HttpPut]
+        [AcceptVerbs(HttpVerbs.Put | HttpVerbs.Post)]
         [Authorize]
         public ActionResult CancelFriendRequest(string otherID)
         {
@@ -188,7 +188,7 @@ namespace SocialPlatform.Controllers
             return RedirectToAction("SentFriendRequests");
         }
 
-        [HttpPut]
+        [AcceptVerbs(HttpVerbs.Put | HttpVerbs.Post)]
         [Authorize]
         public ActionResult Unfriend(string otherID)
         {

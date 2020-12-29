@@ -6,16 +6,18 @@
 <br />
 
 <div class="container">
-    <div class="panel panel-default container-item">
-        @{
-            ViewBag.ShowViewPostButton = true;
-            @Html.Partial("ShowPost", Model);
-            ViewBag.ShowViewPostButton = false;
-        }
-    </div>
+    @if (Model != null)
+    {
+        <div class="panel panel-default container-item">
+            @{
+                ViewBag.ShowViewPostButton = true;
+                @Html.Partial("ShowPost", Model);
+                ViewBag.ShowViewPostButton = false;
+            }
+        </div>
+    }
 </div>
 
-<script src="https://unpkg.com/infinite-scroll@3/dist/infinite-scroll.pkgd.js"></script>
 <script>
     $('.container').infiniteScroll({
         path: function () {

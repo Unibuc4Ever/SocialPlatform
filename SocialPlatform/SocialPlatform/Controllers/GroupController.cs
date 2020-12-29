@@ -3,6 +3,7 @@ using SocialPlatform.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -12,21 +13,55 @@ namespace SocialPlatform.Controllers
     {
         // GET: Group
         [Authorize]
-        public ActionResult Index()
+        public ActionResult Index(int? frommaybe)
         {
             ApplicationDbContext db = new ApplicationDbContext();
             ApplicationUser user = db.Users.Find(User.Identity.GetUserId());
+            int from = frommaybe ?? 0;
 
-            return View(user.Groups);
+            try {
+                // TODO: order
+                var groups = user.Groups.ToList();
+
+                if (from < 0 || from > groups.Count())
+                    throw new Exception();
+
+                Group group_ret = null;
+                if (from != 0)
+                    group_ret = groups.ElementAt(from - 1);
+
+                return View(group_ret);
+            }
+            catch (Exception e)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NoContent);
+            }
         }
-
         // GET: Group
         [Authorize]
-        public ActionResult Explore()
+        public ActionResult Explore(int? frommaybe)
         {
             ApplicationDbContext db = new ApplicationDbContext();
+            int from = frommaybe ?? 0;
+            
+            try
+            {
+                // TODO: order
+                var groups = db.Groups.ToList();
 
-            return View(db.Groups);
+                if (from < 0 || from > groups.Count())
+                    throw new Exception();
+
+                Group group_ret = null;
+                if (from != 0)
+                    group_ret = groups.ElementAt(from - 1);
+
+                return View(group_ret);
+            }
+            catch (Exception e)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NoContent);
+            }
         }
 
         [Authorize]
@@ -89,7 +124,7 @@ namespace SocialPlatform.Controllers
             catch (Exception)
             {
                 TempData["message"] = "Group doesn't exist, or insuficient rights!";
-                return Index();
+                return Index(0);
             }
         }
 
@@ -142,7 +177,7 @@ namespace SocialPlatform.Controllers
             catch(Exception)
             {
                 TempData["message"] = "Group doesn't exist, or insuficient rights!";
-                return Index();    
+                return Index(0);    
             }
         }
 

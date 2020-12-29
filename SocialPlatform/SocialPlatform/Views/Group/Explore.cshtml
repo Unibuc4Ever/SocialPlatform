@@ -1,61 +1,61 @@
 ﻿@using SocialPlatform.Models
 @using System.Data.Entity
 @using Microsoft.AspNet.Identity
-@model DbSet<Group>
+@model Group
 
 @{
     ViewBag.Title = "Index";
     var db = new ApplicationDbContext();
     var user = db.Users.Find(User.Identity.GetUserId());
+    var group = Model;
 }
 
-<h1>@ViewBag.Message</h1>
-
-<h2>All Groups</h2>
+<h2>Explore Groups</h2>
 
 <a class="btn btn-primary" href="/Groups/New">Create new group</a>
 <br />
 <br />
 
-@foreach (var group in Model)
-{
-    <div class="panel panel-default">
-
-        <h3>Group name: @group.Name</h3>
-        <h4>User count: @group.Members.Count()</h4>
-        <div class="panel-footer">
-            @*<a class=" btn btn-sm btn btn-success"
-               href="/Groups/Show/@group.GroupId">
-                View Group
-            </a>*@
-            <button onclick="window.location.href='/Groups/Show/@group.GroupId'"
-                    type="submit"
-                    class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
-                View
-            </button>
-            @if (!(group.UserId == user.Id) && group.Members.Count(mem => mem.Id == user.Id) > 0)
-            {
-                <form action="/Group/Leave/@group.GroupId" method="post">
-                    @Html.HttpMethodOverride(HttpVerbs.Patch)
-                    <button type="submit"
-                            class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
-                        Leave
-                    </button>
-                </form>
-            }
-            else if (group.Members.Count(mem => mem.Id == user.Id) == 0)
-            {
-                <form action="/Group/Join/@group.GroupId" method="post">
-                    @Html.HttpMethodOverride(HttpVerbs.Patch)
-                    <button type="submit"
-                            class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
-                        Join
-                    </button>
-                </form>
-            }
+<div class="container">
+    @if (group != null)
+    {
+        <div class="panel panel-default container-item">
+            <h3>Group name: @group.Name</h3>
+            <h4>User count: @group.Members.Count()</h4>
+            <div class="panel-footer">
+                @*<a class=" btn btn-sm btn btn-success"
+                       href="/Groups/Show/@group.GroupId">
+                        View Group
+                    </a>*@
+                <button onclick="window.location.href='/Groups/Show/@group.GroupId'"
+                        type="submit"
+                        class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+                    View
+                </button>
+                @if (!(group.UserId == user.Id) && group.Members.Count(mem => mem.Id == user.Id) > 0)
+                {
+                    <form action="/Group/Leave/@group.GroupId" method="post">
+                        @Html.HttpMethodOverride(HttpVerbs.Patch)
+                        <button type="submit"
+                                class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+                            Leave
+                        </button>
+                    </form>
+                }
+                else if (group.Members.Count(mem => mem.Id == user.Id) == 0)
+                {
+                    <form action="/Group/Join/@group.GroupId" method="post">
+                        @Html.HttpMethodOverride(HttpVerbs.Patch)
+                        <button type="submit"
+                                class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+                            Join
+                        </button>
+                    </form>
+                }
+            </div>
         </div>
-    </div>
-}
+    }
+</div>
 
 <div id="snack-group-explore" class="mdl-js-snackbar mdl-snackbar">
     <div class="mdl-snackbar__text">@TempData["status"]</div>
@@ -63,13 +63,28 @@
 </div>
 
 <script>
-function showExploreToast() {
-    var snackContainer = document.querySelector('#snack-group-explore');
-    snackContainer.MaterialSnackbar.showSnackbar();
-}
+    function showExploreToast() {
+        var snackContainer = document.querySelector('#snack-group-explore');
+        snackContainer.MaterialSnackbar.showSnackbar();
+    }
 
-document.addEventListener("DOMContentLoaded", function (event) {
-    showExploreToast();
-});
+    document.addEventListener("DOMContentLoaded", function (event) {
+        showExploreToast();
+    });
 </script>
 
+<script src="https://unpkg.com/infinite-scroll@3/dist/infinite-scroll.pkgd.js"></script>
+<script>
+    $('.container').infiniteScroll({
+        path: function () {
+            var page = this.loadCount + 1
+            return '/Group/Explore?frommaybe=' + page;
+        },
+        append: '.container-item',
+        status: '.page-load-status',
+        prefill: true,
+        debug: true,
+        scrollThreshold: 2000,
+        elementScroll: '.mdl-layout__content',
+    });
+</script>

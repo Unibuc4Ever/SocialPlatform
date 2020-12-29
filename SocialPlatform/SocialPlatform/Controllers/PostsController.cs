@@ -42,10 +42,14 @@ namespace SocialPlatform.Controllers
                     my_groups.Where(gr => gr.WallId == post.WallId).Count() > 0 ||
                     my_friends.Where(fr => fr.WallId == post.WallId).Count() > 0);
 
-                if (from < 0 || from >= posts.Count())
+                if (from < 0 || from > posts.Count())
                     throw new Exception();
 
-                return View(posts.ElementAt(from));
+                Post post_ret = null;
+                if (from != 0)
+                    post_ret = posts.ElementAt(from - 1);
+
+                return View(post_ret);
             }
             catch(Exception e)
             {
@@ -67,10 +71,14 @@ namespace SocialPlatform.Controllers
                 // trebuie sa returnam posturile publice
                 var posts = db.Posts.ToList();
 
-                if (from < 0 || from >= posts.Count())
+                if (from < 0 || from > posts.Count())
                     throw new Exception();
 
-                return View(posts.ElementAt(from));
+                Post post_ret = null;
+                if (from != 0)
+                    post_ret = posts.ElementAt(from - 1);
+
+                return View(post_ret);
             }
             catch (Exception e)
             {
