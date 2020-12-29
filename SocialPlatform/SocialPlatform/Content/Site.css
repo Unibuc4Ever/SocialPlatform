@@ -164,4 +164,7 @@ textarea {
 
 .comment-list .comment-post {
     margin-top: 6px;
+.btn-edit {
+    background-color: darkgreen;
+    color: white;
 }

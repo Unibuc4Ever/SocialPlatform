@@ -14,13 +14,43 @@
 
 @if (Model.User.Id == User.Identity.GetUserId())
 {
-	<a class="btn btn-sm btn-success" href="/Groups/Edit/@Model.GroupId">Editaza</a>
-	<div style="display: inline-block; float : left">
-		<form method="post" action="/Groups/Delete/@Model.GroupId">
-			@Html.HttpMethodOverride(HttpVerbs.Delete)
-			<button class="btn btn-sm btn-danger" type="submit">Sterge</button>
-		</form>
-	</div>
+    <div style="display: inline-block; float : left">
+        <form method="post" action="/Groups/Delete/@Model.GroupId">
+            @Html.HttpMethodOverride(HttpVerbs.Delete)
+            <button class="btn btn-sm btn-danger" type="submit">Sterge</button>
+        </form>
+    </div>
+}
+
+@if (Model.User.Id == User.Identity.GetUserId())
+{
+    <form action="/Group/Edit/@Model.GroupId" method="post">
+        @Html.HttpMethodOverride(HttpVerbs.Patch)
+        <button type="submit"
+                class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+            Editeaza
+        </button>
+    </form>
+}
+else if (Model.Members.Count(mem => mem.Id == User.Identity.GetUserId()) > 0)
+{
+    <form action="/Group/Leave/@Model.GroupId" method="post">
+        @Html.HttpMethodOverride(HttpVerbs.Patch)
+        <button type="submit"
+                class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+            Leave
+        </button>
+    </form>
+}
+else
+{
+    <form action="/Group/Join/@Model.GroupId" method="post">
+        @Html.HttpMethodOverride(HttpVerbs.Patch)
+        <button type="submit"
+                class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+            Join
+        </button>
+    </form>
 }
 
 <hr />
@@ -29,26 +59,26 @@
 
 <h2>Members:</h2>
 <ul>
-	@foreach (var user in Model.Members)
-	{
-		<li>@user.FirstName @user.LastName</li>
-	}
+    @foreach (var user in Model.Members)
+    {
+        <li>@user.FirstName @user.LastName</li>
+    }
 </ul>
 
 <h2>Posts:</h2>
 @foreach (var post in Model.Wall.Posts)
 {
-	@Html.Partial("ShowPost", post)
-	<a class="btn btn-sm btn-success" href="/Posts/Show/@post.PostId">View Post</a>
-	if (post.User.Id == User.Identity.GetUserId())
-	{
-		<a class="btn btn-sm btn-success" href="/Posts/Edit/@post.PostId">Editaza</a>
-		<div style="display: inline-block; float : left">
-			<form method="post" action="/Posts/Delete/@post.PostId">
-				@Html.HttpMethodOverride(HttpVerbs.Delete)
-				<button class="btn btn-sm btn-danger" type="submit">Sterge</button>
-			</form>
-		</div>
-	}
-	<hr />
+    @Html.Partial("ShowPost", post)
+    <a class="btn btn-sm btn-success" href="/Posts/Show/@post.PostId">View Post</a>
+    if (post.User.Id == User.Identity.GetUserId())
+    {
+        <a class="btn btn-sm btn-success" href="/Posts/Edit/@post.PostId">Editaza</a>
+        <div style="display: inline-block; float : left">
+            <form method="post" action="/Posts/Delete/@post.PostId">
+                @Html.HttpMethodOverride(HttpVerbs.Delete)
+                <button class="btn btn-sm btn-danger" type="submit">Sterge</button>
+            </form>
+        </div>
+    }
+    <hr />
 }

@@ -145,5 +145,67 @@ namespace SocialPlatform.Controllers
                 return Index();    
             }
         }
+
+        [Authorize]
+        [HttpPatch]
+        public ActionResult Leave(int Id)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            try
+            {
+                Group group = db.Groups.Find(Id);
+                string group_name = group.Name;
+                var user = db.Users.Find(User.Identity.GetUserId());
+                if (group.User == user)
+                {
+                    TempData["status"] = "Esti owner-ul grupului, nu poti iesi din propriul grup";
+                    return RedirectToAction("Index");
+                }
+                if (!group.Members.Remove(user))
+                {
+                    TempData["status"] = "Nu faci parte din grupul " + group_name;
+                    return RedirectToAction("Index");
+                }
+
+                db.SaveChanges();
+                TempData["status"] = "Ai iesit din grupul " + group_name;
+                return RedirectToAction("Index");
+            } catch(Exception e)
+            {
+                Console.WriteLine(e.Message);
+                TempData["status"] = "Grup inexistent sau alta eroare";
+                return RedirectToAction("Index");
+            }
+        }
+
+        [Authorize]
+        [HttpPatch]
+        public ActionResult Join(int Id)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            try
+            {
+                Group group = db.Groups.Find(Id);
+                string group_name = group.Name;
+                var user = db.Users.Find(User.Identity.GetUserId());
+                if (group.Members.Contains(user))
+                {
+                    TempData["status"] = "Deja faci parte din grupul " + group_name;
+                    return RedirectToAction("Index");
+                }
+                group.Members.Add(user);
+                db.SaveChanges();
+
+                TempData["status"] = "Ai iesit din grupul " + group_name;
+                return RedirectToAction("Index");
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e.Message);
+                TempData["status"] = "Nu faci parte din grup sau grup inexistent";
+                return RedirectToAction("Index");
+            }
+        }
+
     }
 }
