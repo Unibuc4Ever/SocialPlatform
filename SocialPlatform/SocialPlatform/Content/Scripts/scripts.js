@@ -60,7 +60,8 @@ function sendFriendRequest(otherId) {
 		type: 'POST',
 		success: function () {
 			var el = document.getElementById('friend_request_button');
-			el.textContent('Cancel Friend Request');
+			el.textContent = 'Cancel Friend Request';
+			el.setAttribute("onclick", "cancelFriendRequest('" + otherId + "')");
 		},
 		error: function (jqXHR, exception) {
 			alert('Error message. Failed to send request!');
@@ -68,12 +69,14 @@ function sendFriendRequest(otherId) {
 	})
 }
 
-function cancelFriendRequest(otherId, el) {
+function cancelFriendRequest(otherId) {
 	$.ajax({
 		url: "/Users/FriendRequest/Cancel/" + otherId,
 		type: 'POST',
 		success: function () {
-			el.disabled = true;
+			var el = document.getElementById('friend_request_button');
+			el.textContent = 'Friend Request';
+			el.setAttribute("onclick", "sendFriendRequest('" + otherId + "')");
 		},
 		error: function (jqXHR, exception) {
 			alert('Error message. Failed to cancel request!');
@@ -81,12 +84,14 @@ function cancelFriendRequest(otherId, el) {
 	})
 }
 
-function acceptFriendRequest(otherId, el) {
+function acceptFriendRequest(otherId) {
 	$.ajax({
 		url: "/Users/FriendRequest/Accept/" + otherId,
 		type: "POST",
 		success: function () {
-			el.disabled = true;
+			var el = document.getElementById('friend_request_button');
+			el.textContent = 'Unfriend';
+			el.setAttribute("onclick", "unFriend('" + otherId + "')");
 		},
 		error: function (jqXHR, exception) {
 			alert('Error message. Failed to accept!');
@@ -94,12 +99,14 @@ function acceptFriendRequest(otherId, el) {
 	})
 }
 
-function unFriend(otherId, el) {
+function unFriend(otherId) {
 	$.ajax({
 		url: "/Users/Friends/Unfriend/" + otherId,
 		type: 'POST',
 		success: function () {
-			el.disabled = true;
+			var el = document.getElementById('friend_request_button');
+			el.textContent = 'Friend Request';
+			el.setAttribute("onclick", "sendFriendRequest('" + otherId + "')");
 		},
 		error: function (jqXHR, exception) {
 			alert('Error message. Failed to send unfriend request!');
