@@ -269,8 +269,9 @@
     <Content Include="Views\Shared\ShowComment.cshtml" />
     <Content Include="Views\Posts\Explore.cshtml" />
     <Content Include="Views\Users\Show.cshtml" />
-    <Content Include="Views\Search\Old.cshtml" />
-    <Content Include="Views\Search\Index.cshtml" />
+    <Content Include="Views\Search\Users.cshtml" />
+    <Content Include="Views\Search\Posts.cshtml" />
+    <Content Include="Views\Search\Groups.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
