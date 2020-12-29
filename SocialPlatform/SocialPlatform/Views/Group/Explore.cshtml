@@ -1,9 +1,12 @@
 ﻿@using SocialPlatform.Models
 @using System.Data.Entity
+@using Microsoft.AspNet.Identity
 @model DbSet<Group>
 
 @{
-	ViewBag.Title = "Index";
+    ViewBag.Title = "Index";
+    var db = new ApplicationDbContext();
+    var user = db.Users.Find(User.Identity.GetUserId());
 }
 
 <h1>@ViewBag.Message</h1>
@@ -16,14 +19,51 @@
 
 @foreach (var group in Model)
 {
-<div class="panel panel-default">
+    <div class="panel panel-default">
 
-	<h3>Group name: @group.Name</h3>
-	<h4>User count: @group.Members.Count()</h4>
-	<div class="panel-footer">
-		<a class=" btn btn-sm btn btn-success"
-		   href="/Groups/Show/@group.GroupId">View Group</a>
-	</div>
-</div>
+        <h3>Group name: @group.Name</h3>
+        <h4>User count: @group.Members.Count()</h4>
+        <div class="panel-footer">
+            <a class=" btn btn-sm btn btn-success"
+               href="/Groups/Show/@group.GroupId">View Group
+            </a>
+            @if (group.Members.Count(mem => mem.Id == user.Id) > 0)
+            {
+                <form action="/Group/Leave/@group.GroupId" method="post">
+                    @Html.HttpMethodOverride(HttpVerbs.Patch)
+                    <button type="submit"
+                            class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+                        Leave
+                    </button>
+                </form>
+            }
+            else
+            {
+                <form action="/Group/Join/@group.GroupId" method="post">
+                @Html.HttpMethodOverride(HttpVerbs.Patch)
+                <button type="submit"
+                        class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+                    Join
+                </button>
+                </form>
+            }
+            </div>
+    </div>
 }
+
+<div id="snack-group-explore" class="mdl-js-snackbar mdl-snackbar">
+    <div class="mdl-snackbar__text">@TempData["status"]</div>
+    <button class="mdl-snackbar__action" type="button"></button>
+</div>
+
+<script>
+function showExploreToast() {
+    var snackContainer = document.querySelector('#snack-group-explore');
+    snackContainer.MaterialSnackbar.showSnackbar();
+}
+
+document.addEventListener("DOMContentLoaded", function (event) {
+    showExploreToast();
+});
+</script>
 
