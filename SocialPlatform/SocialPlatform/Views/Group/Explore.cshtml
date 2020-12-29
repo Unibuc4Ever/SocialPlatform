@@ -24,10 +24,16 @@
         <h3>Group name: @group.Name</h3>
         <h4>User count: @group.Members.Count()</h4>
         <div class="panel-footer">
-            <a class=" btn btn-sm btn btn-success"
-               href="/Groups/Show/@group.GroupId">View Group
-            </a>
-            @if (group.Members.Count(mem => mem.Id == user.Id) > 0)
+            @*<a class=" btn btn-sm btn btn-success"
+               href="/Groups/Show/@group.GroupId">
+                View Group
+            </a>*@
+            <button onclick="window.location.href='/Groups/Show/@group.GroupId'"
+                    type="submit"
+                    class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+                View
+            </button>
+            @if (!(group.UserId == user.Id) && group.Members.Count(mem => mem.Id == user.Id) > 0)
             {
                 <form action="/Group/Leave/@group.GroupId" method="post">
                     @Html.HttpMethodOverride(HttpVerbs.Patch)
@@ -37,17 +43,17 @@
                     </button>
                 </form>
             }
-            else
+            else if (group.Members.Count(mem => mem.Id == user.Id) == 0)
             {
                 <form action="/Group/Join/@group.GroupId" method="post">
-                @Html.HttpMethodOverride(HttpVerbs.Patch)
-                <button type="submit"
-                        class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
-                    Join
-                </button>
+                    @Html.HttpMethodOverride(HttpVerbs.Patch)
+                    <button type="submit"
+                            class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
+                        Join
+                    </button>
                 </form>
             }
-            </div>
+        </div>
     </div>
 }
 

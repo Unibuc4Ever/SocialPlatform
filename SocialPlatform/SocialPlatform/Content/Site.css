@@ -75,3 +75,8 @@ textarea {
 .demo-card-event > .mdl-card__actions > .mdl-button {
     color: #fff;
 }
+
+.btn-edit {
+    background-color: darkgreen;
+    color: white;
+}
