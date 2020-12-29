@@ -59,7 +59,7 @@ namespace SocialPlatform.Controllers
                 group.Name.Contains(query)).ToList();
 
             groups.Sort(delegate (Group a, Group b) {
-                return (a.GroupId < b.GroupId) ? -1 : 1;
+                return (a.GroupId > b.GroupId) ? -1 : 1;
             });
 
             // If not found, returns -1, but we want to anyway not return the old
