@@ -33,13 +33,13 @@
 			if (Likes.Count() > 0)
 			{
 				<a onclick="javascript:sendUnLikeForm(@Likes.First().LikeId)" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" style="color: cornflowerblue; background-color: rgba(174, 242, 248, 20); border-radius:5px;">
-					@Model.Likes.Count() Likes
+					@Model.Likes.Count() <i class="material-icons" style="font-size: 16px">thumb_up</i>
 				</a>
 			}
 			else
 			{
-				<a onclick="javascript:sendLikeForm(@Model.PostId)" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" style="color: black">
-					@Model.Likes.Count() Likes
+				<a onclick="javascript:sendPostLikeForm(@Model.PostId)" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" style="color: black">
+					@Model.Likes.Count() <i class="material-icons" style="font-size: 16px">thumb_up</i>
 				</a>
 			}
 		}
