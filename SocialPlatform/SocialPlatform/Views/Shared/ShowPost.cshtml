@@ -1,65 +1,54 @@
 ﻿@model SocialPlatform.Models.Post
+@using Microsoft.AspNet.Identity
 @using SocialPlatform.Models;
 
 @{
-	var db = new ApplicationDbContext();
-	var userId = User.Identity.GetUserId();
+    var db = new ApplicationDbContext();
+    var userId = User.Identity.GetUserId();
 }
 
-@using Microsoft.AspNet.Identity
-@{
-	ViewBag.Title = "Show";
-}
-
-<div class="panel-heading"></div>
-<div class="panel-body">
-	Continut post: <strong>@Model.Content</strong>
-	<br />
-	<span class="label label-success">@Model.CreatedAt</span>
-	<br />
-	<p>Created by @Model.User.FirstName</p>
-</div>
+<br />
 
 <div class="demo-card-wide mdl-card mdl-shadow--2dp">
-	<div class="mdl-card__title">
-		<h2 class="mdl-card__title-text">@Model.Title</h2>
-	</div>
-	<div class="mdl-card__supporting-text">
-		@Model.Content
-	</div>
-	<div class="mdl-card__actions mdl-card--border" style="display: flex">
-		@{
-			var Likes = db.Likes.Where(l => (l.UserId == userId && l.PostId == Model.PostId));
-			if (Likes.Count() > 0)
-			{
-				<a onclick="javascript:sendUnLikeForm(@Likes.First().LikeId)" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" style="color: cornflowerblue; background-color: rgba(174, 242, 248, 20); border-radius:5px;">
-					@Model.Likes.Count() Likes
-				</a>
-			}
-			else
-			{
-				<a onclick="javascript:sendLikeForm(@Model.PostId)" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" style="color: black">
-					@Model.Likes.Count() Likes
-				</a>
-			}
-		}
-		@if (ViewBag.ShowViewPostButton == true)
-		{
-			<a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="/Posts/Show/@Model.PostId">View</a>
-		}
-		@if (Model.UserId == userId)
-		{
-			<a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="/Posts/Edit/@Model.PostId">Edit</a>
-			<form action="/Posts/Delete/@Model.PostId" method="post">
-				@Html.HttpMethodOverride(HttpVerbs.Delete)
-				<button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" type="submit">Delete</button>
-			</form>
-		}
-	</div>
-	<div class="mdl-card__menu">
-		<button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
-			<i class="material-icons">share</i>
-		</button>
-	</div>
+    <div class="mdl-card__title">
+        <h2 class="mdl-card__title-text">@Model.Title</h2>
+    </div>
+    <div class="mdl-card__supporting-text">
+        @Model.Content
+    </div>
+    <div class="mdl-card__actions mdl-card--border" style="display: flex">
+        @{
+            var Likes = db.Likes.Where(l => (l.UserId == userId && l.PostId == Model.PostId));
+            if (Likes.Count() > 0)
+            {
+                <a onclick="javascript:sendUnLikeForm(@Likes.First().LikeId)" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" style="color: cornflowerblue; background-color: rgba(174, 242, 248, 20); border-radius:5px;">
+                    @Model.Likes.Count() Likes
+                </a>
+            }
+            else
+            {
+                <a onclick="javascript:sendLikeForm(@Model.PostId)" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" style="color: black">
+                    @Model.Likes.Count() Likes
+                </a>
+            }
+        }
+        @if (ViewBag.ShowViewPostButton == true)
+        {
+            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="/Posts/Show/@Model.PostId">View</a>
+        }
+        @if (Model.UserId == userId)
+        {
+            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="/Posts/Edit/@Model.PostId">Edit</a>
+            <form action="/Posts/Delete/@Model.PostId" method="post">
+                @Html.HttpMethodOverride(HttpVerbs.Delete)
+                <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" type="submit">Delete</button>
+            </form>
+        }
+    </div>
+    <div class="mdl-card__menu">
+        <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
+            <i class="material-icons">share</i>
+        </button>
+    </div>
 </div>
 
