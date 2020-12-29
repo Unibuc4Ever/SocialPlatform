@@ -194,9 +194,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Scripts\explore.js" />
     <Content Include="Content\Scripts\scripts.js" />
-    <Content Include="Content\Scripts\search.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
