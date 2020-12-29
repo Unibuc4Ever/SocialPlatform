@@ -18,85 +18,91 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>@ViewBag.Title - My ASP.NET Application</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
 
-	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-	<link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
-	<link rel="stylesheet" href="~/Content/Site.css">
-	<script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
-	<script src="~/Content/Scripts/scripts.js"></script>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+    <link rel="stylesheet" href="~/Content/Site.css">
 
-	@Styles.Render("~/Content/css")
-	@Scripts.Render("~/bundles/modernizr")
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    @*@Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")*@
+
 </head>
 <body>
-	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer
             mdl-layout--fixed-header">
-		<header class="mdl-layout__header">
-			<div class="mdl-layout__header-row">
-				<span class="mdl-layout-title">Social Platform</span>
-				<div class="mdl-layout-spacer"></div>
-				<div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
+        <header class="mdl-layout__header">
+            <div class="mdl-layout__header-row">
+                <span class="mdl-layout-title">Social Platform</span>
+                <div class="mdl-layout-spacer"></div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
                   mdl-textfield--floating-label mdl-textfield--align-right">
-					<label class="mdl-button mdl-js-button mdl-button--icon"
-						   for="fixed-header-drawer-exp">
-						<i class="material-icons">search</i>
-					</label>
-					<div class="mdl-textfield__expandable-holder">
-						<form action="/Search">
-							<input class="mdl-textfield__input" type="text" name="query"
-							   id="fixed-header-drawer-exp">
-							<input type="submit" style="display: none" />
-						</form>
-					</div>
-				</div>
-				<nav class="mdl-navigation">
-					@if (User.Identity.IsAuthenticated)
-					{
-						<a class="mdl-navigation__link" href="/Users">Home</a>
-						<a class="mdl-navigation__link" href="/Posts">News Feed</a>
-						<a class="mdl-navigation__link" href="/Posts/Explore">Explore</a>
-						<a class="mdl-navigation__link" href="/Posts/New/@wallid">Create Post</a>
-						<a class="mdl-navigation__link" href="javascript:document.getElementById('logoutForm').submit()">
-							Sign Out
-						</a>
-						<div style="display:none">@Html.Partial("_LoginPartial")</div>
-					}
-					else
-					{
-						<a class="mdl-navigation__link" href="/Account/Register">Register</a>
-						<a class="mdl-navigation__link" href="/Account/Login">Login</a>
-					}
-				</nav>
-			</div>
-		</header>
-		<div class="mdl-layout__drawer">
-			<span class="mdl-layout-title">Shortcuts</span>
-			<nav class="mdl-navigation">
-				<a class="mdl-navigation__link" href="/Users/Show/@userid">My Wall</a>
-				<a class="mdl-navigation__link" href="/Group">My Groups</a>
-				<a class="mdl-navigation__link" href="/Group/Explore">Find Groups</a>
-				<a class="mdl-navigation__link" href="/Users/Friends">My Friends</a>
-				<a class="mdl-navigation__link" href="/Users/ReceivedFriendRequests">Friend Requests</a>
-				<a class="mdl-navigation__link" href="/Users">Settings</a>
-			</nav>
-		</div>
-		<main class="mdl-layout__content">
-			<div class="page-content" style="padding-left: 100px">
-				@RenderBody()
-				<hr />
-				<footer>
-					<p>&copy; @DateTime.Now.Year - SocialPlatform</p>
-				</footer>
-			</div>
-		</main>
-	</div>
+                    <label class="mdl-button mdl-js-button mdl-button--icon"
+                           for="fixed-header-drawer-exp">
+                        <i class="material-icons">search</i>
+                    </label>
+                    <div class="mdl-textfield__expandable-holder">
+                        <form action="/Search">
+                            <input class="mdl-textfield__input" type="text" name="query"
+                                   id="fixed-header-drawer-exp">
+                            <input type="submit" style="display: none" />
+                        </form>
+                    </div>
+                </div>
+                <nav class="mdl-navigation">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <a class="mdl-navigation__link" href="/Users">Home</a>
+                        <a class="mdl-navigation__link" href="/Posts">News Feed</a>
+                        <a class="mdl-navigation__link" href="/Posts/Explore">Explore</a>
+                        <a class="mdl-navigation__link" href="/Posts/New/@wallid">Create Post</a>
+                        <a class="mdl-navigation__link" href="javascript:document.getElementById('logoutForm').submit()">
+                            Sign Out
+                        </a>
+                        <div style="display:none">@Html.Partial("_LoginPartial")</div>
+                    }
+                    else
+                    {
+                        <a class="mdl-navigation__link" href="/Account/Register">Register</a>
+                        <a class="mdl-navigation__link" href="/Account/Login">Login</a>
+                    }
+                </nav>
+            </div>
+        </header>
+        <div class="mdl-layout__drawer">
+            <span class="mdl-layout-title">Shortcuts</span>
+            <nav class="mdl-navigation">
+                <a class="mdl-navigation__link" href="/Users/Show/@userid">My Wall</a>
+                <a class="mdl-navigation__link" href="/Group">My Groups</a>
+                <a class="mdl-navigation__link" href="/Group/Explore">Find Groups</a>
+                <a class="mdl-navigation__link" href="/Users/Friends">My Friends</a>
+                <a class="mdl-navigation__link" href="/Users/ReceivedFriendRequests">Friend Requests</a>
+                <a class="mdl-navigation__link" href="/Users">Settings</a>
+            </nav>
+        </div>
+        <main class="mdl-layout__content">
+            <div class="page-content" style="padding-left: 100px">
+                @RenderBody()
+                <hr />
+                <footer>
+                    <p>&copy; @DateTime.Now.Year - SocialPlatform</p>
+                </footer>
+            </div>
+        </main>
+    </div>
 
 
-	@Scripts.Render("~/bundles/jquery")
-	@RenderSection("scripts", required: false)
+    @Scripts.Render("~/bundles/jquery")
+    @*@RenderSection("scripts", required: false)*@
+
+    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <script src="~/Content/Scripts/scripts.js"></script>
+    <script src="~/Content/Scripts/explore.js"></script>
 </body>
+
+
 </html>
