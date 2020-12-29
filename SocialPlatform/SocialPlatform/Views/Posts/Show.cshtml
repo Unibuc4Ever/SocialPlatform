@@ -1,131 +1,52 @@
 ﻿@model SocialPlatform.Models.Post
-@using SocialPlatform.Models;
-
-@{
-	var db = new ApplicationDbContext();
-	var userId = User.Identity.GetUserId();
-}
-
+@using SocialPlatform.Models
 @using Microsoft.AspNet.Identity
+
 @{
-	ViewBag.Title = "Show";
+    var db = new ApplicationDbContext();
+    var userId = User.Identity.GetUserId();
 }
 
 <br />
 <br />
 
 <div class="panel panel-default">
-	@Html.Partial("ShowPost", Model)
+    @Html.Partial("ShowPost", Model)
 </div>
 
-<style>
-	.demo-list-three {
-		width: 650px;
-	}
-</style>
-
-<ul class="demo-list-three mdl-list">
-	@foreach (var comm in Model.Comments)
-	{
-		@Html.Partial("ShowComment", comm);
-	}
-</ul>
-
+<form method="post" action="/Comments/New/@Model.PostId">
+    <label>Adauga un Comentariu</label>
+    <br />
+    <textarea class="form-control" name="Content"></textarea>
+    @Html.ValidationMessage("Content", "", new { @class = "text-danger" })
+    <br />
+    <button class="btn btn-success " type="submit">Adauga comentariu</button>
+</form>
 <hr />
 
-<form method="post" action="/Comments/New/@Model.PostId">
-	<label>Adauga un Comentariu</label>
-	<br />
-	<textarea class="form-control" name="Content"></textarea>
-	@Html.ValidationMessage("Content", "", new { @class = "text-danger" })
-	<br />
-	<button class="btn btn-success " type="submit">Adauga comentariu</button>
-</form>
+<div class="demo-list-three mdl-list container">
+    @if (ViewBag.CommentNr > 0)
+    {
+        int poz = ViewBag.CommentNr;
+        var comm = Model.Comments.ElementAt(poz - 1);
+        <div class="container-item">
+            @Html.Partial("ShowComment", comm)
+        </div>
+    }
+</div>
 
-
-<style>
-	/*font Awesome http://fontawesome.io*/
-	@@import url(//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css);
-	/*Comment List styles*/
-	.comment-list .row {
-		margin-bottom: 0px;
-	}
-
-	.comment-list .panel .panel-heading {
-		padding: 4px 15px;
-		position: absolute;
-		border: none;
-		/*Panel-heading border radius*/
-		border-top-right-radius: 0px;
-		top: 1px;
-	}
-
-		.comment-list .panel .panel-heading.right {
-			border-right-width: 0px;
-			/*Panel-heading border radius*/
-			border-top-left-radius: 0px;
-			right: 16px;
-		}
-
-		.comment-list .panel .panel-heading .panel-body {
-			padding-top: 6px;
-		}
-
-	.comment-list figcaption {
-		/*For wrapping text in thumbnail*/
-		word-wrap: break-word;
-	}
-	/* Portrait tablets and medium desktops */
-	@@media (min-width: 768px) {
-		.comment-list .arrow:after, .comment-list .arrow:before {
-			content: "";
-			position: absolute;
-			width: 0;
-			height: 0;
-			border-style: solid;
-			border-color: transparent;
-		}
-
-		.comment-list .panel.arrow.left:after, .comment-list .panel.arrow.left:before {
-			border-left: 0;
-		}
-		/*****Left Arrow*****/
-		/*Outline effect style*/
-		.comment-list .panel.arrow.left:before {
-			left: 0px;
-			top: 30px;
-			/*Use boarder color of panel*/
-			border-right-color: inherit;
-			border-width: 16px;
-		}
-		/*Background color effect*/
-		.comment-list .panel.arrow.left:after {
-			left: 1px;
-			top: 31px;
-			/*Change for different outline color*/
-			border-right-color: #FFFFFF;
-			border-width: 15px;
-		}
-		/*****Right Arrow*****/
-		/*Outline effect style*/
-		.comment-list .panel.arrow.right:before {
-			right: -16px;
-			top: 30px;
-			/*Use boarder color of panel*/
-			border-left-color: inherit;
-			border-width: 16px;
-		}
-		/*Background color effect*/
-		.comment-list .panel.arrow.right:after {
-			right: -14px;
-			top: 31px;
-			/*Change for different outline color*/
-			border-left-color: #FFFFFF;
-			border-width: 15px;
-		}
-	}
-
-	.comment-list .comment-post {
-		margin-top: 6px;
-	}
-</style>
+<script src="https://unpkg.com/infinite-scroll@3/dist/infinite-scroll.pkgd.js"></script>
+<script>
+    $('.container').infiniteScroll({
+        path: function () {
+            var page = this.loadCount + 1
+            return '/Posts/Show/@Model.PostId?frommaybe=' + page;
+        },
+        append: '.container-item',
+        status: '.page-load-status',
+        prefill: true,
+        debug: true,
+        scrollThreshold: 2000,
+        elementScroll: '.mdl-layout__content',
+    });
+</script>

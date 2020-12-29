@@ -4,7 +4,7 @@
 
 
 @{
-	ViewBag.Title = "Profile";
+    ViewBag.Title = "Profile";
 }
 
 <h1>@ViewBag.Message</h1>
@@ -13,14 +13,31 @@
 
 <p>User: @Model.FirstName @Model.LastName</p>
 
-@foreach (SocialPlatform.Models.Post post in Model.Posts)
-{
-	<div class="panel panel-default">
+<div class="container">
+    @if (ViewBag.PostNr > 0)
+    {
+        int poz = ViewBag.PostNr;
+        var post = Model.Posts.ElementAt(poz - 1);
+        ViewBag.ShowViewPostButton = true;
+        <div class="panel panel-default container-item">
+            @Html.Partial("ShowPost", post)
+        </div>
+        ViewBag.ShowViewPostButton = false;
+    }
+</div>
 
-		@{
-			ViewBag.ShowViewPostButton = true;
-			@Html.Partial("ShowPost", post);
-			ViewBag.ShowViewPostButton = false;
-		}
-	</div>
-}
+<script src="https://unpkg.com/infinite-scroll@3/dist/infinite-scroll.pkgd.js"></script>
+<script>
+    $('.container').infiniteScroll({
+        path: function () {
+            var page = this.loadCount + 1
+            return '/Users/Show/@Model.Id?frommaybe=' + page;
+        },
+        append: '.container-item',
+        status: '.page-load-status',
+        prefill: true,
+        debug: true,
+        scrollThreshold: 2000,
+        elementScroll: '.mdl-layout__content',
+    });
+</script>
