@@ -1,25 +1,32 @@
 ﻿@using SocialPlatform.Models
 @using System.Data.Entity
-@model ICollection<Post>
+@model Post
 
-
-@{
-	ViewBag.Title = "Index";
-}
-
-<h1>@ViewBag.Message</h1>
 <br />
 <br />
 
-@foreach (SocialPlatform.Models.Post post in Model)
-{
-	<div class="panel panel-default">
+<div class="container">
+    <div class="panel panel-default container-item">
+        @{
+            ViewBag.ShowViewPostButton = true;
+            @Html.Partial("ShowPost", Model);
+            ViewBag.ShowViewPostButton = false;
+        }
+    </div>
+</div>
 
-		@{
-			ViewBag.ShowViewPostButton = true;
-			@Html.Partial("ShowPost", post);
-			ViewBag.ShowViewPostButton = false;
-		}
-	</div>
-}
-
+<script src="https://unpkg.com/infinite-scroll@3/dist/infinite-scroll.pkgd.js"></script>
+<script>
+    $('.container').infiniteScroll({
+        path: function () {
+            var page = this.loadCount + 1
+            return '/Posts/Index?frommaybe=' + page;
+        },
+        append: '.container-item',
+        status: '.page-load-status',
+        prefill: true,
+        debug: true,
+        scrollThreshold: 2000,
+        elementScroll: '.mdl-layout__content',
+    });
+</script>

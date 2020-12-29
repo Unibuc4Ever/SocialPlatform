@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Net;
 
 namespace SocialPlatform.Controllers
 {
@@ -20,36 +21,61 @@ namespace SocialPlatform.Controllers
         // 5. Posted in a group I am part of
         // GET: Post
         [Authorize]
-        public ActionResult Index()
+        public ActionResult Index(int? frommaybe)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            // trebuie sa returneam numai posturile
-            // din baza de date care sunt pe un wall
-            // la care avem acces (suntem prieteni).
-            var user = db.Users.Find(User.Identity.GetUserId());
-            var my_groups = user.Groups.ToList();
-            var my_friends = user.Friends.ToList();
+            int from = frommaybe ?? 0;
 
-            var posts = db.Posts.ToList().Where(post =>
-                post.WallId == user.WallId ||
-                post.UserId == user.Id ||
-                my_friends.Any(fr => fr.Id == post.UserId) ||
-                my_groups.Where(gr => gr.WallId == post.WallId).Count() > 0 ||
-                my_friends.Where(fr => fr.WallId == post.WallId).Count() > 0);
+            try
+            {
+                // trebuie sa returneam numai posturile
+                // din baza de date care sunt pe un wall
+                // la care avem acces (suntem prieteni).
+                var user = db.Users.Find(User.Identity.GetUserId());
+                var my_groups = user.Groups.ToList();
+                var my_friends = user.Friends.ToList();
 
-            return View(posts.ToList());
+                var posts = db.Posts.ToList().Where(post =>
+                    post.WallId == user.WallId ||
+                    post.UserId == user.Id ||
+                    my_friends.Any(fr => fr.Id == post.UserId) ||
+                    my_groups.Where(gr => gr.WallId == post.WallId).Count() > 0 ||
+                    my_friends.Where(fr => fr.WallId == post.WallId).Count() > 0);
+
+                if (from < 0 || from >= posts.Count())
+                    throw new Exception();
+
+                return View(posts.ElementAt(from));
+            }
+            catch(Exception e)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NoContent);
+            }
         }
 
         // Returns all the posts
         // TODO: Return only public posts.
         [Authorize]
-        public ActionResult Explore()
+        public ActionResult Explore(int? frommaybe)
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            // trebuie sa returneam numai posturile
-            // din baza de date care sunt pe un wall
-            // la care avem acces (suntem prieteni).
-            return View(db.Posts.ToList());
+            int from = frommaybe ?? 0;
+
+            try
+            {
+                // TODO:
+                // trebuie sa returnam posturile publice
+                var posts = db.Posts.ToList();
+
+                if (from < 0 || from >= posts.Count())
+                    throw new Exception();
+
+                return View(posts.ElementAt(from));
+            }
+            catch (Exception e)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NoContent);
+            }
         }
 
         // HttpGet
@@ -94,17 +120,26 @@ namespace SocialPlatform.Controllers
             return View(post);
         }
 
+        // Frommaybe is used for the comments
+        // It indicated the nr of the comment (0 -> none, 1 -> first, 2 -> second etc)
         [Authorize]
-        public ActionResult Show(int id)
+        public ActionResult Show(int id, int? frommaybe)
         {
             var db = new ApplicationDbContext();
+            int from = frommaybe ?? 0;
+            
             try
             {
                 Post post = db.Posts.Find(id);
+                
+                if (post.Comments.Count() < from || from < 0)
+                    throw new Exception();
+
+                ViewBag.CommentNr = from;
                 return View(post);
             } catch (Exception)
-			{
-                throw new HttpException(404, "Post does not exist!");
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.NoContent);
             } 
         }
 

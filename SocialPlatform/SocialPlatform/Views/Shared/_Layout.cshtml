@@ -27,10 +27,15 @@
     <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" href="~/Content/Site.css">
 
+    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <script src="~/Content/Scripts/scripts.js"></script>
+    <script src="~/Content/Scripts/search.js"></script>
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    @*@Styles.Render("~/Content/css")
-        @Scripts.Render("~/bundles/modernizr")*@
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
 
 </head>
 <body>
@@ -96,8 +101,6 @@
         </main>
     </div>
 
-
-    @Scripts.Render("~/bundles/jquery")
     @RenderSection("scripts", required: false)
 
     <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
