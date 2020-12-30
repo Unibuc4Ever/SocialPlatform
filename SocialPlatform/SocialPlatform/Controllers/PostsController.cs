@@ -201,7 +201,7 @@ namespace SocialPlatform.Controllers
             ApplicationDbContext db = new ApplicationDbContext();
             try {
                 Post post = db.Posts.Find(id);
-                if (post.User.Id != User.Identity.GetUserId())
+                if (post.User.Id != User.Identity.GetUserId() && !User.IsInRole("Administrator"))
                     throw new Exception();
                 db.Likes.RemoveRange(db.Likes.Where(like => like.PostId == post.PostId ||
                                                     (like.Comment != null && like.Comment.PostId == post.PostId)));
