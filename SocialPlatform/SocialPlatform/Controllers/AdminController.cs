@@ -22,17 +22,40 @@ namespace SocialPlatform.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult ChangeRole(string user_id, string new_role)
         {
-            var db = new ApplicationDbContext();
-            UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>
-                (new UserStore<ApplicationUser>(db));
-            var user = db.Users.Find(user_id);
+            try
+            {
+                var db = new ApplicationDbContext();
+                UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>
+                    (new UserStore<ApplicationUser>(db));
+
+                if (!new string[3] { "Administrator", "Editor", "User" }.Contains(new_role))
+                    throw new Exception();
+
+                userManager.RemoveFromRoles(user_id, new string[] { userManager.GetRoles(user_id).First() });
+                userManager.AddToRole(user_id, new_role);
+            }
+            catch(Exception e) { }
+
             string user_wall_route = "/Users/Show/" + user_id;
+            return Redirect(user_wall_route);
+        }
 
-            if (!new string[3] { "Administrator", "Editor", "User" }.Contains(new_role))
-                return Redirect(user_wall_route);
+        [Authorize(Roles = "Administrator")]
+        public ActionResult DeleteUser(string id)
+        {
+            try
+            {
+                // TODO: Fix foreign keys
+                var db = new ApplicationDbContext();
+                UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>
+                    (new UserStore<ApplicationUser>(db));
 
-            userManager.RemoveFromRoles(user_id, new string[] { userManager.GetRoles(user_id).First() });
-            userManager.AddToRole(user_id, new_role);
+                db.Users.Remove(db.Users.Find(id));
+                db.SaveChanges();
+            }
+            catch (Exception e) { }
+
+            string user_wall_route = "/";
             return Redirect(user_wall_route);
         }
 
