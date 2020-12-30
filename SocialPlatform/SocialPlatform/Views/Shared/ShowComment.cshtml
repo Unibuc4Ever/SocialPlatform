@@ -21,7 +21,7 @@
         }
     </div>
     <div class="mdl-list__item-secondary-content">
-        @if (Model.UserId == User.Identity.GetUserId())
+        @if (Model.UserId == User.Identity.GetUserId() || User.IsInRole("Administrator") || User.IsInRole("Editor"))
         {
             <form action="/Comments/Delete/@Model.CommentId" method="post">
                 @Html.HttpMethodOverride(HttpVerbs.Delete)
