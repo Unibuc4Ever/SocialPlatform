@@ -43,17 +43,15 @@ namespace SocialPlatform.Controllers
         [Authorize(Roles = "Administrator")]
         public ActionResult DeleteUser(string id)
         {
+            var db = new ApplicationDbContext();
             try
             {
-                // TODO: Fix foreign keys
-                var db = new ApplicationDbContext();
-                UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>
-                    (new UserStore<ApplicationUser>(db));
-
-                db.Users.Remove(db.Users.Find(id));
-                db.SaveChanges();
+                SocialWorker worker = new SocialWorker();
+                worker.DeleteUser(id, ref db);
             }
-            catch (Exception e) { }
+            catch (Exception e) {
+                return Redirect("/Users/Show/" + id);
+            }
 
             string user_wall_route = "/";
             return Redirect(user_wall_route);
