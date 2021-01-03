@@ -23,7 +23,6 @@ namespace SocialPlatform.Models
             foreach (var comment in post.Comments.ToList())
                 DeleteComment(comment.CommentId, ref db);
 
-            foreach (var like in post.Likes)
                 db.Likes.Remove(like);
 
             db.Posts.Remove(post);
