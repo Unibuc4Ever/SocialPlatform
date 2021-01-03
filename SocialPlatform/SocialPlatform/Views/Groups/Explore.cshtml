@@ -34,7 +34,7 @@
                 </button>
                 @if (!(group.UserId == user.Id) && group.Members.Count(mem => mem.Id == user.Id) > 0)
                 {
-                    <form action="/Group/Leave/@group.GroupId" method="post">
+                    <form action="/Groups/Leave/@group.GroupId" method="post">
                         @Html.HttpMethodOverride(HttpVerbs.Patch)
                         <button type="submit"
                                 class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
@@ -44,7 +44,7 @@
                 }
                 else if (group.Members.Count(mem => mem.Id == user.Id) == 0)
                 {
-                    <form action="/Group/Join/@group.GroupId" method="post">
+                    <form action="/Groups/Join/@group.GroupId" method="post">
                         @Html.HttpMethodOverride(HttpVerbs.Patch)
                         <button type="submit"
                                 class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
@@ -78,7 +78,7 @@
     $('.container').infiniteScroll({
         path: function () {
             var page = this.loadCount + 1
-            return '/Group/Explore?frommaybe=' + page;
+            return '/Groups/Explore?frommaybe=' + page;
         },
         append: '.container-item',
         status: '.page-load-status',

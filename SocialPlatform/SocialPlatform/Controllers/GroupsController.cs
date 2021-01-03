@@ -9,7 +9,7 @@ using System.Web.Mvc;
 
 namespace SocialPlatform.Controllers
 {
-    public class GroupController : Controller
+    public class GroupsController : Controller
     {
         // GET: Group
         [Authorize]
@@ -169,16 +169,15 @@ namespace SocialPlatform.Controllers
                 if (group.UserId != user.Id && !User.IsInRole("Administrator"))
                     throw new Exception();
 
-                db.Walls.Remove(group.Wall);
-                db.Groups.Remove(group);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                SocialWorker worker = new SocialWorker();
+                worker.DeleteGroup(Id, ref db);
             }
-            catch(Exception)
+            catch(Exception e)
             {
                 TempData["message"] = "Group doesn't exist, or insuficient rights!";
                 return Index(0);    
             }
+            return RedirectToAction("Index");
         }
 
         [Authorize]

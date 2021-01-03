@@ -8,7 +8,7 @@
 
 <h2>Modifica Grup</h2>
 
-@using (Html.BeginForm(actionName: "Edit", controllerName: "Group"))
+@using (Html.BeginForm(actionName: "Edit", controllerName: "Groups"))
 {
 	@Html.HttpMethodOverride(HttpVerbs.Put)
 	@Html.ValidationSummary(false, "", new { @class = "text-danger" })
