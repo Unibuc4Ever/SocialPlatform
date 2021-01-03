@@ -64,9 +64,11 @@ namespace SocialPlatform.Models
 
     public class RegisterViewModel
     {
-        [Required(ErrorMessage = "Trebuie sa ai un First Name.")]
-        [StringLength(30, ErrorMessage = "First name prea lung, trebuie sa aiba sub 30 caractere.")]
+        [Required(ErrorMessage = "Please enter your first name!")]
+        [StringLength(30, ErrorMessage = "Your first name should have less than 30 characters!")]
         public string FirstName { get; set; }
+        [Required(ErrorMessage = "Please enter your last name!")]
+        [StringLength(30, ErrorMessage = "Your last name should have less than 30 characters!")]
         public string LastName { get; set; }
 
         [Required]
@@ -84,6 +86,8 @@ namespace SocialPlatform.Models
         [Display(Name = "Confirm password")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
+
+        public bool WallIsVisible { get; set; } = true;
     }
 
     public class ResetPasswordViewModel

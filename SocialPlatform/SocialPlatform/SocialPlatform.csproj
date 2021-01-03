@@ -263,7 +263,7 @@
     <Content Include="Views\Users\ReceivedFriendRequests.cshtml" />
     <Content Include="Views\Users\Friends.cshtml" />
     <Content Include="Views\Comments\Edit.cshtml" />
-    <Content Include="Views\Users\Index.cshtml" />
+    <Content Include="Views\Users\Settings.cshtml" />
     <Content Include="Views\Groups\Index.cshtml" />
     <Content Include="Views\Groups\New.cshtml" />
     <Content Include="Views\Groups\Show.cshtml" />
