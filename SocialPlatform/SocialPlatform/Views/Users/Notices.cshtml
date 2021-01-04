@@ -10,9 +10,9 @@
 <table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
     <thead>
         <tr>
-            <th>Nr</th>
-            <th class="mdl-data-table__header--sorted-descending">Date</th>
-            <th class="mdl-data-table__cell--non-numeric">Message</th>
+            <th style="text-align: center; min-width: 100px">Nr</th>
+            <th class="mdl-data-table__header--sorted-descending" style="text-align: center; min-width: 200px">Date</th>
+            <th class="mdl-data-table__cell--non-numeric" style="text-align: center; min-width: 500px">Message</th>
         </tr>
     </thead>
     <tbody class="container">
@@ -21,9 +21,9 @@
             int poz = ViewBag.NoticeNr;
             var message = Model.Notices.OrderByDescending(not => not.CreatedAt).ElementAt(poz - 1);
             <tr class="container-item">
-                <td>@(Model.Notices.Count() - poz + 1)</td>
-                <td>@message.CreatedAt</td>
-                <td class="mdl-data-table__cell--non-numeric">@message.Content</td>
+                <td style="text-align: center;">@(Model.Notices.Count() - poz + 1)</td>
+                <td style="text-align: center;">@message.CreatedAt</td>
+                <td style="text-align: center;" class="mdl-data-table__cell--non-numeric">@message.Content</td>
             </tr>
         }
     </tbody>
