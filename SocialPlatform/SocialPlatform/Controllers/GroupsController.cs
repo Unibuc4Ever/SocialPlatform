@@ -24,7 +24,7 @@ namespace SocialPlatform.Controllers
                 var groups = user.Groups.ToList();
 
                 if (from < 0 || from > groups.Count())
-                    throw new Exception();
+                    return new HttpStatusCodeResult(HttpStatusCode.NoContent);
 
                 Group group_ret = null;
                 if (from != 0)
@@ -50,7 +50,7 @@ namespace SocialPlatform.Controllers
                 var groups = db.Groups.ToList();
 
                 if (from < 0 || from > groups.Count())
-                    throw new Exception();
+                    return new HttpStatusCodeResult(HttpStatusCode.NoContent);
 
                 Group group_ret = null;
                 if (from != 0)

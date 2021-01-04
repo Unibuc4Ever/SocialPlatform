@@ -43,7 +43,7 @@ namespace SocialPlatform.Controllers
                     my_friends.Where(fr => fr.WallId == post.WallId).Count() > 0);
 
                 if (from < 0 || from > posts.Count())
-                    throw new Exception();
+                    return new HttpStatusCodeResult(HttpStatusCode.NoContent);
 
                 Post post_ret = null;
                 if (from != 0)
@@ -57,9 +57,8 @@ namespace SocialPlatform.Controllers
             }
         }
 
+        // No authorize => public for not logged in users.
         // Returns all the posts
-        // TODO: Return only public posts.
-        [Authorize]
         public ActionResult Explore(int? frommaybe)
         {
             ApplicationDbContext db = new ApplicationDbContext();
@@ -67,12 +66,25 @@ namespace SocialPlatform.Controllers
 
             try
             {
-                // TODO:
                 // trebuie sa returnam posturile publice
-                var posts = db.Posts.ToList();
+                var posts = db.Posts.Where(delegate (Post post) {
+                    var users = db.Users.Where(usr => usr.WallId == post.WallId);
+                    // Posted on a group -> free to access.
+                    if (users.Count() == 0)
+                        return true;
+                    // User detaining the wall it was posted on.
+                    var user = users.First();
+
+                    // we are friends
+                    if (user.Friends.Count(usr => usr.Id == User.Identity.GetUserId()) == 1)
+                        return true;
+
+                    // It is public
+                    return user.WallIsVisible;
+                }).ToList();
 
                 if (from < 0 || from > posts.Count())
-                    throw new Exception();
+                    return new HttpStatusCodeResult(HttpStatusCode.NoContent);
 
                 Post post_ret = null;
                 if (from != 0)
