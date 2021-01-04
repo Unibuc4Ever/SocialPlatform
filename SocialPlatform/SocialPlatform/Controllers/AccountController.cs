@@ -190,7 +190,7 @@ namespace SocialPlatform.Controllers
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                    return RedirectToAction("Index", "Users");
+                    return RedirectToAction("Explore", "Posts");
                 }
                 AddErrors(result);
             }
@@ -475,7 +475,7 @@ namespace SocialPlatform.Controllers
             {
                 return Redirect(returnUrl);
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Posts");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult
