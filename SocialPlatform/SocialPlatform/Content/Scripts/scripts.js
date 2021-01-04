@@ -1,4 +1,4 @@
-﻿function sendPostLikeForm(postId) {
+﻿function sendPostLikeForm(postId, el, cnt_likes) {
 	$.ajax({
 		url: "/Likes/New",
 		type: 'POST',
@@ -8,7 +8,9 @@
 			type: "like"
 		}),
 		success: function () {
-			location.reload();
+			var eln = document.getElementById(el);
+			eln.innerHTML = (cnt_likes + 1) + " <i class='material-icons btn-liked'>thumb_up</i>";
+			eln.setAttribute("onclick", `javascript: sendPostUnLikeForm(${postId}, '${el}', ${cnt_likes + 1})`);
 		},
 		error: function (jqXHR, exception) {
 			alert('Error message. Failed my Like');
@@ -16,7 +18,26 @@
 	});
 }
 
-function sendCommentLikeForm(commentId) {
+function sendPostUnLikeForm(postId, el, cnt_likes) {
+	$.ajax({
+		url: "/Likes/DeletePostLike",
+		type: 'POST',
+		contentType: 'application/json',
+		data: JSON.stringify({
+			PostId: postId
+		}),
+		success: function () {
+			var eln = document.getElementById(el);
+			eln.innerHTML = (cnt_likes - 1) + " <i class='material-icons btn-not-liked'>thumb_up</i>";
+			eln.setAttribute("onclick", `javascript: sendPostLikeForm(${postId}, '${el}', ${cnt_likes - 1})`);
+		},
+		error: function (jqXHR, exception) {
+			alert('Error message. Failed my Like');
+		}
+	});
+}
+
+function sendCommentLikeForm(commentId, el, cnt_likes) {
 	$.ajax({
 		url: "/Likes/New",
 		type: 'POST',
@@ -26,7 +47,9 @@ function sendCommentLikeForm(commentId) {
 			type: "like"
 		}),
 		success: function () {
-			location.reload();
+			var eln = document.getElementById(el);
+			eln.innerHTML = (cnt_likes + 1) + " <i class='material-icons btn-liked'>thumb_up</i>";
+			eln.setAttribute("onclick", `javascript: sendCommentUnLikeForm(${commentId}, '${el}', ${cnt_likes + 1})`);
 		},
 		error: function (jqXHR, exception) {
 			alert('Error message. Failed my Like');
@@ -34,22 +57,25 @@ function sendCommentLikeForm(commentId) {
 	});
 }
 
-function sendUnLikeForm(likeId) {
+function sendCommentUnLikeForm(commentId, el, cnt_likes) {
 	$.ajax({
-		url: "/Likes/Delete",
+		url: "/Likes/DeleteCommentLike",
 		type: 'POST',
 		contentType: 'application/json',
 		data: JSON.stringify({
-			LikeId: likeId
+			CommentId: commentId
 		}),
 		success: function () {
-			location.reload();
+			var eln = document.getElementById(el);
+			eln.innerHTML = (cnt_likes - 1) + " <i class='material-icons btn-not-liked'>thumb_up</i>";
+			eln.setAttribute("onclick", `javascript: sendCommentLikeForm(${commentId}, '${el}', ${cnt_likes - 1})`);
 		},
 		error: function (jqXHR, exception) {
 			alert('Error message. Failed my Like');
 		}
 	});
 }
+
 
 // Used for sending friend requests.
 // They require the buttons to have particular IDs.

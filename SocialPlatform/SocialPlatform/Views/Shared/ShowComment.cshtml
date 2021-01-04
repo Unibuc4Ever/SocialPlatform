@@ -35,21 +35,24 @@
             @{ var Likes = db.Likes.Where(l => (l.UserId == userId && l.CommentId == Model.CommentId)); }
             @if (userId == null)
             {
-                <a href="/Account/Login" class="like-link mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                <a href="/Account/Login" class="like-link mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+                    id="comment_like_@Model.CommentId">
                     @Model.Likes.Count() <i class="material-icons btn-not-liked">thumb_up</i>
                 </a>
             }
             else if (Likes.Count() > 0)
             {
-                <a onclick="javascript:sendUnLikeForm(@Likes.First().LikeId)"
-                   class="like-link mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                <a onclick="javascript:sendCommentUnLikeForm(@Model.CommentId, 'comment_like_@Model.CommentId', @Model.Likes.Count())"
+                    class="like-link mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+                    id="comment_like_@Model.CommentId">
                     @Model.Likes.Count() <i class="material-icons btn-liked">thumb_up</i>
                 </a>
             }
             else
             {
-                <a onclick="javascript:sendCommentLikeForm(@Model.CommentId)"
-                   class="like-link mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                <a onclick="javascript:sendCommentLikeForm(@Model.CommentId, 'comment_like_@Model.CommentId', @Model.Likes.Count())"
+                    class="like-link mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+                    id="comment_like_@Model.CommentId">
                     @Model.Likes.Count() <i class="material-icons btn-not-liked">thumb_up</i>
                 </a>
             }
