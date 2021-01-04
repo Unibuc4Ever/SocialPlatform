@@ -24,11 +24,10 @@ namespace SocialPlatform.Controllers
 
                 if (ModelState.IsValid)
                 {
-                    // TODO
-                    if (like.PostId != null)
-                    {
-                        /// verificam daca a dat deja post
-                    }
+                    if (user.Likes.Count(l => (l.PostId != null && l.PostId == like.PostId) ||
+                                              (l.CommentId != null && l.CommentId == like.LikeId)) == 1)
+                        throw new Exception();
+
                     db.Likes.Add(like);
                     db.SaveChanges();
                     //return 
