@@ -1,5 +1,13 @@
 ﻿@using SocialPlatform.Models
 @model Group
+@using System.Data.Entity
+@using Microsoft.AspNet.Identity;
+
+@{
+    var db = new ApplicationDbContext();
+    var user = db.Users.Find(User.Identity.GetUserId());
+    var ownerId = (Model != null) ? Model.User.Id : null;
+}
 
 @{
     ViewBag.Title = "Index";
@@ -7,23 +15,23 @@
 
 <h1>@ViewBag.Message</h1>
 
-<h2>My Groups</h2>
+<div style="display: flex; justify-content: space-between;">
+    <h3>My Groups</h3>
 
-<a class="btn btn-primary" href="/Groups/New">Create new group</a>
-<br />
+    <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+       href="/Groups/New">
+        Create new group
+    </a>
+</div>
+
 <br />
 
-<div class="container">
+<div class="container my-groups-container">
     @if (Model != null)
     {
-        <div class="panel panel-default container-item">
-            <h3>Group name: @Model.Name</h3>
-            <h4>User count: @Model.Members.Count()</h4>
-            <div class="panel-footer">
-                <a class=" btn btn-sm btn btn-success"
-                   href="/Groups/Show/@Model.GroupId">View Group</a>
-            </div>
-        </div>
+    @Html.Partial("GroupCard", Model);
+        <br />
+        <br />
     }
 </div>
 

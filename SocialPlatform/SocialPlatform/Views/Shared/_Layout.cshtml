@@ -26,7 +26,8 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
 
-    @Styles.Render("~/Content/css")
+    <link rel="stylesheet" href="~/Content/getmdl-select.min.css">
+    <link rel="stylesheet" href="~/Content/Site.css">
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/modernizr")
 
@@ -59,7 +60,7 @@
                 <nav class="mdl-navigation">
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <a class="mdl-navigation__link" href="/Users">Home</a>
+                        @*<a class="mdl-navigation__link" href="/Users">Home</a>*@
                         <a class="mdl-navigation__link" href="/Posts">News Feed</a>
                         <a class="mdl-navigation__link" href="/Posts/Explore">Explore</a>
                         <a class="mdl-navigation__link" href="/Posts/New/@wallid">Create Post</a>
@@ -86,7 +87,7 @@
                 <a class="mdl-navigation__link" href="/Users/Friends">My Friends</a>
                 <a class="mdl-navigation__link" href="/Users/ReceivedFriendRequests">Friend Requests</a>
                 <a class="mdl-navigation__link" href="/Users/Settings">Settings</a>
-                @if(User.IsInRole("Administrator"))
+                @if (User.IsInRole("Administrator"))
                 {
                     <a class="mdl-navigation__link" href="/Admin/Index">Admin's Corner</a>
                 }
@@ -100,6 +101,7 @@
     </div>
 
     @Scripts.Render("~/Content/Scripts/scripts.js")
+    @Scripts.Render("~/Content/Scripts/getmdl-select.js")
     @RenderSection("scripts", required: false)
 
 </body>

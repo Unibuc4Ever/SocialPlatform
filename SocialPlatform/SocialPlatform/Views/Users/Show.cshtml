@@ -15,29 +15,60 @@
 
 @if (User.IsInRole("Administrator"))
 {
-    <span class="mdl-chip mdl-chip--contact">
-        <span class="mdl-chip__contact mdl-color--teal mdl-color-text--white">ID</span>
-        <span class="mdl-chip__text">@Model.Id</span>
-    </span>
-    <span class="mdl-chip mdl-chip--contact">
-        <span class="mdl-chip__contact mdl-color--teal mdl-color-text--white">R</span>
-        <span class="mdl-chip__text">@userManager.GetRoles(Model.Id).First()</span>
-    </span>
+    <hr />
+
+    <h5 style="color: slategray">Change Role</h5>
+
+    <div style="display: flex; justify-content: center; align-items: center;">
+        <div style="margin-right: 50px">
+            <span class="mdl-chip mdl-chip--contact">
+                <span class="mdl-chip__contact mdl-color--teal mdl-color-text--white">R</span>
+                <span class="mdl-chip__text">@userManager.GetRoles(Model.Id).First()</span>
+            </span>
+        </div>
+        <div>
+            <form method="post" action="/Admin/ChangeRole">
+                <input type="hidden" id="user_id" name="user_id" value="@Model.Id">
+
+                <div class="mdl-textfield mdl-js-textfield getmdl-select">
+                    <input type="text" value="" class="mdl-textfield__input" id="new_role" readonly>
+                    <input type="hidden" value="" name="new_role">
+                    <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
+                    <label for="new_role" class="mdl-textfield__label">Choose new role</label>
+                    <ul for="new_role" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
+                        <li class="mdl-menu__item" data-val="User">Normal User</li>
+                        <li class="mdl-menu__item" data-val="Editor">Editor</li>
+                        <li class="mdl-menu__item" data-val="Administrator">Administrator</li>
+                    </ul>
+                </div>
+
+
+
+
+                @*<select id="new_role" name="new_role">
+                        <option value="User">Normal User</option>
+                        <option value="Editor">Editor</option>
+                        <option value="Administrator">Administrator</option>
+                    </select>
+                    <input type="hidden" id="user_id" name="user_id" value="@Model.Id">*@
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="submit">Change Role</button>
+            </form>
+
+
+        </div>
+
+    </div>
+
+
+
+    @*<br />*@
+
 
     <br />
 
-    <form method="post" action="/Admin/ChangeRole">
-        <label for="new_role">New Role:</label>
-        <select id="new_role" name="new_role">
-            <option value="User">Normal User</option>
-            <option value="Editor">Editor</option>
-            <option value="Administrator">Administrator</option>
-        </select>
-        <input type="hidden" id="user_id" name="user_id" value="@Model.Id">
-        <button class="btn btn-sm btn-danger" type="submit">Change Role</button>
-    </form>
-    <br />
+    <hr />
 
+    <h5 style="color: slategray">Send Notice message</h5>
     <form method="post" action="/Admin/AddNotice/@Model.Id">
         <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
             <input class="mdl-textfield__input" type="text" id="Content" name="Content">
@@ -47,8 +78,10 @@
     </form>
     <br />
 
-    <a href="/Admin/DeleteUser/@Model.Id" class="class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Delete User</a>
+    <a href="/Admin/DeleteUser/@Model.Id" class="class=" mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Delete User</a>
     <br />
+
+    <hr />
 }
 
 @if (user.Id != Model.Id)
