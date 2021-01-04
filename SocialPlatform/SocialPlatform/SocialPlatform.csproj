@@ -200,6 +200,8 @@
     <Content Include="App_Data\aspnet-SocialPlatform-20201116024032_log.ldf">
       <DependentUpon>aspnet-SocialPlatform-20201116024032.mdf</DependentUpon>
     </Content>
+    <Content Include="Content\getmdl-select.min.css" />
+    <Content Include="Content\Scripts\getmdl-select.js" />
     <Content Include="Content\Scripts\scripts.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
