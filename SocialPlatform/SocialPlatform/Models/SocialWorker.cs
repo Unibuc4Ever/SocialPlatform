@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 
-// TODO: Make this thing work
-
 namespace SocialPlatform.Models
 {
     public class SocialWorker
