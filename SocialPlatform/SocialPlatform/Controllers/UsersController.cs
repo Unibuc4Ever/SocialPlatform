@@ -66,7 +66,7 @@ namespace SocialPlatform.Controllers
 			{
                 var user = db.Users.Find(id);
                 
-                if (user.Posts.Count() < from || from < 0)
+                if (user.Wall.Posts.Count() < from || from < 0)
                     return new HttpStatusCodeResult(HttpStatusCode.NoContent);
 
                 if (from > 0 && user.Friends.Count(usr => usr.Id == User.Identity.GetUserId()) == 0
