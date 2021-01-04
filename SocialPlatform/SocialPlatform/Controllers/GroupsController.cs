@@ -20,8 +20,7 @@ namespace SocialPlatform.Controllers
             int from = frommaybe ?? 0;
 
             try {
-                // TODO: order
-                var groups = user.Groups.ToList();
+                var groups = user.Groups.ToList().OrderByDescending(gr => gr.Members.Count());
 
                 if (from < 0 || from > groups.Count())
                     return new HttpStatusCodeResult(HttpStatusCode.NoContent);
@@ -46,8 +45,7 @@ namespace SocialPlatform.Controllers
             
             try
             {
-                // TODO: order
-                var groups = db.Groups.ToList();
+                var groups = db.Groups.ToList().OrderByDescending(gr => gr.Members.Count());
 
                 if (from < 0 || from > groups.Count())
                     return new HttpStatusCodeResult(HttpStatusCode.NoContent);
