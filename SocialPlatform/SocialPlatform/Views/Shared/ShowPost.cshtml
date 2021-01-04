@@ -10,9 +10,13 @@
 <br />
 
 <div class="show-post-card demo-card-wide mdl-card mdl-shadow--2dp">
-	<div class="mdl-card__title"
+	<div class="mdl-card__title" style="display: flex; justify-content: space-between; align-items: center;"
          onclick="window.location.href = '/Posts/Show/@Model.PostId'">
-		<h2 class="mdl-card__title-text">@Model.Title</h2>
+		<h2 class="mdl-card__title-text" style="font-weight: 400;">@Model.Title</h2>
+        <div style="display: flex; align-items: center;">
+            <i class="material-icons">calendar_today</i>
+            <p style="margin: auto; max-width: 90px; text-align: right; color: rgba(0, 0, 0, .50)"> @Model.CreatedAt</p>
+        </div>
 	</div>
 	<div class="mdl-card__supporting-text">
 		@Model.Content
