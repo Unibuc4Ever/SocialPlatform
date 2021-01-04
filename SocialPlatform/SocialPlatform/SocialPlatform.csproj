@@ -280,6 +280,8 @@
     <Content Include="Views\Search\Groups.cshtml" />
     <Content Include="Views\Users\Notices.cshtml" />
     <Content Include="Views\Shared\GroupCard.cshtml" />
+    <Content Include="Views\Shared\UserCard.cshtml" />
+    <Content Include="Views\Shared\GroupCard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Likes\" />

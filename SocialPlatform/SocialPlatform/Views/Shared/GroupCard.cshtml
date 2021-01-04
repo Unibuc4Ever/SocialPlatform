@@ -20,7 +20,7 @@
     <div class="mdl-card__supporting-text" style="display: flex; justify-content: space-between;">
         <div style="display: flex; align-content: center; align-items: center;">
             <i class="material-icons">people</i> <span class="count-people"> @Model.Members.Count().ToString() </span> <br>
-        </div>
+    </div>
 
         <div>
         <span style="padding-right: 6px;">Owner:</span> @Model.User.FirstName @Model.User.LastName <br>
@@ -30,10 +30,10 @@
     <div class="mdl-card__actions mdl-card--border" style="display: flex; justify-content: space-between;">
         @if (ViewBag.dontShowViewGroup != true)
         {
-            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
-               href="/Groups/Show/@Model.GroupId">
-                View Group
-            </a>
+        <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+           href="/Groups/Show/@Model.GroupId">
+            View Group
+        </a>
         }
         else
         {
@@ -47,7 +47,7 @@
         {
             <a class="mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect"
                href="/Groups/Leave/@Model.GroupId">
-                Leave
+                    Leave
             </a>
         }
         else if (Model.UserId != userId)

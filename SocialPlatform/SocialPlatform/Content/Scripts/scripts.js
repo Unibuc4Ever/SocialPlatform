@@ -59,7 +59,7 @@ function sendFriendRequest(otherId) {
 		url: "/Users/FriendRequest/New/" + otherId,
 		type: 'POST',
 		success: function () {
-			var el = document.getElementById('friend_request_button');
+			var el = document.getElementById('friend_request_button_' + otherId);
 			el.textContent = 'Cancel Friend Request';
 			el.setAttribute("onclick", "cancelFriendRequest('" + otherId + "')");
 		},
@@ -74,7 +74,7 @@ function cancelFriendRequest(otherId) {
 		url: "/Users/FriendRequest/Cancel/" + otherId,
 		type: 'POST',
 		success: function () {
-			var el = document.getElementById('friend_request_button');
+			var el = document.getElementById('friend_request_button_' + otherId);
 			el.textContent = 'Friend Request';
 			el.setAttribute("onclick", "sendFriendRequest('" + otherId + "')");
 		},
@@ -89,7 +89,7 @@ function acceptFriendRequest(otherId) {
 		url: "/Users/FriendRequest/Accept/" + otherId,
 		type: "POST",
 		success: function () {
-			var el = document.getElementById('friend_request_button');
+			var el = document.getElementById('friend_request_button_' + otherId);
 			el.textContent = 'Unfriend';
 			el.setAttribute("onclick", "unFriend('" + otherId + "')");
 		},
@@ -104,7 +104,7 @@ function unFriend(otherId) {
 		url: "/Users/Friends/Unfriend/" + otherId,
 		type: 'POST',
 		success: function () {
-			var el = document.getElementById('friend_request_button');
+			var el = document.getElementById('friend_request_button_' + otherId);
 			el.textContent = 'Friend Request';
 			el.setAttribute("onclick", "sendFriendRequest('" + otherId + "')");
 		},

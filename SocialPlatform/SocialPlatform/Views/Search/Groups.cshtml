@@ -13,29 +13,10 @@
 </div>
 <br />
 
-<div class="container">
+<div class="container my-groups-container">
     @if (Model != null)
     {
-        <div class="demo-card-event mdl-card mdl-shadow--2dp container-item">
-            <div class="mdl-card__title mdl-card--expand">
-                <h4>
-                    Group Name:<br>
-                    @Model.Name<br>
-                    Members:<br>
-                    @Model.Members.Count()
-                </h4>
-            </div>
-            <div class="mdl-card__actions mdl-card--border">
-                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
-                    href="/Groups/Show/@Model.GroupId">
-                    View Group
-                </a>
-                <div class="mdl-layout-spacer"></div>
-                <i class="material-icons">event</i>
-            </div>
-            <hr />
-            <br />
-        </div>
+        @Html.Partial("GroupCard", Model)
     }
 </div>
 
