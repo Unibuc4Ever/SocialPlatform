@@ -74,7 +74,7 @@
     @if (ViewBag.PostNr > 0)
     {
         int poz = ViewBag.PostNr;
-        var post = Model.Posts.ElementAt(poz - 1);
+        var post = Model.Wall.Posts.OrderByDescending(p => p.CreatedAt).ElementAt(poz - 1);
         ViewBag.ShowViewPostButton = true;
         <div class="panel panel-default container-item">
             @Html.Partial("ShowPost", post)
