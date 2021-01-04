@@ -15,20 +15,21 @@
 </div>
 
 <form method="post" action="/Comments/New/@Model.PostId">
-    <label>Adauga un Comentariu</label>
     <br />
-    <textarea class="form-control" name="Content"></textarea>
-    @Html.ValidationMessage("Content", "", new { @class = "text-danger" })
+    <div class="mdl-textfield mdl-js-textfield">
+        <textarea class="mdl-textfield__input" rows="3" cols="50" name="Content" id="Content"></textarea>
+        <label class="mdl-textfield__label" for="Content">Type Comment...</label>
+    </div>
     <br />
-    <button class="btn btn-success " type="submit">Adauga comentariu</button>
+    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="submit">Adauga comentariu</button>
 </form>
-<hr />
+<br />
 
 <div class="demo-list-three mdl-list container">
     @if (ViewBag.CommentNr > 0)
     {
         int poz = ViewBag.CommentNr;
-        var comm = Model.Comments.ElementAt(poz - 1);
+        var comm = Model.Comments.OrderByDescending(post => post.CreatedAt).ElementAt(poz - 1);
         <div class="container-item">
             @Html.Partial("ShowComment", comm)
         </div>
