@@ -1,5 +1,13 @@
 ﻿@using SocialPlatform.Models
 @model Group
+@using System.Data.Entity
+@using Microsoft.AspNet.Identity;
+
+@{
+    var db = new ApplicationDbContext();
+    var user = db.Users.Find(User.Identity.GetUserId());
+    var ownerId = (Model != null) ? Model.User.Id : null;
+}
 
 @{
     ViewBag.Title = "Index";
@@ -7,38 +15,69 @@
 
 <h1>@ViewBag.Message</h1>
 
-<h2>My Groups</h2>
+<div style="display: flex; justify-content: space-between;">
+    <h3>My Groups</h3>
 
-<a class="btn btn-primary" href="/Groups/New">Create new group</a>
-<br />
-<br />
-
-<div class="container">
-    @if (Model != null)
-    {
-        <div class="panel panel-default container-item">
-            <h3>Group name: @Model.Name</h3>
-            <h4>User count: @Model.Members.Count()</h4>
-            <div class="panel-footer">
-                <a class=" btn btn-sm btn btn-success"
-                   href="/Groups/Show/@Model.GroupId">View Group</a>
-            </div>
-        </div>
-    }
+    <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+       href="/Groups/New">
+        Create new group
+    </a>
 </div>
 
-<script>
-    $('.container').infiniteScroll({
-        path: function () {
-            var page = this.loadCount + 1
-            return '/Groups/My?frommaybe=' + page;
-        },
-        append: '.container-item',
-        status: '.page-load-status',
-        prefill: true,
-        debug: true,
-        scrollThreshold: 2000,
-        elementScroll: '.mdl-layout__content',
-    });
-</script>
+<br />
+
+<div class="container my-groups-container">
+    @if (Model != null)
+    {
+    <div class="group-card mdl-card mdl-shadow--2dp container-item">
+        <div class="mdl-card__title mdl-card--expand">
+            <h2 class="mdl-card__title-text">@Model.Name</h2>
+        </div>
+        <div class="mdl-card__supporting-text">
+            Members: @Model.Members.Count().ToString() <br>
+        </div>
+
+        <div class="mdl-card__actions mdl-card--border">
+            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+               href="/Groups/Show/@Model.GroupId">
+                View Group
+            </a>
+
+        @*@if (user.Id == ownerId)
+        {
+                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+                   href="/Groups/Delete/@Model.GroupId">
+                    Delete
+                </a>
+                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+                   href="/Groups/Edit/@Model.GroupId">
+                    Edit
+                </a>
+        }*@
+            <a class="mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect"
+               href="/Groups/Leave/@Model.GroupId">
+                Leave
+            </a>
+        </div>
+
+    </div>
+            <br />
+            <br />
+            }
+        </div>
+
+        <script>
+            $('.container').infiniteScroll({
+                path: function () {
+                    var page = this.loadCount + 1
+                    return '/Groups/My?frommaybe=' + page;
+                },
+                append: '.container-item',
+                status: '.page-load-status',
+                prefill: true,
+                debug: true,
+                scrollThreshold: 2000,
+                elementScroll: '.mdl-layout__content',
+            });
+        </script>
 

@@ -164,6 +164,12 @@ textarea {
     }
 }
 
+/* Show Post Card */
+.show-post-card > .mdl-card__title:hover {
+    cursor: pointer;
+    background-color: #00a8a049;
+}
+
 .comment-list .comment-post {
     margin-top: 6px;
 }
@@ -210,4 +216,20 @@ textarea {
 
 .like-link {
     min-width: inherit;
+}
+
+/* Group card */
+.group-card {
+    margin-bottom: 30px;
+}
+
+.group-card > .mdl-card__title {
+    color: white;
+    background-color: rgb(63,81,181);
+}
+
+.my-groups-container {
+    display: flex;
+    flex-wrap: wrap;
+    grid-gap: 15px;
 }
