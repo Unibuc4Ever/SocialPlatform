@@ -156,7 +156,7 @@ namespace SocialPlatform.Controllers
         }
 
         [Authorize]
-        [HttpDelete]
+        [AcceptVerbs(HttpVerbs.Delete | HttpVerbs.Post)]
         public ActionResult Delete(int Id)
         {
             ApplicationDbContext db = new ApplicationDbContext();
@@ -179,7 +179,7 @@ namespace SocialPlatform.Controllers
         }
 
         [Authorize]
-        [HttpPatch]
+        [AcceptVerbs(HttpVerbs.Delete | HttpVerbs.Post)]
         public ActionResult Leave(int Id)
         {
             ApplicationDbContext db = new ApplicationDbContext();
@@ -211,7 +211,7 @@ namespace SocialPlatform.Controllers
         }
 
         [Authorize]
-        [HttpPatch]
+        [HttpPost]
         public ActionResult Join(int Id)
         {
             ApplicationDbContext db = new ApplicationDbContext();

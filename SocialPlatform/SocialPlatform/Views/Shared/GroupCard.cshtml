@@ -15,17 +15,29 @@
         Members: @Model.Members.Count().ToString() <br>
     </div>
 
-    <div class="mdl-card__actions mdl-card--border">
+    <div class="mdl-card__actions mdl-card--border" style="display: flex; justify-content: space-between">
         <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
            href="/Groups/Show/@Model.GroupId">
             View Group
         </a>
 
-        @if (Model.Members.Count(mem => mem.Id == userId) > 0) { 
-            <a style="float: right" class="mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect"
-                href="/Groups/Leave/@Model.GroupId">
-                Leave
-            </a>
+        @if (Model.Members.Count(mem => mem.Id == userId) > 0)
+        {
+            <form action="/Groups/Leave/@Model.GroupId" method="POST">
+                <button style="float: right" class="mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect"
+                        type="submit">
+                    Leave
+                </button>
+            </form>
+        }
+        else
+        {
+            <form action="/Groups/Join/@Model.GroupId" method="POST">
+                <button style="float: right;color:forestgreen;" class="mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect"
+                        type="submit">
+                    Join
+                </button>
+            </form>
         }
     </div>
 
