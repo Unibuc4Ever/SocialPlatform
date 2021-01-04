@@ -28,13 +28,15 @@ textarea {
 }
 
 .demo-card-wide.mdl-card {
-    width: 512px;
+    width: 100%;
+    min-height: auto;
 }
 
 .demo-card-wide > .mdl-card__title {
-    color: #fff;
-    height: 176px;
-    background: url("/Content/Images/nature.jpg") center / cover;
+    color: #3d00a8;
+    height: 60px;
+    /*    background: url("/Content/Images/nature.jpg") center / cover;*/
+    background-color: #00a8a029;
 }
 
 .demo-card-wide > .mdl-card__menu {
@@ -164,7 +166,31 @@ textarea {
 
 .comment-list .comment-post {
     margin-top: 6px;
+}
+
 .btn-edit {
     background-color: darkgreen;
     color: white;
+}
+
+.site-post-author-container {
+    text-decoration: none;
+    color: darkorchid;
+    opacity: 0.7;
+
+    margin-left: auto;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.site-post-author-container:hover {
+    text-decoration: underline;
+    opacity: 1;
+    
+}
+
+.page-content {
+    padding: 0px 70px 0px 70px;
 }
