@@ -200,6 +200,17 @@ textarea {
     
 }
 
+.link {
+    text-decoration: none;
+/*    color: darkorchid;*/
+/*    opacity: 0;*/
+}
+
+.link:hover {
+    text-decoration: underline;
+    opacity: 1;
+}
+
 .page-content {
     padding: 0px 70px 0px 70px;
 }

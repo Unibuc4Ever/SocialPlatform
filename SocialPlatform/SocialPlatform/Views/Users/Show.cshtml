@@ -11,7 +11,7 @@
             (new UserStore<ApplicationUser>(db));
 }
 
-<h3>@Model.FirstName @Model.LastName</h3>
+<h3 style="color: slategray">@Model.FirstName @Model.LastName</h3>
 
 @if (User.IsInRole("Administrator"))
 {
@@ -23,9 +23,9 @@
         <span class="mdl-chip__contact mdl-color--teal mdl-color-text--white">R</span>
         <span class="mdl-chip__text">@userManager.GetRoles(Model.Id).First()</span>
     </span>
-    
+
     <br />
-    
+
     <form method="post" action="/Admin/ChangeRole">
         <label for="new_role">New Role:</label>
         <select id="new_role" name="new_role">
@@ -38,7 +38,16 @@
     </form>
     <br />
 
-    <a href="/Admin/DeleteUser/@Model.Id" class="class="btn btn-sm btn-danger">Delete User</a>
+    <form method="post" action="/Admin/AddNotice/@Model.Id">
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" id="Content" name="Content">
+            <label class="mdl-textfield__label" for="Content">Notice...</label>
+        </div>
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit">Send Notice</button>
+    </form>
+    <br />
+
+    <a href="/Admin/DeleteUser/@Model.Id" class="class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Delete User</a>
     <br />
 }
 
@@ -101,6 +110,7 @@
         status: '.page-load-status',
         prefill: true,
         debug: true,
+        history: false,
         scrollThreshold: 2000,
         elementScroll: '.mdl-layout__content',
     });

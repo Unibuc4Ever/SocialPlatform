@@ -35,18 +35,19 @@
     }
 </div>
 
-        <script>
-            $('.container').infiniteScroll({
-                path: function () {
-                    var page = this.loadCount + 1
-                    return '/Groups/My?frommaybe=' + page;
-                },
-                append: '.container-item',
-                status: '.page-load-status',
-                prefill: true,
-                debug: true,
-                scrollThreshold: 2000,
-                elementScroll: '.mdl-layout__content',
-            });
-        </script>
+<script>
+    $('.container').infiniteScroll({
+        path: function () {
+            var page = this.loadCount + 1
+            return '/Groups/My?frommaybe=' + page;
+        },
+        append: '.container-item',
+        status: '.page-load-status',
+        prefill: true,
+        debug: true,
+        history: false,
+        scrollThreshold: 2000,
+        elementScroll: '.mdl-layout__content',
+    });
+</script>
 

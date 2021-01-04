@@ -1,0 +1,47 @@
+﻿@using SocialPlatform.Models
+@using System.Data.Entity
+@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.EntityFramework;
+@model ApplicationUser
+
+
+<h3 style="color: slategray">Notices</h3>
+
+<table class="mdl-data-table mdl-js-data-table mdl-shadow--2dp">
+    <thead>
+        <tr>
+            <th>Nr</th>
+            <th class="mdl-data-table__header--sorted-descending">Date</th>
+            <th class="mdl-data-table__cell--non-numeric">Message</th>
+        </tr>
+    </thead>
+    <tbody class="container">
+        @if (ViewBag.NoticeNr > 0)
+        {
+            int poz = ViewBag.NoticeNr;
+            var message = Model.Notices.OrderByDescending(not => not.CreatedAt).ElementAt(poz - 1);
+            <tr class="container-item">
+                <td>@(Model.Notices.Count() - poz + 1)</td>
+                <td>@message.CreatedAt</td>
+                <td class="mdl-data-table__cell--non-numeric">@message.Content</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<script>
+    $('.container').infiniteScroll({
+        path: function () {
+            var page = this.loadCount + 1
+            return '/Users/Notices?frommaybe=' + page;
+        },
+        append: '.container-item',
+        status: '.page-load-status',
+        prefill: true,
+        debug: true,
+        history: false,
+        scrollThreshold: 2000,
+        elementScroll: '.mdl-layout__content',
+    });
+</script>

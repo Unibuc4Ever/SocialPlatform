@@ -249,5 +249,21 @@ namespace SocialPlatform.Controllers
             return RedirectToAction("Friends");
 
         }
+
+        // Returns the profile of a user
+        [Authorize]
+        public ActionResult Notices(int? frommaybe)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            int from = frommaybe ?? 0;
+            var user = db.Users.Find(User.Identity.GetUserId());
+
+            if (user.Notices.Count() < from || from < 0)
+                return new HttpStatusCodeResult(HttpStatusCode.NoContent);
+
+            ViewBag.NoticeNr = from;
+
+            return View(user);
+        }
     }
 }
