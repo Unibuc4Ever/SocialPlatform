@@ -1,64 +1,42 @@
 ﻿@model SocialPlatform.Models.RegisterViewModel
 
-@{
-    ViewBag.Title = "Home";
-}
+<h3 style="color: slategray">Settings</h3>
 
-<h2>Hello @Model.FirstName @Model.LastName!</h2>
-
-<h3>Available options:</h3>
-
-<a class="btn btn-sm btn-success" href="/Admin/Index">Access Developer Page</a>
-
-<a class="btn btn-sm btn-success" href=@Url.RouteUrl("AddFriendRequest")>Send Friend Request</a>
-
-
-<a class="btn btn-sm btn-success" href="/Posts/Index">News Feed</a>
-
-<a class="btn btn-sm btn-success" href=@Url.RouteUrl("SentFriendRequests")>View Sent Friend Requests</a>
-
-<a class="btn btn-sm btn-success" href=@Url.RouteUrl("ReceivedFriendRequests")>View Received Friend Requests</a>
-
-<a class="btn btn-sm btn-success" href="/Users/Friends">View Friends</a>
-
-<a class="btn btn-sm btn-success" href="/Groups/My">View my Groups</a>
-
-<a class="btn btn-sm btn-success" href="/Groups/All">View All Groups</a>
-
-<a class="btn btn-sm btn-success" href="/Groups/New">Create new Group</a>
-
-<br />
 
 @using (Html.BeginForm(actionName: "Settings", controllerName: "Users"))
 {
-    <br />
-
-    @Html.ValidationSummary()
+    <div style="color:crimson">
+        @Html.ValidationSummary()
+    </div>
 
     @Html.HiddenFor(m => m.Email)
     @Html.HiddenFor(m => m.Password)
     @Html.HiddenFor(m => m.ConfirmPassword)
 
-    @Html.Label("FirstName", "First Name")
-    <br />
-    @Html.EditorFor(m => m.FirstName, new { htmlAttributes = new { @class = "form-control" } })
-    @Html.ValidationMessage("FirstName", null, new { @class = "text-danger" })
-    <br />
-    <br />
-    @Html.Label("LastName", "Last Name")
-    <br />
-    @Html.EditorFor(m => m.LastName, new { htmlAttributes = new { @class = "form-control" } })
-    @Html.ValidationMessage("LastName", null, new { @class = "text-danger" })
-    <br />
-    <br />
-    @*<label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" />*@
-    @Html.Label("WallIsVisible", "Display Wall Publicly");
-    <br />
-    @Html.CheckBoxFor(m => m.WallIsVisible, new { @class = "mdl-checkbox__input" })
-    @*<input type="checkbox" id="WallIsVisible" name="WallIsVisible" class="mdl-switch__input" value="true">*@
-        @*<span class="mdl-switch__label"></span>*@
 
+    <div class="form-group">
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            @Html.TextBoxFor(m => m.FirstName, new { @class = "mdl-textfield__input" })
+            @Html.LabelFor(m => m.FirstName, new { @class = "mdl-textfield__label" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            @Html.TextBoxFor(m => m.LastName, new { @class = "mdl-textfield__input" })
+            @Html.LabelFor(m => m.LastName, new { @class = "mdl-textfield__label" })
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <div class="checkbox">
+                @Html.CheckBoxFor(m => m.WallIsVisible)
+                @Html.LabelFor(m => m.WallIsVisible, "Display Wall Publicly")
+            </div>
+        </div>
+    </div>
     <br />
-    <br />
-    <button class="btn btn-sm btn-success" type="submit">Save Changes</button>
+    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="submit">Save Changes</button>
 }

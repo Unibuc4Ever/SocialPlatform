@@ -2,6 +2,9 @@
 @using System.Data.Entity
 @model ApplicationUser
 
+
+<h3 style="color: slategray">Search: @ViewBag.Query</h3>
+
 <div class="mdl-tabs mdl-js-tabs">
     <div class="mdl-tabs__tab-bar">
         <a href="/Search/Posts?query=@ViewBag.Query" class="mdl-tabs__tab">Posts</a>
@@ -9,6 +12,8 @@
         <a href="" class="mdl-tabs__tab is-active">Users</a>
     </div>
 </div>
+
+<br />
 
 <div class="container">
     @if (Model != null)

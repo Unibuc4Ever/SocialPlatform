@@ -112,7 +112,7 @@ namespace SocialPlatform.Controllers
                         throw new Exception();
 
                     if (user.SentFriendRequests.Contains(other) || user.Friends.Contains(other))
-                        return RedirectToAction("Index");
+                        return Redirect("/Users/Show/" + otherID);
                     
                     if (user.ReceivedFriendRequests.Contains(other)) {
                         return AcceptFriendRequest(otherID);
@@ -120,7 +120,7 @@ namespace SocialPlatform.Controllers
 
                     user.SentFriendRequests.Add(other);
                     db.SaveChanges();
-                    return RedirectToAction("Index");
+                    return Redirect("/Users/Show/" + otherID);
                 }
                 else
                     throw new Exception();
