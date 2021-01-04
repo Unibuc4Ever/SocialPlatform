@@ -1,73 +1,43 @@
 ﻿@model SocialPlatform.Models.Group
-
 @using Microsoft.AspNet.Identity
 
-@{
-
-}
-
-<h1>Detalii Grup</h1>
-
-<h2>Group name: @Model.Name</h2>
-<h2>Owner: @Model.User.FirstName @Model.User.LastName</h2>
-<h2>WallId: @Model.WallId</h2>
-
-@if (Model.User.Id == User.Identity.GetUserId() || User.IsInRole("Administrator"))
-{
-    <div style="display: inline-block; float : left">
-        <form method="post" action="/Groups/Delete/@Model.GroupId">
-            @Html.HttpMethodOverride(HttpVerbs.Delete)
-            <button class="btn btn-sm btn-danger" type="submit">Sterge</button>
-        </form>
-    </div>
-}
-
-@if (Model.User.Id == User.Identity.GetUserId())
-{
-    <form action="/Groups/Edit/@Model.GroupId" method="post">
-        @Html.HttpMethodOverride(HttpVerbs.Patch)
-        <button type="submit"
-                class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
-            Editeaza
-        </button>
-    </form>
-}
-else if (Model.Members.Count(mem => mem.Id == User.Identity.GetUserId()) > 0)
-{
-    <form action="/Groups/Leave/@Model.GroupId" method="post">
-        @Html.HttpMethodOverride(HttpVerbs.Patch)
-        <button type="submit"
-                class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
-            Leave
-        </button>
-    </form>
-}
-else
-{
-    <form action="/Groups/Join/@Model.GroupId" method="post">
-        @Html.HttpMethodOverride(HttpVerbs.Patch)
-        <button type="submit"
-                class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
-            Join
-        </button>
-    </form>
-}
-
-<hr />
-
-<a class="btn btn-sm btn-success" href="/Posts/New/@Model.Wall.WallId">Add Post</a>
-
-<h2>Members:</h2>
-<ul>
-    @foreach (var user in Model.Members)
-    {
-        <li>@user.FirstName @user.LastName</li>
+<div >
+    @{ 
+        ViewBag.dontShowViewGroup = true;
     }
-</ul>
+    
+    <br />
+    @Html.Partial("GroupCard", Model)
+</div>
 
-<h2>Posts:</h2>
-@foreach (var post in Model.Wall.Posts)
-{
-    @Html.Partial("ShowPost", post)
-    <hr />
-}
+<div class="mdl-tabs mdl-js-tabs">
+    <div class="mdl-tabs__tab-bar">
+        <a href="#posts-tab" class="mdl-tabs__tab is-active">Posts</a>
+        <a href="#members-tab" class="mdl-tabs__tab">Members</a>
+    </div>
+
+    <div class="mdl-tabs__panel is-active" id="posts-tab">
+        @foreach (var post in Model.Wall.Posts)
+        {
+            @Html.Partial("ShowPost", post)
+            <hr />
+        }
+    </div>
+
+    <div class="mdl-tabs__panel" id="members-tab">
+        <h3>Members:</h3>
+        <div class="my-groups-container">
+@* TODO: Replace with user Card *@
+            @foreach (var user in Model.Members)
+            {
+                <h5>@user.FirstName @user.LastName</h5>
+            }
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
