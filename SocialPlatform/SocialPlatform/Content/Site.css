@@ -1,5 +1,5 @@
 ﻿body {
-    font: Roboto;
+    font-family: 'Roboto';
 }
 
 .body-content {
@@ -212,7 +212,7 @@ textarea {
 }
 
 .page-content {
-    padding: 0px 70px 0px 70px;
+    padding: 0px 70px 20px 70px;
 }
 
 /* Likes */
@@ -230,6 +230,7 @@ textarea {
 
 .like-link {
     min-width: inherit;
+/*    color: rgb(92 99 255);*/
 }
 
 /* Group card */
@@ -241,6 +242,12 @@ textarea {
     color: white;
     background-color: rgb(63,81,181);
 }
+
+.group-card > .mdl-card__title:hover {
+    background-color: #0c1b79;
+    cursor: pointer;
+}
+
 
 .my-groups-container {
     display: flex;
@@ -262,4 +269,15 @@ textarea {
 
 .count-people {
     margin-left: 5px;
+}
+
+.mdl-layout__header a.mdl-navigation__link:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+/* Admin buttons */
+.admin-btn {
+    margin-top: 10px;
+    margin-bottom: 10px;
 }

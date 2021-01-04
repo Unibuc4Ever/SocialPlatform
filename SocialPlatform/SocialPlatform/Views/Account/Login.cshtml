@@ -4,14 +4,13 @@
     ViewBag.Title = "Log in";
 }
 
-<h2>@ViewBag.Title</h2>
+<h3 style="color: slategrey;">@ViewBag.Title</h3>
 <div class="row">
     <div class="col-md-8">
         <section id="loginForm">
             @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
             {
                 @Html.AntiForgeryToken()
-                <br />
 
                 <div style="color:crimson">
                     @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
