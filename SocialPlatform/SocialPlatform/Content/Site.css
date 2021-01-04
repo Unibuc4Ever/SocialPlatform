@@ -28,7 +28,7 @@ textarea {
 }
 
 .demo-card-wide.mdl-card {
-    width: 512px;
+    width: 100%;
 }
 
 .demo-card-wide > .mdl-card__title {
@@ -175,4 +175,19 @@ textarea {
 .site-post-author-container {
     display: flex;
     justify-content: flex-end;
+}
+
+.site-post-author-container > a {
+    text-decoration: none;
+    color: darkorchid;
+    opacity: 0.7;
+}
+
+.site-post-author-container > a:hover {
+    text-decoration: underline;
+    opacity: 1;
+}
+
+.page-content {
+    padding: 0px 70px 0px 70px;
 }
