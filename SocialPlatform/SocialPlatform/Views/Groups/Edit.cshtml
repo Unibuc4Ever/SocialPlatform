@@ -1,28 +1,62 @@
 ﻿@model SocialPlatform.Models.Group
 
 @{
-
+    ViewBag.Title = "Edit";
 }
 
 <h1>@ViewBag.Message</h1>
 
-<h2>Modifica Grup</h2>
+<h2>Modify Grup</h2>
 
 @using (Html.BeginForm(actionName: "Edit", controllerName: "Groups"))
 {
-	@Html.HttpMethodOverride(HttpVerbs.Put)
-	@Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    @Html.HttpMethodOverride(HttpVerbs.Put)
 
-	@Html.HiddenFor(m => m.GroupId)
+    <div style="color:crimson">
+        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    </div>
 
-	@Html.Label("Name", "Nume Grup")
-	<br />
-	@Html.TextBox("Name", null, new { @class = "form-control" })
-	@Html.ValidationMessageFor(m => m.Name, null, new { @class = "text-danger" })
-	<br />
-	<br />
-	<button class="btn btn-sm btn-success" type="submit">Modifica Grup</button>
+    @Html.HiddenFor(m => m.GroupId)
+
+    <div class="form-group">
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            @Html.Label("Name", "Nume Grup", new { @class = "mdl-textfield__label" })
+            @Html.TextBox("Name", null, new { @class = "mdl-textfield__input" })
+            @Html.ValidationMessageFor(m => m.Name, null, new { @class = "text-danger" })
+
+        </div>
+    </div>
+
+
+    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" 
+            type="submit">Update</button>
+    <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" href="/Groups/Show/@Model.GroupId">Cancel</a>
 }
 
 
+
+
+            @*<h3 style="color: slategray">Edit Comment</h3>
+
+
+            @using (Html.BeginForm(actionName: "Edit", controllerName: "Comments"))
+            {
+                @Html.HttpMethodOverride(HttpVerbs.Put)
+                @Html.HiddenFor(m => m.CommentId)
+
+                <div style="color:crimson">
+                    @Html.ValidationMessage("Content", null, new { @class = "text-danger" })
+                </div>
+
+                <div class="form-group">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        @Html.TextBoxFor(m => m.Content, new { @class = "mdl-textfield__input" })
+                        @Html.LabelFor(m => m.Content, new { @class = "mdl-textfield__label" })
+                    </div>
+                </div>
+                <br />
+
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="submit">Update Comment</button>
+                <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" href="/Posts/Show/@Model.PostId">Cancel</a>
+            }*@
 
