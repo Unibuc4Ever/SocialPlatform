@@ -275,6 +275,7 @@
     <Content Include="Views\Search\Users.cshtml" />
     <Content Include="Views\Search\Posts.cshtml" />
     <Content Include="Views\Search\Groups.cshtml" />
+    <Content Include="Views\Shared\GroupCard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Likes\" />
