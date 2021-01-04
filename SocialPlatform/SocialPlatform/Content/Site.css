@@ -194,3 +194,20 @@ textarea {
 .page-content {
     padding: 0px 70px 0px 70px;
 }
+
+/* Likes */
+.btn-liked {
+    margin-bottom: 5px;
+    font-size: 16px;
+}
+
+.btn-not-liked {
+    margin-bottom: 5px;
+    font-size: 16px;
+    color: black;
+    opacity: 0.6;
+}
+
+.like-link {
+    min-width: inherit;
+}
