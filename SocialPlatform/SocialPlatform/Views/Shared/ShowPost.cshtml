@@ -16,9 +16,6 @@
 	<div class="mdl-card__supporting-text">
 		@Model.Content
 	</div>
-	<div class="mdl-card__actions mdl-card--border site-post-author-container">
-		<a href="/Users/Show/@Model.UserId">@Model.User.FirstName @Model.User.LastName</a>
-	</div>
     <div class="mdl-card__actions mdl-card--border" style="display: flex">
         @{
             var Likes = db.Likes.Where(l => (l.UserId == userId && l.PostId == Model.PostId));
@@ -56,6 +53,8 @@
                 <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" type="submit">Delete</button>
             </form>
         }
+
+        <a class="site-post-author-container" href="/Users/Show/@Model.UserId">@Model.User.FirstName @Model.User.LastName</a>
     </div>
 </div>
 
