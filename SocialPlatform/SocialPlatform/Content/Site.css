@@ -1,4 +1,5 @@
 ﻿body {
+    font: Roboto;
 }
 
 .body-content {
@@ -183,6 +184,8 @@ textarea {
     display: flex;
     justify-content: center;
     align-items: center;
+
+    padding-right: 10px;
 }
 
 .site-post-author-container:hover {
