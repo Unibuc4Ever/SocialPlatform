@@ -82,7 +82,7 @@ namespace SocialPlatform.Controllers
 
 			}
             ViewBag.Message = "Unable to find user!";
-            return RedirectToAction("Index");
+            return Redirect("/");
         }
 
 

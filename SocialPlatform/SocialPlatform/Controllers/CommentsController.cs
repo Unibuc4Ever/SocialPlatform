@@ -99,9 +99,9 @@ namespace SocialPlatform.Controllers
                     throw new Exception();
 
                 int PostId = comm.PostId;
-                db.Comments.Remove(comm);
-                db.SaveChanges();
 
+                SocialWorker worker = new SocialWorker();
+                worker.DeleteComment(id, ref db);
                 return RedirectToAction("Show", "Posts", new { id = PostId });
             }
             catch (Exception)

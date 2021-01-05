@@ -173,9 +173,9 @@ namespace SocialPlatform.Controllers
             catch(Exception e)
             {
                 TempData["message"] = "Group doesn't exist, or insuficient rights!";
-                return Index(0);    
+                return Redirect("/Groups/Show/Id");    
             }
-            return RedirectToAction("Index");
+            return Redirect("/Groups/");
         }
 
         [Authorize]
