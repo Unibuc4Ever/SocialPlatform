@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -43,7 +45,7 @@ namespace SocialPlatform.Models
         {
             var group = db.Groups.Find(group_id);
             DeleteWall(group.WallId, ref db);
-            db.Groups.Remove(group);
+            // No need to delete group, was deleted from wall
             db.SaveChanges();
         }
 
@@ -62,7 +64,13 @@ namespace SocialPlatform.Models
             if (user.WallId != null)
                 DeleteWall(user.WallId ?? 0, ref db);
 
-            db.Users.Remove(user);
+            user.Friends.Clear();
+            user.ReceivedFriendRequests.Clear();
+            user.SentFriendRequests.Clear();
+            user.FriendOf.Clear();
+
+            var UserManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(db));
+            UserManager.Delete(user);
             db.SaveChanges();
         }
     }
