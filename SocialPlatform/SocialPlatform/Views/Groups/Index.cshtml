@@ -1,0 +1,51 @@
+﻿@using SocialPlatform.Models
+@model Group
+@using System.Data.Entity
+@using Microsoft.AspNet.Identity;
+
+@{
+    var db = new ApplicationDbContext();
+    var user = db.Users.Find(User.Identity.GetUserId());
+    var ownerId = (Model != null) ? Model.User.Id : null;
+}
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div style="display: flex; justify-content: space-between; align-items: center;">
+    <h3 style="color: slategray">My Groups</h3>
+
+    <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+       href="/Groups/New">
+        Create new group
+    </a>
+</div>
+
+<br />
+
+<div class="container my-groups-container">
+    @if (Model != null)
+    {
+    @Html.Partial("GroupCard", Model);
+        <br />
+        <br />
+    }
+</div>
+
+<script>
+    $('.container').infiniteScroll({
+        path: function () {
+            var page = this.loadCount + 1
+            return '/Groups/My?frommaybe=' + page;
+        },
+        append: '.container-item',
+        status: '.page-load-status',
+        prefill: true,
+        debug: true,
+        history: false,
+        scrollThreshold: 2000,
+        elementScroll: '.mdl-layout__content',
+    });
+</script>
+

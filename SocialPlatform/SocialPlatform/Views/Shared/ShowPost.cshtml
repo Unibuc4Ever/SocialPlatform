@@ -1,0 +1,70 @@
+﻿@model SocialPlatform.Models.Post
+@using Microsoft.AspNet.Identity
+@using SocialPlatform.Models;
+
+@{
+    var db = new ApplicationDbContext();
+    var userId = User.Identity.GetUserId();
+}
+
+<br />
+
+<div class="show-post-card demo-card-wide mdl-card mdl-shadow--2dp">
+	<div class="mdl-card__title" style="display: flex; justify-content: space-between; align-items: center;"
+         onclick="window.location.href = '/Posts/Show/@Model.PostId'">
+		<h2 class="mdl-card__title-text" style="font-weight: 400;">@Model.Title</h2>
+        <div style="display: flex; align-items: center;">
+            <i class="material-icons">calendar_today</i>
+            <p style="margin: auto; max-width: 90px; text-align: right; color: rgba(0, 0, 0, .50)"> @Model.CreatedAt</p>
+        </div>
+	</div>
+	<div class="mdl-card__supporting-text">
+		@Model.Content
+	</div>
+    <div class="mdl-card__actions mdl-card--border" style="display: flex">
+        @{
+            var Likes = db.Likes.Where(l => (l.UserId == userId && l.PostId == Model.PostId));
+            if (userId == null)
+            {
+                <a href="/Account/Login" class="like-link mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+                    id="like_button_id_@Model.PostId">
+                    @Model.Likes.Count() <i class="material-icons btn-not-liked">thumb_up</i>
+                </a>
+            }
+            else if (Likes.Count() > 0)
+            {
+                <a onclick="javascript:sendPostUnLikeForm(@Model.PostId, 'like_button_id_@Model.PostId', @Model.Likes.Count())" 
+                    class="like-link mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+                    id="like_button_id_@Model.PostId">
+                    @Model.Likes.Count() <i class="material-icons btn-liked">thumb_up</i>
+                </a>
+            }
+            else
+            {
+                <a onclick="javascript:sendPostLikeForm(@Model.PostId, 'like_button_id_@Model.PostId', @Model.Likes.Count())" 
+                    class="like-link mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" 
+                    id="like_button_id_@Model.PostId">
+                    @Model.Likes.Count() <i class="material-icons btn-not-liked">thumb_up</i>
+                </a>
+            }
+        }
+        @if (ViewBag.ShowViewPostButton == true)
+        {
+            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="/Posts/Show/@Model.PostId">View</a>
+        }
+        @if (Model.UserId == userId)
+        {
+            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="/Posts/Edit/@Model.PostId">Edit</a>
+        }
+        @if (Model.UserId == userId || User.IsInRole("Administrator") || User.IsInRole("Editor"))
+        {
+            <form action="/Posts/Delete/@Model.PostId" method="post">
+                @Html.HttpMethodOverride(HttpVerbs.Delete)
+                <button class="mdl-button mdl-button--accent mdl-js-button mdl-js-ripple-effect" type="submit">Delete</button>
+            </form>
+        }
+
+        <a class="site-post-author-container" href="/Users/Show/@Model.UserId">@Model.User.FirstName @Model.User.LastName</a>
+    </div>
+</div>
+

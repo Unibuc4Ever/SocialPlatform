@@ -1,0 +1,110 @@
+﻿@using Microsoft.AspNet.Identity
+@using SocialPlatform.Models
+
+
+@{
+	int? wallid = null;
+	string userid = null;
+}
+
+@if (User.Identity.IsAuthenticated)
+{
+	var db = new ApplicationDbContext();
+	var user = db.Users.Find(User.Identity.GetUserId());
+	wallid = user.WallId;
+	userid = user.Id;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.3.0/material.indigo-pink.min.css">
+
+    <link rel="stylesheet" href="~/Content/getmdl-select.min.css">
+    <link rel="stylesheet" href="~/Content/Site.css">
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/modernizr")
+
+    <script src="https://code.getmdl.io/1.3.0/material.min.js"></script>
+    <script src="https://unpkg.com/infinite-scroll@3/dist/infinite-scroll.pkgd.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer
+            mdl-layout--fixed-header">
+        <header class="mdl-layout__header">
+            <div class="mdl-layout__header-row">
+                <span class="mdl-layout-title">Social Platform</span>
+                <div class="mdl-layout-spacer"></div>
+                <div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
+                  mdl-textfield--floating-label mdl-textfield--align-right">
+                    <label class="mdl-button mdl-js-button mdl-button--icon"
+                           for="fixed-header-drawer-exp">
+                        <i class="material-icons">search</i>
+                    </label>
+                    <div class="mdl-textfield__expandable-holder">
+                        <form action="/Search/Posts">
+                            <input class="mdl-textfield__input" type="text" name="query"
+                                   id="fixed-header-drawer-exp">
+                            <input type="submit" style="display: none" />
+                        </form>
+                    </div>
+                </div>
+                <nav class="mdl-navigation">
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        @*<a class="mdl-navigation__link" href="/Users">Home</a>*@
+                        <a class="mdl-navigation__link" href="/Posts">News Feed</a>
+                        <a class="mdl-navigation__link" href="/Posts/Explore">Explore</a>
+                        <a class="mdl-navigation__link" href="/Posts/New/@wallid">New Post</a>
+                        <a class="mdl-navigation__link" href="javascript:document.getElementById('logoutForm').submit()">
+                            Sign Out
+                        </a>
+                        <div style="display:none">@Html.Partial("_LoginPartial")</div>
+                    }
+                    else
+                    {
+                        <a class="mdl-navigation__link" href="/Posts/Explore">Explore</a>
+                        <a class="mdl-navigation__link" href="/Account/Register">Register</a>
+                        <a class="mdl-navigation__link" href="/Account/Login">Login</a>
+                    }
+                </nav>
+            </div>
+        </header>
+        <div class="mdl-layout__drawer">
+            <span class="mdl-layout-title">Shortcuts</span>
+            <nav class="mdl-navigation">
+                <a class="mdl-navigation__link" href="/Users/Show/@userid">My Wall</a>
+                <a class="mdl-navigation__link" href="/Groups">My Groups</a>
+                <a class="mdl-navigation__link" href="/Groups/Explore">Explore Groups</a>
+                <a class="mdl-navigation__link" href="/Users/Friends">My Friends</a>
+                <a class="mdl-navigation__link" href="/Users/ReceivedFriendRequests">Friend Requests</a>
+                <a class="mdl-navigation__link" href="/Users/Settings">Settings</a>
+                @if (User.IsInRole("Administrator"))
+                {
+                    <a class="mdl-navigation__link" href="/Admin/Index">Admin's Corner</a>
+                }
+            </nav>
+        </div>
+        <main class="mdl-layout__content">
+            <div class="page-content">
+                @RenderBody()
+            </div>
+        </main>
+    </div>
+
+    @Scripts.Render("~/Content/Scripts/scripts.js")
+    @Scripts.Render("~/Content/Scripts/getmdl-select.js")
+    @RenderSection("scripts", required: false)
+
+</body>
+
+
+</html>

@@ -1,0 +1,43 @@
+﻿@model SocialPlatform.Models.Group
+@using Microsoft.AspNet.Identity
+
+<div >
+    @{ 
+        ViewBag.dontShowViewGroup = true;
+    }
+    
+    <br />
+    @Html.Partial("GroupCard", Model)
+</div>
+
+<div class="mdl-tabs mdl-js-tabs">
+    <div class="mdl-tabs__tab-bar">
+        <a href="#posts-tab" class="mdl-tabs__tab is-active">Posts</a>
+        <a href="#members-tab" class="mdl-tabs__tab">Members</a>
+    </div>
+
+    <div class="mdl-tabs__panel is-active" id="posts-tab">
+        @foreach (var post in Model.Wall.Posts.OrderByDescending(p => p.CreatedAt))
+        {
+            ViewBag.ShowViewPostButton = true;
+            @Html.Partial("ShowPost", post);
+            ViewBag.ShowViewPostButton = false;
+        }
+    </div>
+
+    <div class="mdl-tabs__panel" id="members-tab">
+        <br />
+        <div class="my-groups-container">
+            @foreach (var user in Model.Members)
+            {
+                @Html.Partial("UserCard", user);
+            }
+        </div>
+    </div>
+
+</div>
+
+
+
+
+

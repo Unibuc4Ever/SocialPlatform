@@ -1,0 +1,34 @@
+﻿@using SocialPlatform.Models
+@using System.Data.Entity
+@model Post
+
+<h3 style="color: slategrey;">News Feed</h3>
+
+<div class="container">
+    @if (Model != null)
+    {
+        <div class="panel panel-default container-item">
+            @{
+                ViewBag.ShowViewPostButton = true;
+                @Html.Partial("ShowPost", Model);
+                ViewBag.ShowViewPostButton = false;
+            }
+        </div>
+    }
+</div>
+
+<script>
+    $('.container').infiniteScroll({
+        path: function () {
+            var page = this.loadCount + 1
+            return '/Posts/Index?frommaybe=' + page;
+        },
+        append: '.container-item',
+        status: '.page-load-status',
+        prefill: true,
+        debug: true,
+        history: false,
+        scrollThreshold: 2000,
+        elementScroll: '.mdl-layout__content',
+    });
+</script>

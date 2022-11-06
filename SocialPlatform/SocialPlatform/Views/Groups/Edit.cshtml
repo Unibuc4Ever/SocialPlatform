@@ -1,0 +1,36 @@
+﻿@model SocialPlatform.Models.Group
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h1>@ViewBag.Message</h1>
+
+
+<h3 style="color: slategray">Modify Grup</h3>
+
+
+@using (Html.BeginForm(actionName: "Edit", controllerName: "Groups"))
+{
+    @Html.HttpMethodOverride(HttpVerbs.Put)
+
+    <div style="color:crimson">
+        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    </div>
+
+    @Html.HiddenFor(m => m.GroupId)
+
+    <div class="form-group">
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            @Html.Label("Name", "Nume Grup", new { @class = "mdl-textfield__label" })
+            @Html.TextBox("Name", null, new { @class = "mdl-textfield__input" })
+            @Html.ValidationMessageFor(m => m.Name, null, new { @class = "text-danger" })
+
+        </div>
+    </div>
+
+
+    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" 
+            type="submit">Update</button>
+    <a class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" href="/Groups/Show/@Model.GroupId">Cancel</a>
+}

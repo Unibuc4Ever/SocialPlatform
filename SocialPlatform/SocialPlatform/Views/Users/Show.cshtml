@@ -1,0 +1,101 @@
+﻿@using SocialPlatform.Models
+@using System.Data.Entity
+@using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.EntityFramework;
+@model ApplicationUser
+
+@{
+    var db = new ApplicationDbContext();
+    var user = db.Users.Find(User.Identity.GetUserId());
+    UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>
+            (new UserStore<ApplicationUser>(db));
+}
+
+<h3 style="color: slategrey;">Wall</h3>
+<br />
+
+
+@{
+    ViewBag.ViewProfile = false;
+    @Html.Partial("UserCard", Model)
+    ViewBag.ViewProfile = null;
+}
+
+
+@if (User.IsInRole("Administrator") && Model.Id != User.Identity.GetUserId())
+{
+    <hr />
+
+    <h5 style="color: slategray">Change Role</h5>
+
+    <div style="display: flex; align-items: center;">
+        <div style="margin-right: 50px">
+            <span class="mdl-chip mdl-chip--contact">
+                <span class="mdl-chip__contact mdl-color--teal mdl-color-text--white">R</span>
+                <span class="mdl-chip__text">@userManager.GetRoles(Model.Id).First()</span>
+            </span>
+        </div>
+        <div>
+            <form method="post" action="/Admin/ChangeRole">
+                <input type="hidden" id="user_id" name="user_id" value="@Model.Id">
+
+                <div class="mdl-textfield mdl-js-textfield getmdl-select">
+                    <input type="text" value="" class="mdl-textfield__input" id="new_role" readonly>
+                    <input type="hidden" value="" name="new_role">
+                    <i class="mdl-icon-toggle__label material-icons">keyboard_arrow_down</i>
+                    <label for="new_role" class="mdl-textfield__label">Choose new role</label>
+                    <ul for="new_role" class="mdl-menu mdl-menu--bottom-left mdl-js-menu">
+                        <li class="mdl-menu__item" data-val="User">Normal User</li>
+                        <li class="mdl-menu__item" data-val="Editor">Editor</li>
+                        <li class="mdl-menu__item" data-val="Administrator">Administrator</li>
+                    </ul>
+                </div>
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="submit">Change Role</button>
+            </form>
+        </div>
+    </div>
+
+    <br />
+    <hr />
+
+    <h5 style="color: slategray">Send Notice message</h5>
+    <form method="post" action="/Admin/AddNotice/@Model.Id">
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            <input class="mdl-textfield__input" type="text" id="Content" name="Content">
+            <label class="mdl-textfield__label" for="Content">Notice...</label>
+        </div>
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" type="submit">Send Notice</button>
+    </form>
+    <br />
+
+    <hr />
+}
+
+<div class="container">
+    @if (ViewBag.PostNr > 0)
+    {
+        int poz = ViewBag.PostNr;
+        var post = Model.Wall.Posts.OrderByDescending(p => p.CreatedAt).ElementAt(poz - 1);
+        ViewBag.ShowViewPostButton = true;
+        <div class="panel panel-default container-item">
+            @Html.Partial("ShowPost", post)
+        </div>
+        ViewBag.ShowViewPostButton = false;
+    }
+</div>
+
+<script>
+    $('.container').infiniteScroll({
+        path: function () {
+            var page = this.loadCount + 1
+            return '/Users/Show/@Model.Id?frommaybe=' + page;
+        },
+        append: '.container-item',
+        status: '.page-load-status',
+        prefill: true,
+        debug: true,
+        history: false,
+        scrollThreshold: 2000,
+        elementScroll: '.mdl-layout__content',
+    });
+</script>

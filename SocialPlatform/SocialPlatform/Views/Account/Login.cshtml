@@ -1,0 +1,61 @@
+﻿@using SocialPlatform.Models
+@model LoginViewModel
+@{
+    ViewBag.Title = "Log in";
+}
+
+<h3 style="color: slategrey;">@ViewBag.Title</h3>
+<div class="row">
+    <div class="col-md-8">
+        <section id="loginForm">
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <div style="color:crimson">
+                    @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                </div>
+                <br />
+
+                <div class="form-group">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        @Html.TextBoxFor(m => m.Email, new { @class = "mdl-textfield__input" })
+                        @Html.LabelFor(m => m.Email, new { @class = "mdl-textfield__label" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+                        @Html.PasswordFor(m => m.Password, new { @class = "mdl-textfield__input" })
+                        @Html.LabelFor(m => m.Password, new { @class = "mdl-textfield__label" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <div class="checkbox">
+                            @Html.CheckBoxFor(m => m.RememberMe)
+                            @Html.LabelFor(m => m.RememberMe)
+                        </div>
+                    </div>
+                </div>
+                <br />
+
+                <div class="form-group">
+                    <div class="col-md-offset-2 col-md-10">
+                        <input type="submit" value="Log in" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" />
+                        <a href='/Account/Register' class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent">Register</a>
+                    </div>
+                </div>
+                <br />
+                <br />
+                <p>
+                </p>
+            }
+        </section>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

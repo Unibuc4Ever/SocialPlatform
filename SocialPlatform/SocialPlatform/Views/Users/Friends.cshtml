@@ -1,0 +1,18 @@
+﻿@using SocialPlatform.Models
+
+@model ApplicationUser
+
+@{
+    ViewBag.Title = "Sent Friend Requests";
+}
+
+<h3 style="color: slategray">My Friends</h3>
+<br />
+
+
+<div class="my-groups-container">
+    @foreach (ApplicationUser user in Model.Friends)
+    {
+        @Html.Partial("UserCard", user)
+    }
+</div>

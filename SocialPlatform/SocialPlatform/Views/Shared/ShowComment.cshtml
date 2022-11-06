@@ -1,0 +1,64 @@
+﻿@model SocialPlatform.Models.Comment
+@using SocialPlatform.Models;
+@using Microsoft.AspNet.Identity
+@{
+    var db = new ApplicationDbContext();
+    var userId = User.Identity.GetUserId();
+}
+
+<li class="mdl-list__item mdl-list__item--three-line card-5 mdl-shadow--2dp"
+    style="margin-bottom: 10px">
+    <div class="mdl-list__item-primary-content">
+        <i class="material-icons mdl-list__item-avatar">person</i>
+        <span>@Model.User.FirstName @Model.User.LastName</span>
+        <span class="mdl-list__item-text-body">
+            @Model.Content
+        </span>
+    </div>
+    <div class="mdl-list__item-secondary-content">
+        @if (Model.UserId == User.Identity.GetUserId())
+        {
+            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="/Comments/Edit/@Model.CommentId">Edit</a>
+        }
+    </div>
+    <div class="mdl-list__item-secondary-content">
+        @if (Model.UserId == User.Identity.GetUserId() || User.IsInRole("Administrator") || User.IsInRole("Editor"))
+        {
+            <form action="/Comments/Delete/@Model.CommentId" method="post">
+                @Html.HttpMethodOverride(HttpVerbs.Delete)
+                <button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" type="submit">Delete</button>
+            </form>
+        }
+    </div>
+    <div class="mdl-list__item-secondary-content">
+       
+
+            @{ var Likes = db.Likes.Where(l => (l.UserId == userId && l.CommentId == Model.CommentId)); }
+            @if (userId == null)
+            {
+                <a href="/Account/Login" class="like-link mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+                    id="comment_like_@Model.CommentId">
+                    @Model.Likes.Count() <i class="material-icons btn-not-liked">thumb_up</i>
+                </a>
+            }
+            else if (Likes.Count() > 0)
+            {
+                <a onclick="javascript:sendCommentUnLikeForm(@Model.CommentId, 'comment_like_@Model.CommentId', @Model.Likes.Count())"
+                    class="like-link mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+                    id="comment_like_@Model.CommentId">
+                    @Model.Likes.Count() <i class="material-icons btn-liked">thumb_up</i>
+                </a>
+            }
+            else
+            {
+                <a onclick="javascript:sendCommentLikeForm(@Model.CommentId, 'comment_like_@Model.CommentId', @Model.Likes.Count())"
+                    class="like-link mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+                    id="comment_like_@Model.CommentId">
+                    @Model.Likes.Count() <i class="material-icons btn-not-liked">thumb_up</i>
+                </a>
+            }
+
+    </div>
+
+
+</li>

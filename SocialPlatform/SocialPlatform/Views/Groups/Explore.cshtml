@@ -1,0 +1,64 @@
+﻿@using SocialPlatform.Models
+@using System.Data.Entity
+@using Microsoft.AspNet.Identity
+@model Group
+
+@{
+    ViewBag.Title = "Index";
+    var db = new ApplicationDbContext();
+    var user = db.Users.Find(User.Identity.GetUserId());
+    var group = Model;
+}
+
+
+<div style="display: flex; justify-content: space-between; align-items: center;">
+    <h3 style="color: slategray">Explore Groups</h3>
+
+    <a class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent"
+       href="/Groups/New">
+        Create new group
+    </a>
+</div>
+
+<br />
+<br />
+
+<div class="container my-groups-container">
+    @if (group != null)
+    {
+        @Html.Partial("GroupCard", group)
+    }
+</div>
+
+<div id="snack-group-explore" class="mdl-js-snackbar mdl-snackbar">
+    <div class="mdl-snackbar__text">@TempData["status"]</div>
+    <button class="mdl-snackbar__action" type="button"></button>
+</div>
+
+<script>
+    function showExploreToast() {
+        var snackContainer = document.querySelector('#snack-group-explore');
+        snackContainer.MaterialSnackbar.showSnackbar();
+    }
+
+    document.addEventListener("DOMContentLoaded", function (event) {
+        showExploreToast();
+    });
+</script>
+
+<script src="https://unpkg.com/infinite-scroll@3/dist/infinite-scroll.pkgd.js"></script>
+<script>
+    $('.container').infiniteScroll({
+        path: function () {
+            var page = this.loadCount + 1
+            return '/Groups/Explore?frommaybe=' + page;
+        },
+        append: '.container-item',
+        status: '.page-load-status',
+        prefill: true,
+        debug: true,
+        history: false,
+        scrollThreshold: 2000,
+        elementScroll: '.mdl-layout__content',
+    });
+</script>

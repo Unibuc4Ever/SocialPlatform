@@ -1,0 +1,42 @@
+﻿@using SocialPlatform.Models
+@using System.Data.Entity
+@model ApplicationUser
+
+
+<h3 style="color: slategray">Search: @ViewBag.Query</h3>
+
+<div class="mdl-tabs mdl-js-tabs">
+    <div class="mdl-tabs__tab-bar">
+        <a href="/Search/Posts?query=@ViewBag.Query" class="mdl-tabs__tab">Posts</a>
+        <a href="/Search/Groups?query=@ViewBag.Query" class="mdl-tabs__tab">Groups</a>
+        <a href="" class="mdl-tabs__tab is-active">Users</a>
+    </div>
+</div>
+
+<br />
+
+<div class="container my-groups-container">
+    @if (Model != null)
+    {
+        <div class="container-item">
+            @Html.Partial("UserCard", Model)
+        </div>
+        <br />
+    }
+</div>
+
+<script>
+    $('.container').infiniteScroll({
+        path: function () {
+            var page = this.loadCount + 1
+            return '/Search/Users?query=@ViewBag.Query&frommaybe=' + page;
+        },
+        append: '.container-item',
+        status: '.page-load-status',
+        prefill: true,
+        debug: true,
+        history: false,
+        scrollThreshold: 2000,
+        elementScroll: '.mdl-layout__content',
+    });
+</script>

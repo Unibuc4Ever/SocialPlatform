@@ -1,0 +1,53 @@
+﻿@model SocialPlatform.Models.Post
+@using SocialPlatform.Models
+@using Microsoft.AspNet.Identity
+
+@{
+    var db = new ApplicationDbContext();
+    var userId = User.Identity.GetUserId();
+}
+
+<br />
+<br />
+
+<div class="panel panel-default">
+    @Html.Partial("ShowPost", Model)
+</div>
+
+<form method="post" action="/Comments/New/@Model.PostId">
+    <br />
+    <div class="mdl-textfield mdl-js-textfield">
+        <textarea class="mdl-textfield__input" rows="3" cols="50" name="Content" id="Content"></textarea>
+        <label class="mdl-textfield__label" for="Content">Type Comment...</label>
+    </div>
+    <br />
+    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="submit">Add Comment</button>
+</form>
+<br />
+
+<div class="demo-list-three mdl-list container">
+    @if (ViewBag.CommentNr > 0)
+    {
+        int poz = ViewBag.CommentNr;
+        var comm = Model.Comments.OrderByDescending(post => post.CreatedAt).ElementAt(poz - 1);
+        <div class="container-item">
+            @Html.Partial("ShowComment", comm)
+        </div>
+    }
+</div>
+
+<script>
+    $('.container').infiniteScroll({
+        path: function () {
+            var page = this.loadCount + 1
+            return '/Posts/Show/@Model.PostId?frommaybe=' + page;
+        },
+        append: '.container-item',
+        status: '.page-load-status',
+        prefill: true,
+        debug: true,
+        history: false,
+        scrollThreshold: 2000,
+        elementScroll: '.mdl-layout__content',
+    });
+</script>

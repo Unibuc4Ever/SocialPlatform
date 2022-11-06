@@ -1,0 +1,36 @@
+﻿@model SocialPlatform.Models.Post
+@using Microsoft.AspNet.Identity;
+@{
+
+}
+
+<h3 style="color: slategrey;">New Post</h3>
+
+@using (Html.BeginForm(actionName: "New", controllerName: "Posts"))
+{
+
+    <div style="color:crimson">
+        @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+    </div>
+    @Html.HiddenFor(m => m.WallId)
+
+    <div class="form-group">
+        <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+            @Html.TextBoxFor(m => m.Title, new { @class = "mdl-textfield__input" })
+            @Html.LabelFor(m => m.Title, new { @class = "mdl-textfield__label" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="mdl-textfield mdl-js-textfield">
+            @Html.TextAreaFor(m => m.Content, new { @class = "mdl-textfield__input", rows = "3", cols = "100" })
+            @Html.LabelFor(m => m.Content, new { @class = "mdl-textfield__label" })
+        </div>
+    </div>
+
+    <br />
+
+    <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="submit">Adauga Post</button>
+}
+
+

@@ -1,0 +1,283 @@
+﻿body {
+    font-family: 'Roboto';
+}
+
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Override the default bootstrap behavior where horizontal description lists 
+   will truncate terms that are too long to fit in the left column 
+*/
+.dl-horizontal dt {
+    white-space: normal;
+}
+
+/* Set width on the form input elements since they're 100% wide by default */
+input,
+select,
+textarea {
+    max-width: 280px;
+}
+
+/* Added by us below */
+
+/* For cards representing posts */
+.demo-layout-waterfall .mdl-layout__header-row .mdl-navigation__link:last-of-type {
+    padding-right: 0;
+}
+
+.demo-card-wide.mdl-card {
+    width: 100%;
+    min-height: auto;
+}
+
+.demo-card-wide > .mdl-card__title {
+    color: #3d00a8;
+    height: 60px;
+    /*    background: url("/Content/Images/nature.jpg") center / cover;*/
+    background-color: #00a8a029;
+}
+
+.demo-card-wide > .mdl-card__menu {
+    color: #fff;
+}
+
+/* For cards representing groups */
+.demo-card-event.mdl-card {
+    width: 256px;
+    height: 256px;
+    background: #3E4EB8;
+}
+
+.demo-card-event > .mdl-card__actions {
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.demo-card-event > .mdl-card__title {
+    align-items: flex-start;
+}
+
+    .demo-card-event > .mdl-card__title > h4 {
+        margin-top: 0;
+    }
+
+.demo-card-event > .mdl-card__actions {
+    display: flex;
+    box-sizing: border-box;
+    align-items: center;
+}
+
+.demo-card-event > .mdl-card__actions > .material-icons {
+    padding-right: 10px;
+}
+
+.demo-card-event > .mdl-card__title,
+.demo-card-event > .mdl-card__actions,
+.demo-card-event > .mdl-card__actions > .mdl-button {
+    color: #fff;
+}
+
+/*Comments*/
+
+.demo-list-three {
+    width: 650px;
+}
+/*font Awesome http://fontawesome.io*/
+@@import url(//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css);
+/*Comment List styles*/
+.comment-list .row {
+    margin-bottom: 0px;
+}
+
+.comment-list .panel .panel-heading {
+    padding: 4px 15px;
+    position: absolute;
+    border: none;
+    /*Panel-heading border radius*/
+    border-top-right-radius: 0px;
+    top: 1px;
+}
+
+    .comment-list .panel .panel-heading.right {
+        border-right-width: 0px;
+        /*Panel-heading border radius*/
+        border-top-left-radius: 0px;
+        right: 16px;
+    }
+
+    .comment-list .panel .panel-heading .panel-body {
+        padding-top: 6px;
+    }
+
+.comment-list figcaption {
+    /*For wrapping text in thumbnail*/
+    word-wrap: break-word;
+}
+/* Portrait tablets and medium desktops */
+@@media (min-width: 768px) {
+    .comment-list .arrow:after, .comment-list .arrow:before {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 0;
+        border-style: solid;
+        border-color: transparent;
+    }
+
+    .comment-list .panel.arrow.left:after, .comment-list .panel.arrow.left:before {
+        border-left: 0;
+    }
+    /*****Left Arrow*****/
+    /*Outline effect style*/
+    .comment-list .panel.arrow.left:before {
+        left: 0px;
+        top: 30px;
+        /*Use boarder color of panel*/
+        border-right-color: inherit;
+        border-width: 16px;
+    }
+    /*Background color effect*/
+    .comment-list .panel.arrow.left:after {
+        left: 1px;
+        top: 31px;
+        /*Change for different outline color*/
+        border-right-color: #FFFFFF;
+        border-width: 15px;
+    }
+    /*****Right Arrow*****/
+    /*Outline effect style*/
+    .comment-list .panel.arrow.right:before {
+        right: -16px;
+        top: 30px;
+        /*Use boarder color of panel*/
+        border-left-color: inherit;
+        border-width: 16px;
+    }
+    /*Background color effect*/
+    .comment-list .panel.arrow.right:after {
+        right: -14px;
+        top: 31px;
+        /*Change for different outline color*/
+        border-left-color: #FFFFFF;
+        border-width: 15px;
+    }
+}
+
+/* Show Post Card */
+.show-post-card > .mdl-card__title:hover {
+    cursor: pointer;
+    background-color: #00a8a049;
+}
+
+.comment-list .comment-post {
+    margin-top: 6px;
+}
+
+.btn-edit {
+    background-color: darkgreen;
+    color: white;
+}
+
+.site-post-author-container {
+    text-decoration: none;
+    color: darkorchid;
+    opacity: 0.7;
+
+    margin-left: auto;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    padding-right: 10px;
+}
+
+.site-post-author-container:hover {
+    text-decoration: underline;
+    opacity: 1;
+    
+}
+
+.link {
+    text-decoration: none;
+/*    color: darkorchid;*/
+/*    opacity: 0;*/
+}
+
+.link:hover {
+    text-decoration: underline;
+    opacity: 1;
+}
+
+.page-content {
+    padding: 0px 70px 20px 70px;
+}
+
+/* Likes */
+.btn-liked {
+    margin-bottom: 5px;
+    font-size: 16px;
+}
+
+.btn-not-liked {
+    margin-bottom: 5px;
+    font-size: 16px;
+    color: black;
+    opacity: 0.6;
+}
+
+.like-link {
+    min-width: inherit;
+/*    color: rgb(92 99 255);*/
+}
+
+/* Group card */
+.group-card {
+    margin-bottom: 30px;
+}
+
+.group-card > .mdl-card__title {
+    color: white;
+    background-color: rgb(63,81,181);
+}
+
+.group-card > .mdl-card__title:hover {
+    background-color: #0c1b79;
+    cursor: pointer;
+}
+
+
+.my-groups-container {
+    display: flex;
+    flex-wrap: wrap;
+    grid-gap: 15px;
+}
+
+.explore-groups-container {
+    max-width: 400px;
+    margin: auto;
+    justify-content: center;
+    grid-gap: 15px;
+}
+
+.explore-groups-container > .group-card {
+    flex-basis: 100%;
+    width: 100%;
+}
+
+.count-people {
+    margin-left: 5px;
+}
+
+.mdl-layout__header a.mdl-navigation__link:hover {
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+/* Admin buttons */
+.admin-btn {
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
