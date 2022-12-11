@@ -1,0 +1,29 @@
+﻿@using SocialPlatform.Models
+@using System.Data.Entity
+@model DbSet<Group>
+
+@{
+	ViewBag.Title = "Index";
+}
+
+<h1>@ViewBag.Message</h1>
+
+<h2>All Groups</h2>
+
+<a class="btn btn-primary" href="/Groups/New">Create new group</a>
+<br />
+<br />
+
+@foreach (var group in Model)
+{
+<div class="panel panel-default">
+
+	<h3>Group name: @group.Name</h3>
+	<h4>User count: @group.Members.Count()</h4>
+	<div class="panel-footer">
+		<a class=" btn btn-sm btn btn-success"
+		   href="/Groups/Show/@group.GroupId">View Group</a>
+	</div>
+</div>
+}
+
