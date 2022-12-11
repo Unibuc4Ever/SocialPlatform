@@ -12,14 +12,15 @@ namespace SocialPlatform.Controllers
 {
     public class PostsController : Controller
     {
-        private static ApplicationDbContext db = new ApplicationDbContext();
+        private static ApplicationDbContext db1 = new ApplicationDbContext();
         private static UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new
-             UserStore<ApplicationUser>(db));
+             UserStore<ApplicationUser>(db1));
 
         // GET: Post
         [Authorize]
         public ActionResult Index()
         {
+            ApplicationDbContext db = new ApplicationDbContext();
             // trebuie sa returneam numai posturile
             // din baza de date care sunt pe un wall
             // la care avem acces (suntem prieteni).
@@ -38,6 +39,7 @@ namespace SocialPlatform.Controllers
         [Authorize]
         public ActionResult New(Post post)
         {
+            ApplicationDbContext db = new ApplicationDbContext();
             var user = db.Users.Find(User.Identity.GetUserId());
             post.UserId = user.Id;
             post.CreatedAt = DateTime.Now;
@@ -79,6 +81,7 @@ namespace SocialPlatform.Controllers
         [Authorize]
         public ActionResult Edit(int id)
         {
+            ApplicationDbContext db = new ApplicationDbContext();
             try {
                 Post post = db.Posts.Find(id);
                 if (post.User.Id != User.Identity.GetUserId())
@@ -95,6 +98,7 @@ namespace SocialPlatform.Controllers
         [Authorize]
         public ActionResult Edit(int id, Post new_post)
         {
+            ApplicationDbContext db = new ApplicationDbContext();
             try
             {
                 if (ModelState.IsValid)
@@ -121,6 +125,7 @@ namespace SocialPlatform.Controllers
         [Authorize]
         public ActionResult Delete(int id)
         {
+            ApplicationDbContext db = new ApplicationDbContext();
             try {
                 Post post = db.Posts.Find(id);
                 if (post.User.Id != User.Identity.GetUserId())

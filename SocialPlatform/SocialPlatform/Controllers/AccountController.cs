@@ -19,8 +19,6 @@ namespace SocialPlatform.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
 
-        private static ApplicationDbContext db = new ApplicationDbContext();
-
         public AccountController()
         {
         }
@@ -151,6 +149,7 @@ namespace SocialPlatform.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Register(RegisterViewModel model)
         {
+            ApplicationDbContext db = new ApplicationDbContext();
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser
