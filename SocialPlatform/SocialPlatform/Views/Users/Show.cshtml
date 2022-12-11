@@ -12,19 +12,29 @@
 
 @if (user.Id != Model.Id)
 {
-    if (user.Friends.Contains(Model))
+    if (user.Friends.Where(usr => usr.Id == Model.Id).Count() == 1)
     {
-        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
-            Button
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+                id="friend_request_button"
+                onclick="unFriend('@Model.Id');">
+            Unfriend
         </button>
     }
-    else if (user.SentFriendRequests.Contains(Model))
+    else if (user.SentFriendRequests.Where(usr => usr.Id == Model.Id).Count() == 1)
     {
-
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+                id="friend_request_button"
+                onclick="cancelFriendRequest('@Model.Id');">
+            Cancel Friend Request
+        </button>
     }
-    else if (user.ReceivedFriendRequests.Contains(Model))
+    else if (user.ReceivedFriendRequests.Where(usr => usr.Id == Model.Id).Count() == 1)
     {
-
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+                id="friend_request_button"
+                onclick="acceptFriendRequest('@Model.Id');">
+            Accept Friend Request
+        </button>
     }
     else
     {
@@ -34,7 +44,6 @@
             Friend Request
         </button>
     }
-
 }
 
 <div class="container">

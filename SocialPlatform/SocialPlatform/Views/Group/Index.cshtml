@@ -1,8 +1,8 @@
 ﻿@using SocialPlatform.Models
-@model ICollection<Group>
+@model Group
 
 @{
-	ViewBag.Title = "Index";
+    ViewBag.Title = "Index";
 }
 
 <h1>@ViewBag.Message</h1>
@@ -13,16 +13,33 @@
 <br />
 <br />
 
-@foreach (var group in Model)
-{
-<div class="panel panel-default">
-
-	<h3>Group name: @group.Name</h3>
-	<h4>User count: @group.Members.Count()</h4>
-	<div class="panel-footer">
-		<a class=" btn btn-sm btn btn-success"
-		   href="/Groups/Show/@group.GroupId">View Group</a>
-	</div>
+<div class="container">
+    @if (Model != null)
+    {
+        <div class="panel panel-default container-item">
+            <h3>Group name: @Model.Name</h3>
+            <h4>User count: @Model.Members.Count()</h4>
+            <div class="panel-footer">
+                <a class=" btn btn-sm btn btn-success"
+                   href="/Groups/Show/@Model.GroupId">View Group</a>
+            </div>
+        </div>
+    }
 </div>
-}
+
+<script src="https://unpkg.com/infinite-scroll@3/dist/infinite-scroll.pkgd.js"></script>
+<script>
+    $('.container').infiniteScroll({
+        path: function () {
+            var page = this.loadCount + 1
+            return '/Groups/My?frommaybe=' + page;
+        },
+        append: '.container-item',
+        status: '.page-load-status',
+        prefill: true,
+        debug: true,
+        scrollThreshold: 2000,
+        elementScroll: '.mdl-layout__content',
+    });
+</script>
 
