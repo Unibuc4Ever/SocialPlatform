@@ -78,7 +78,7 @@ namespace SocialPlatform.Controllers
                     return new HttpStatusCodeResult(HttpStatusCode.NoContent);
 
                 if (from > 0 && user.Friends.Count(usr => usr.Id == User.Identity.GetUserId()) == 0
-                        && user.WallIsVisible == false)
+                        && user.WallIsVisible == false && user.Id != User.Identity.GetUserId())
                     return new HttpStatusCodeResult(HttpStatusCode.NoContent);
 
                 ViewBag.PostNr = from;
