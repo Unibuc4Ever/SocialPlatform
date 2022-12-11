@@ -12,7 +12,7 @@
 
 <a class="btn btn-sm btn-success" href=@Url.RouteUrl("AddFriendRequest")>Send Friend Request</a>
 
-<a class="btn btn-sm btn-success" href="/Posts/New">Create A Post</a>
+<a class="btn btn-sm btn-success" href="/Posts/New/@Model.WallId">Create A Post</a>
 
 <a class="btn btn-sm btn-success" href="/Posts/Index">News Feed</a>
 
@@ -21,5 +21,9 @@
 <a class="btn btn-sm btn-success" href=@Url.RouteUrl("ReceivedFriendRequests")>View Received Friend Requests</a>
 
 <a class="btn btn-sm btn-success" href="/Users/Friends">View Friend</a>
+
+<a class="btn btn-sm btn-success" href="/Groups">View my Groups</a>
+
+<a class="btn btn-sm btn-success" href="/Groups/New">Create new Group</a>
 
 <br />

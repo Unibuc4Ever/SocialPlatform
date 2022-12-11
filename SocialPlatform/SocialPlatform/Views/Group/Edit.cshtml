@@ -1,0 +1,26 @@
+﻿@model SocialPlatform.Models.Group
+
+@{
+
+}
+
+<h2>Modifica Grup</h2>
+
+@using (Html.BeginForm(actionName: "New", controllerName: "Group"))
+{
+	@Html.HttpMethodOverride(HttpVerbs.Put)
+	@Html.ValidationSummary(false, "", new { @class = "text-danger" })
+
+	@Html.HiddenFor(m => m.GroupId)
+
+	@Html.Label("Name", "Nume Grup")
+	<br />
+	@Html.TextBox("Name", null, new { @class = "form-control" })
+	@Html.ValidationMessageFor(m => m.Name, null, new { @class = "text-danger" })
+	<br />
+	<br />
+	<button class="btn btn-sm btn-success" type="submit">Modifica Grup</button>
+}
+
+
+
