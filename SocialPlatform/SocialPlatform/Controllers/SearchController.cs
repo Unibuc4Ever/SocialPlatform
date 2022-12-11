@@ -9,144 +9,99 @@ namespace SocialPlatform.Controllers
 {
     public class SearchController : Controller
     {
-        public ActionResult Index(string query)
+        public ActionResult Posts(string query, int? frommaybe)
         {
             var db = new ApplicationDbContext();
-            
+            int from = frommaybe ?? 0;
 
-            return View();
-        }
-
-        // GET: Search
-        // Search the word id.
-        // If id is null, then redirect to default
-        public ActionResult Old (string query)
-        {
-            var db = new ApplicationDbContext();
             if (query == null)
                 return RedirectToRoute("/");
-
             query = query.Trim();
 
-            if (query.Length == 0)
+            try
+            {
+                // TODO: sa fixam ordinea
+                var posts = db.Posts.Where(post =>
+                    post.Title.Contains(query) ||
+                    post.Content.Contains(query));
+
+                if (from < 0 || from > posts.Count())
+                    throw new Exception();
+
+                Post post_ret = null;
+                if (from != 0)
+                    post_ret = posts.ToList().ElementAt(from - 1);
+
+                ViewBag.Query = query;
+                return View(post_ret);
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("/");
+            }
+        }
+
+        public ActionResult Groups(string query, int? frommaybe)
+        {
+            var db = new ApplicationDbContext();
+            int from = frommaybe ?? 0;
+
+            if (query == null)
                 return RedirectToRoute("/");
+            query = query.Trim();
 
-            var users = db.Users.Where(user =>
-                (user.FirstName + " " + user.LastName).Contains(query) ||
-                (user.LastName + " " + user.FirstName).Contains(query));
-
-            var groups = db.Groups.Where(group =>
-                group.Name.Contains(query));
-
-            var posts = db.Posts.Where(post =>
-                post.Title.Contains(query) ||
-                post.Content.Contains(query));
-
-            ViewBag.Users = users;
-            ViewBag.Groups = groups;
-            ViewBag.Posts = posts;
-
-            return View();
-        }
-
-        public ActionResult PagedGroups(string query, int cnt, int lastWallID)
-        {
-            var db = new ApplicationDbContext();
-            //db.Configuration.LazyLoadingEnabled = false;
-            //db.Configuration.ProxyCreationEnabled = false;
-
-            var groups = db.Groups.Where(group =>
-                group.Name.Contains(query)).ToList();
-
-            groups.Sort(delegate (Group a, Group b) {
-                return (a.GroupId > b.GroupId) ? -1 : 1;
-            });
-
-            // If not found, returns -1, but we want to anyway not return the old
-            // Element, so we add 1
-            var index = groups.FindIndex(gr => gr.WallId == lastWallID) + 1;
-            cnt = Math.Min(cnt, groups.Count() - index);
-
-            var selectedGroups = groups.GetRange(index, cnt);
-
-            int nextWallID = -1;
-            if (selectedGroups.Count() > 0)
-                nextWallID = selectedGroups.Last().WallId;
-
-            var transformedGroups = new List<dynamic>();
-            selectedGroups.ForEach(delegate (Group gr) {
-                transformedGroups.Add( new {
-                    Name = gr.Name,
-                    GroupID = gr.GroupId,
-                    WallID = gr.WallId,
-                    MemberCount = gr.Members.Count()
-                });
-            });
-
-            return Json(
-                new { 
-                    groups = transformedGroups,
-                    lastWallID = nextWallID
-                }, 
-                JsonRequestBehavior.AllowGet
-            );
-        }
-
-        public ActionResult PagedUsers(string query, int cnt, int lastWallID)
-        {
-            var db = new ApplicationDbContext();
-            db.Configuration.LazyLoadingEnabled = false;
-            db.Configuration.ProxyCreationEnabled = false;
-
-            var users = db.Users.Where(user =>
-                (user.FirstName + " " + user.LastName).Contains(query) ||
-                (user.LastName + " " + user.FirstName).Contains(query)).ToList();
-
-            users.Sort(delegate (ApplicationUser a, ApplicationUser b)
+            try
             {
-                return (a.WallId < b.WallId) ? -1 : 1;
-            });
+                // TODO: sa fixam ordinea
+                var groups = db.Groups.Where(group =>
+                    group.Name.Contains(query));
 
-            // If not found, returns -1, but we want to anyway not return the old
-            // Element, so we add 1
-            int index = users.FindIndex(usr => usr.WallId == lastWallID) + 1;
-            cnt = Math.Min(cnt, users.Count() - index);
+                if (from < 0 || from > groups.Count())
+                    throw new Exception();
 
-            return Json(
-                new { 
-                    users = users.GetRange(index, cnt) 
-                },
-                JsonRequestBehavior.AllowGet
-            );
+                Group group_ret = null;
+                if (from != 0)
+                    group_ret = groups.ToList().ElementAt(from - 1);
+
+                ViewBag.Query = query;
+                return View(group_ret);
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("/");
+            }
         }
-
-        public ActionResult PagedPosts(string query, int cnt, int lastWallID)
+        public ActionResult Users(string query, int? frommaybe)
         {
             var db = new ApplicationDbContext();
-            db.Configuration.LazyLoadingEnabled = false;
-            db.Configuration.ProxyCreationEnabled = false;
+            int from = frommaybe ?? 0;
 
-            var posts = db.Posts.Where(post =>
-                post.Title.Contains(query) ||
-                post.Content.Contains(query)).ToList();
+            if (query == null)
+                return RedirectToRoute("/");
+            query = query.Trim();
 
-            posts.Sort(delegate (Post a, Post b)
+            try
             {
-                return (a.WallId < b.WallId) ? -1 : 1;
-            });
+                // TODO: sa fixam ordinea
+                var users = db.Users.Where(user =>
+                    (user.FirstName + " " + user.LastName).Contains(query) ||
+                    (user.LastName + " " + user.FirstName).Contains(query));
 
-            // If not found, returns -1, but we want to anyway not return the old
-            // Element, so we add 1
-            int index = posts.FindIndex(usr => usr.WallId == lastWallID) + 1;
-            cnt = Math.Min(cnt, posts.Count() - index);
 
-            return Json(
-                new { 
-                    users = posts.GetRange(index, cnt) 
-                },
-                JsonRequestBehavior.AllowGet
-            );
-           
+                if (from < 0 || from > users.ToList().Count())
+                    throw new Exception();
+
+                ApplicationUser user_ret = null;
+                if (from != 0)
+                    user_ret = users.ToList().ElementAt(from - 1);
+
+                ViewBag.Query = query;
+                return View(user_ret);
+            }
+            catch (Exception e)
+            {
+                return RedirectToAction("/");
+            }
         }
     }
 }

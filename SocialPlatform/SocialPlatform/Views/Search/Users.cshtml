@@ -1,0 +1,52 @@
+﻿@using SocialPlatform.Models
+@using System.Data.Entity
+@model ApplicationUser
+
+<div class="mdl-tabs mdl-js-tabs">
+    <div class="mdl-tabs__tab-bar">
+        <a href="/Search/Posts?query=@ViewBag.Query" class="mdl-tabs__tab">Posts</a>
+        <a href="/Search/Groups?query=@ViewBag.Query" class="mdl-tabs__tab">Groups</a>
+        <a href="" class="mdl-tabs__tab is-active">Users</a>
+    </div>
+</div>
+
+<div class="container">
+    @if (Model != null)
+    {
+        <div class="demo-card-event mdl-card mdl-shadow--2dp container-item">
+            <div class="mdl-card__title mdl-card--expand">
+                <h4>
+                    @Model.FirstName @Model.LastName<br>
+                    Number of posts: <br>
+                    @Model.Posts.Count()<br>
+                    Friend of:<br>
+                    @Model.Friends.Count() users
+                </h4>
+            </div>
+            <div class="mdl-card__actions mdl-card--border">
+                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+                   href="/Users/Show/@Model.Id">
+                    View User
+                </a>
+                <div class="mdl-layout-spacer"></div>
+                <i class="material-icons">event</i>
+            </div>
+        </div>
+        <br />
+    }
+</div>
+
+<script>
+    $('.container').infiniteScroll({
+        path: function () {
+            var page = this.loadCount + 1
+            return '/Search/Users?query=@ViewBag.Query&frommaybe=' + page;
+        },
+        append: '.container-item',
+        status: '.page-load-status',
+        prefill: true,
+        debug: true,
+        scrollThreshold: 2000,
+        elementScroll: '.mdl-layout__content',
+    });
+</script>

@@ -1,17 +1,50 @@
 ﻿@using SocialPlatform.Models
 @using System.Data.Entity
+@using Microsoft.AspNet.Identity
 @model ApplicationUser
 
-
 @{
-    ViewBag.Title = "Profile";
+    var db = new ApplicationDbContext();
+    var user = db.Users.Find(User.Identity.GetUserId());
 }
 
-<h1>@ViewBag.Message</h1>
-<br />
-<br />
+<h3>@Model.FirstName @Model.LastName</h3>
 
-<p>User: @Model.FirstName @Model.LastName</p>
+@if (user.Id != Model.Id)
+{
+    if (user.Friends.Where(usr => usr.Id == Model.Id).Count() == 1)
+    {
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+                id="friend_request_button"
+                onclick="unFriend('@Model.Id');">
+            Unfriend
+        </button>
+    }
+    else if (user.SentFriendRequests.Where(usr => usr.Id == Model.Id).Count() == 1)
+    {
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+                id="friend_request_button"
+                onclick="cancelFriendRequest('@Model.Id');">
+            Cancel Friend Request
+        </button>
+    }
+    else if (user.ReceivedFriendRequests.Where(usr => usr.Id == Model.Id).Count() == 1)
+    {
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+                id="friend_request_button"
+                onclick="acceptFriendRequest('@Model.Id');">
+            Accept Friend Request
+        </button>
+    }
+    else
+    {
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+                id="friend_request_button"
+                onclick="sendFriendRequest('@Model.Id');">
+            Friend Request
+        </button>
+    }
+}
 
 <div class="container">
     @if (ViewBag.PostNr > 0)
@@ -26,7 +59,6 @@
     }
 </div>
 
-<script src="https://unpkg.com/infinite-scroll@3/dist/infinite-scroll.pkgd.js"></script>
 <script>
     $('.container').infiniteScroll({
         path: function () {

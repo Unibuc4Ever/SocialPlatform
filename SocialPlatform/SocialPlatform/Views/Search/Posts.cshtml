@@ -2,13 +2,18 @@
 @using System.Data.Entity
 @model Post
 
-<br />
-<br />
+<div class="mdl-tabs mdl-js-tabs">
+    <div class="mdl-tabs__tab-bar">
+        <a href="" class="mdl-tabs__tab is-active">Posts</a>
+        <a href="/Search/Groups?query=@ViewBag.Query" class="mdl-tabs__tab">Groups</a>
+        <a href="/Search/Users?query=@ViewBag.Query" class="mdl-tabs__tab">Users</a>
+    </div>
+</div>
 
 <div class="container">
     @if (Model != null)
     {
-        <div class="panel panel-default container-item">
+        <div class="container-item">
             @{
                 ViewBag.ShowViewPostButton = true;
                 @Html.Partial("ShowPost", Model);
@@ -22,7 +27,7 @@
     $('.container').infiniteScroll({
         path: function () {
             var page = this.loadCount + 1
-            return '/Posts/Index?frommaybe=' + page;
+            return '/Search/Posts?query=@ViewBag.Query&frommaybe=' + page;
         },
         append: '.container-item',
         status: '.page-load-status',
