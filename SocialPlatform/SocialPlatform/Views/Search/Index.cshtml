@@ -2,77 +2,86 @@
 @using System.Data.Entity
 
 @{
-	var Posts = ViewBag.Posts;
-	var Groups = ViewBag.Groups;
-	var Users = ViewBag.Users;
-	ViewBag.Title = "Search";
+    @*var Posts = ViewBag.Posts;
+    var Groups = ViewBag.Groups;
+    var Users = ViewBag.Users;*@
+    ViewBag.Title = "Search";
 }
 
 <h1>@ViewBag.Message</h1>
 
 <div class="mdl-tabs mdl-js-tabs">
-	<div class="mdl-tabs__tab-bar">
-		<a href="#tab1-panel" class="mdl-tabs__tab is-active">Posts</a>
-		<a href="#tab2-panel" class="mdl-tabs__tab">Groups</a>
-		<a href="#tab3-panel" class="mdl-tabs__tab">Users</a>
-	</div>
+    <div class="mdl-tabs__tab-bar">
+        <a href="#tab1-panel" class="mdl-tabs__tab is-active">Posts</a>
+        <a href="#tab2-panel" class="mdl-tabs__tab">Groups</a>
+        <a href="#tab3-panel" class="mdl-tabs__tab">Users</a>
+    </div>
 
-	<div class="mdl-tabs__panel is-active" id="tab1-panel">
-		@foreach (Post post in Posts)
-		{
-			ViewBag.ShowViewPostButton = true;
-			@Html.Partial("ShowPost", post);
-			ViewBag.ShowViewPostButton = false;
-		}
-	</div>
+    @*<div class="mdl-tabs__panel is-active" id="tab1-panel">
+        @foreach (Post post in Posts)
+        {
+            ViewBag.ShowViewPostButton = true;
+            @Html.Partial("ShowPost", post);
+            ViewBag.ShowViewPostButton = false;
+        }
+    </div>*@
 
-	<div class="mdl-tabs__panel" id="tab2-panel">
-		@foreach (Group group in Groups)
-		{
-			<div class="demo-card-event mdl-card mdl-shadow--2dp">
-				<div class="mdl-card__title mdl-card--expand">
-					<h4>
-						Group Name:<br>
-						@group.Name<br>
-						Members:<br>
-						@group.Members.Count()
-					</h4>
-				</div>
-				<div class="mdl-card__actions mdl-card--border">
-					<a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
-					   href="/Group/Show/@group.GroupId">
-						View Group
-					</a>
-					<div class="mdl-layout-spacer"></div>
-					<i class="material-icons">event</i>
-				</div>
-			</div>
-		}
-	</div>
+<div class="mdl-tabs__panel" id="tab2-panel">
+    <div id="group-container">
 
-	<div class="mdl-tabs__panel" id="tab3-panel">
-		@foreach (ApplicationUser user in Users)
-		{
-			<div class="demo-card-event mdl-card mdl-shadow--2dp">
-				<div class="mdl-card__title mdl-card--expand">
-					<h4>
-						@user.FirstName @user.LastName<br>
-						Number of posts: <br>
-						@user.Posts.Count()<br>
-						Friend of:<br>
-						@user.Friends.Count() users
-					</h4>
-				</div>
-				<div class="mdl-card__actions mdl-card--border">
-					<a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
-						href="/Users/Show/@user.Id">
-						View User
-					</a>
-					<div class="mdl-layout-spacer"></div>
-					<i class="material-icons">event</i>
-				</div>
-			</div>
-			<br />
-		}
-	</div>
+    </div>
+
+    <br />
+    <button onclick="infScroll.loadNextPage()"
+            class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+        Load More...
+    </button>
+    @*@foreach (Group group in Groups)
+        {
+            <div class="demo-card-event mdl-card mdl-shadow--2dp">
+                <div class="mdl-card__title mdl-card--expand">
+                    <h4>
+                        Group Name:<br>
+                        @group.Name<br>
+                        Members:<br>
+                        @group.Members.Count()
+                    </h4>
+                </div>
+                <div class="mdl-card__actions mdl-card--border">
+                    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+                       href="/Group/Show/@group.GroupId">
+                        View Group
+                    </a>
+                    <div class="mdl-layout-spacer"></div>
+                    <i class="material-icons">event</i>
+                </div>
+            </div>
+        }*@
+</div>
+
+    @*<div class="mdl-tabs__panel" id="tab3-panel">
+        @foreach (ApplicationUser user in Users)
+        {
+            <div class="demo-card-event mdl-card mdl-shadow--2dp">
+                <div class="mdl-card__title mdl-card--expand">
+                    <h4>
+                        @user.FirstName @user.LastName<br>
+                        Number of posts: <br>
+                        @user.Posts.Count()<br>
+                        Friend of:<br>
+                        @user.Friends.Count() users
+                    </h4>
+                </div>
+                <div class="mdl-card__actions mdl-card--border">
+                    <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+                       href="/Users/Show/@user.Id">
+                        View User
+                    </a>
+                    <div class="mdl-layout-spacer"></div>
+                    <i class="material-icons">event</i>
+                </div>
+            </div>
+            <br />
+        }
+    </div>*@
 </div>
