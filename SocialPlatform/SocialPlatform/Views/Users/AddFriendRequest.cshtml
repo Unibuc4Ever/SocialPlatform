@@ -1,7 +1,12 @@
-﻿@*@model SocialPlatform.Models.FriendRequest*@
+﻿@using SocialPlatform.Models;
+@using Microsoft.AspNet.Identity
 
 @{
-    ViewBag.Title = "FriendRequest";
+	var db = new ApplicationDbContext();
+}
+
+@{
+	ViewBag.Title = "FriendRequest";
 }
 
 <h2>FriendRequest</h2>
@@ -9,13 +14,22 @@
 
 @using (Html.BeginForm(actionName: "AddFriendRequest", controllerName: "Users"))
 {
-    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
-    @Html.Label("otherID", "ID-ul prietenului")
-    <br />
-    @Html.TextBox("otherID", null, new { @class = "form-control" })
-    @*@Html.ValidationMessageFor(m => m.OtherId, null, new { @class = "text-danger" })*@
-    <br />
-    <br />
+	@Html.ValidationSummary(false, "", new { @class = "text-danger" })
+	@Html.Label("otherID", "User")
+	<br />
+	<select name="otherID" class="form-control">
+		@foreach (var user in db.Users)
+		{
+			if (user.Id != User.Identity.GetUserId())
+			{
+				<option class="dropdown-item" value="@user.Id">
+					@user.FirstName @user.LastName
+				</option>
+			}
+		}
+	</select>
+	<br />
+	<br />
 
-    <button class="btn btn-sm btn-success" type="submit">Trimite cerere</button>
+	<button class="btn btn-sm btn-success" type="submit">Trimite cerere</button>
 }

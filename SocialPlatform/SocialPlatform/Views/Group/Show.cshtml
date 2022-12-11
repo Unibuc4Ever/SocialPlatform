@@ -23,6 +23,10 @@
 	</div>
 }
 
+<hr />
+
+<a class="btn btn-sm btn-success" href="/Posts/New/@Model.Wall.WallId">Add Post</a>
+
 <h2>Members:</h2>
 <ul>
 	@foreach (var user in Model.Members)
@@ -35,6 +39,7 @@
 @foreach (var post in Model.Wall.Posts)
 {
 	@Html.Partial("ShowPost", post)
+	<a class="btn btn-sm btn-success" href="/Posts/Show/@post.PostId">View Post</a>
 	if (post.User.Id == User.Identity.GetUserId())
 	{
 		<a class="btn btn-sm btn-success" href="/Posts/Edit/@post.PostId">Editaza</a>
