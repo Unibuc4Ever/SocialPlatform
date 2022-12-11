@@ -14,8 +14,8 @@ namespace SocialPlatform.Controllers
             var db = new ApplicationDbContext();
             int from = frommaybe ?? 0;
 
-            if (query == null)
-                return RedirectToRoute("/");
+            if (query == null || query == "")
+                return Redirect("/");
             query = query.Trim();
 
             try
@@ -37,7 +37,7 @@ namespace SocialPlatform.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("/");
+                return Redirect("/");
             }
         }
 
@@ -46,8 +46,8 @@ namespace SocialPlatform.Controllers
             var db = new ApplicationDbContext();
             int from = frommaybe ?? 0;
 
-            if (query == null)
-                return RedirectToRoute("/");
+            if (query == null || query == "")
+                return Redirect("/");
             query = query.Trim();
 
             try
@@ -68,7 +68,7 @@ namespace SocialPlatform.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("/");
+                return Redirect("/");
             }
         }
         public ActionResult Users(string query, int? frommaybe)
@@ -76,8 +76,8 @@ namespace SocialPlatform.Controllers
             var db = new ApplicationDbContext();
             int from = frommaybe ?? 0;
 
-            if (query == null)
-                return RedirectToRoute("/");
+            if (query == null || query == "")
+                return Redirect("/");
             query = query.Trim();
 
             try
@@ -100,7 +100,7 @@ namespace SocialPlatform.Controllers
             }
             catch (Exception e)
             {
-                return RedirectToAction("/");
+                return Redirect("/");
             }
         }
     }

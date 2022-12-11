@@ -166,7 +166,7 @@ namespace SocialPlatform.Controllers
             {
                 Group group = db.Groups.Find(Id);
                 var user = db.Users.Find(User.Identity.GetUserId());
-                if (group.UserId != user.Id)
+                if (group.UserId != user.Id && !User.IsInRole("Administrator"))
                     throw new Exception();
 
                 db.Walls.Remove(group.Wall);
