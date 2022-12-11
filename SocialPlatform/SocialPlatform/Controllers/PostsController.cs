@@ -40,7 +40,7 @@ namespace SocialPlatform.Controllers
                     post.UserId == user.Id ||
                     my_friends.Any(fr => fr.Id == post.UserId) ||
                     my_groups.Where(gr => gr.WallId == post.WallId).Count() > 0 ||
-                    my_friends.Where(fr => fr.WallId == post.WallId).Count() > 0);
+                    my_friends.Where(fr => fr.WallId == post.WallId).Count() > 0).OrderByDescending(post => post.CreatedAt);
 
                 if (from < 0 || from > posts.Count())
                     return new HttpStatusCodeResult(HttpStatusCode.NoContent);
@@ -79,9 +79,13 @@ namespace SocialPlatform.Controllers
                     if (user.Friends.Count(usr => usr.Id == User.Identity.GetUserId()) == 1)
                         return true;
 
+                    // my own post
+                    if (user.WallId == post.WallId)
+                        return true;
+
                     // It is public
                     return user.WallIsVisible;
-                }).ToList();
+                }).ToList().OrderByDescending(post => post.CreatedAt);
 
                 if (from < 0 || from > posts.Count())
                     return new HttpStatusCodeResult(HttpStatusCode.NoContent);
