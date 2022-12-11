@@ -1,14 +1,43 @@
 ﻿@using SocialPlatform.Models
 @using System.Data.Entity
 @using Microsoft.AspNet.Identity
+@using Microsoft.AspNet.Identity.EntityFramework;
 @model ApplicationUser
 
 @{
     var db = new ApplicationDbContext();
     var user = db.Users.Find(User.Identity.GetUserId());
+    UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>
+            (new UserStore<ApplicationUser>(db));
 }
 
 <h3>@Model.FirstName @Model.LastName</h3>
+
+@if (User.IsInRole("Administrator"))
+{
+    <span class="mdl-chip mdl-chip--contact">
+        <span class="mdl-chip__contact mdl-color--teal mdl-color-text--white">ID</span>
+        <span class="mdl-chip__text">@Model.Id</span>
+    </span>
+    <span class="mdl-chip mdl-chip--contact">
+        <span class="mdl-chip__contact mdl-color--teal mdl-color-text--white">R</span>
+        <span class="mdl-chip__text">@userManager.GetRoles(Model.Id).First()</span>
+    </span>
+    
+    <br />
+    
+    <form method="post" action="/Admin/ChangeRole">
+        <label for="new_role">New Role:</label>
+        <select id="new_role" name="new_role">
+            <option value="User">Normal User</option>
+            <option value="Editor">Editor</option>
+            <option value="Administrator">Administrator</option>
+        </select>
+        <input type="hidden" id="user_id" name="user_id" value="@Model.Id">
+        <button class="btn btn-sm btn-danger" type="submit">Change Role</button>
+    </form>
+    <br />
+}
 
 @if (user.Id != Model.Id)
 {

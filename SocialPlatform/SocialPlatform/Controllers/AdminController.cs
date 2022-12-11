@@ -12,10 +12,28 @@ namespace SocialPlatform.Controllers
     public class AdminController : Controller
     {
         // GET: Admin
+        [Authorize(Roles = "Administrator")]
         public ActionResult Index()
         {
             ApplicationDbContext db = new ApplicationDbContext();
             return View(db.Users);
+        }
+
+        [Authorize(Roles = "Administrator")]
+        public ActionResult ChangeRole(string user_id, string new_role)
+        {
+            var db = new ApplicationDbContext();
+            UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>
+                (new UserStore<ApplicationUser>(db));
+            var user = db.Users.Find(user_id);
+            string user_wall_route = "/Users/Show/" + user_id;
+
+            if (!new string[3] { "Administrator", "Editor", "User" }.Contains(new_role))
+                return Redirect(user_wall_route);
+
+            userManager.RemoveFromRoles(user_id, new string[] { userManager.GetRoles(user_id).First() });
+            userManager.AddToRole(user_id, new_role);
+            return Redirect(user_wall_route);
         }
 
         public ActionResult Dummy()

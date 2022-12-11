@@ -95,7 +95,7 @@ namespace SocialPlatform.Controllers
             try
             {
                 Comment comm = db.Comments.Find(id);
-                if (comm.UserId != User.Identity.GetUserId())
+                if (comm.UserId != User.Identity.GetUserId() && !User.IsInRole("Administrator"))
                     throw new Exception();
 
                 int PostId = comm.PostId;

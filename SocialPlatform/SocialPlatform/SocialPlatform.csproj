@@ -194,6 +194,10 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\aspnet-SocialPlatform-20201116024032.mdf" />
+    <Content Include="App_Data\aspnet-SocialPlatform-20201116024032_log.ldf">
+      <DependentUpon>aspnet-SocialPlatform-20201116024032.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\Scripts\scripts.js" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
@@ -272,7 +276,6 @@
     <Content Include="Views\Search\Groups.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="App_Data\" />
     <Folder Include="Views\Likes\" />
   </ItemGroup>
   <ItemGroup>
