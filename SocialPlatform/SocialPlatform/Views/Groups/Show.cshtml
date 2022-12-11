@@ -24,7 +24,7 @@
 
 @if (Model.User.Id == User.Identity.GetUserId())
 {
-    <form action="/Group/Edit/@Model.GroupId" method="post">
+    <form action="/Groups/Edit/@Model.GroupId" method="post">
         @Html.HttpMethodOverride(HttpVerbs.Patch)
         <button type="submit"
                 class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
@@ -34,7 +34,7 @@
 }
 else if (Model.Members.Count(mem => mem.Id == User.Identity.GetUserId()) > 0)
 {
-    <form action="/Group/Leave/@Model.GroupId" method="post">
+    <form action="/Groups/Leave/@Model.GroupId" method="post">
         @Html.HttpMethodOverride(HttpVerbs.Patch)
         <button type="submit"
                 class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
@@ -44,7 +44,7 @@ else if (Model.Members.Count(mem => mem.Id == User.Identity.GetUserId()) > 0)
 }
 else
 {
-    <form action="/Group/Join/@Model.GroupId" method="post">
+    <form action="/Groups/Join/@Model.GroupId" method="post">
         @Html.HttpMethodOverride(HttpVerbs.Patch)
         <button type="submit"
                 class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--colored">
