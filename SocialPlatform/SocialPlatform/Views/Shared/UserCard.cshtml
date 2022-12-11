@@ -24,7 +24,7 @@
         @if (ViewBag.ViewProfile != false)
         {
             <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
-                href="/Users/Show/@Model.Id">
+               href="/Users/Show/@Model.Id">
                 View Profile
             </a>
         }
@@ -70,6 +70,13 @@
                     Friend Request
                 </button>
             }
+        }
+        else if (userId == Model.Id)
+        {
+            <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
+                    href="/Users/Settings">
+                Settings
+            </a>
         }
     </div>
 
