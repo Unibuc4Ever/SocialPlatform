@@ -85,15 +85,15 @@
                 <a class="mdl-navigation__link" href="/Users/Friends">My Friends</a>
                 <a class="mdl-navigation__link" href="/Users/ReceivedFriendRequests">Friend Requests</a>
                 <a class="mdl-navigation__link" href="/Users/Settings">Settings</a>
+                @if(User.IsInRole("Administrator"))
+                {
+                    <a class="mdl-navigation__link" href="/Admin/Index">Admin's Corner</a>
+                }
             </nav>
         </div>
         <main class="mdl-layout__content">
             <div class="page-content">
                 @RenderBody()
-                <hr />
-                <footer>
-                    <p>&copy; @DateTime.Now.Year - SocialPlatform</p>
-                </footer>
             </div>
         </main>
     </div>
