@@ -17,6 +17,9 @@
         @Model.Content
     </div>
     <div class="mdl-card__actions mdl-card--border" style="display: flex">
+        <a href="/Users/Show/@Model.UserId">Author: @Model.User.FirstName @Model.User.LastName</a>
+    </div>
+    <div class="mdl-card__actions mdl-card--border" style="display: flex">
         @{
             var Likes = db.Likes.Where(l => (l.UserId == userId && l.PostId == Model.PostId));
             if (Likes.Count() > 0)

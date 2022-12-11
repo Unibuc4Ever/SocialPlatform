@@ -32,3 +32,60 @@ function sendUnLikeForm(likeId) {
 		}
 	});
 }
+
+// Used for sending friend requests.
+// They require the buttons to have particular IDs.
+
+function sendFriendRequest(otherId) {
+	$.ajax({
+		url: "/Users/FriendRequest/New/" + otherId,
+		type: 'POST',
+		success: function () {
+			var el = document.getElementById('friend_request_button');
+			el.textContent('Cancel Friend Request');
+		},
+		error: function (jqXHR, exception) {
+			alert('Error message. Failed to send request!');
+		}
+	})
+}
+
+function cancelFriendRequest(otherId, el) {
+	$.ajax({
+		url: "/Users/FriendRequest/Cancel/" + otherId,
+		type: 'POST',
+		success: function () {
+			el.disabled = true;
+		},
+		error: function (jqXHR, exception) {
+			alert('Error message. Failed to cancel request!');
+		}
+	})
+}
+
+function acceptFriendRequest(otherId, el) {
+	$.ajax({
+		url: "/Users/FriendRequest/Accept/" + otherId,
+		type: "POST",
+		success: function () {
+			el.disabled = true;
+		},
+		error: function (jqXHR, exception) {
+			alert('Error message. Failed to accept!');
+		}
+	})
+}
+
+function unFriend(otherId, el) {
+	$.ajax({
+		url: "/Users/Friends/Unfriend/" + otherId,
+		type: 'POST',
+		success: function () {
+			el.disabled = true;
+		},
+		error: function (jqXHR, exception) {
+			alert('Error message. Failed to send unfriend request!');
+		}
+	})
+}
+

@@ -1,17 +1,41 @@
 ﻿@using SocialPlatform.Models
 @using System.Data.Entity
+@using Microsoft.AspNet.Identity
 @model ApplicationUser
 
-
 @{
-    ViewBag.Title = "Profile";
+    var db = new ApplicationDbContext();
+    var user = db.Users.Find(User.Identity.GetUserId());
 }
 
-<h1>@ViewBag.Message</h1>
-<br />
-<br />
+<h3>@Model.FirstName @Model.LastName</h3>
 
-<p>User: @Model.FirstName @Model.LastName</p>
+@if (user.Id != Model.Id)
+{
+    if (user.Friends.Contains(Model))
+    {
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+            Button
+        </button>
+    }
+    else if (user.SentFriendRequests.Contains(Model))
+    {
+
+    }
+    else if (user.ReceivedFriendRequests.Contains(Model))
+    {
+
+    }
+    else
+    {
+        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
+                id="friend_request_button"
+                onclick="sendFriendRequest('@Model.Id');">
+            Friend Request
+        </button>
+    }
+
+}
 
 <div class="container">
     @if (ViewBag.PostNr > 0)
