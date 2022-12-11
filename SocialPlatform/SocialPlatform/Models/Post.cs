@@ -20,10 +20,15 @@ namespace SocialPlatform.Models
         [Required(ErrorMessage = "Trebuie sa aveti un continut!")]
         public string Content { get; set; }
 
+        // Creator of the post.
         public string UserId { get; set; }
 
         public virtual ApplicationUser User { get; set; }
 
         public virtual ICollection<Comment> Comments { get; set; }
+
+        // Where the post was posted.
+        public int WallId { get; set; }
+        public virtual Wall Wall { get; set; }
     }
 }
