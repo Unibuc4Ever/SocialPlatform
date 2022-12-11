@@ -21,10 +21,9 @@ namespace SocialPlatform.Controllers
 
             try
             {
-                // TODO: sa fixam ordinea
                 var posts = db.Posts.Where(post =>
                     post.Title.Contains(query) ||
-                    post.Content.Contains(query));
+                    post.Content.Contains(query)).OrderByDescending(post => post.CreatedAt);
 
                 if (from < 0 || from > posts.Count())
                     return new HttpStatusCodeResult(HttpStatusCode.NoContent);
@@ -53,9 +52,8 @@ namespace SocialPlatform.Controllers
 
             try
             {
-                // TODO: sa fixam ordinea
                 var groups = db.Groups.Where(group =>
-                    group.Name.Contains(query));
+                    group.Name.Contains(query)).OrderByDescending(gr => gr.Members.Count());
 
                 if (from < 0 || from > groups.Count())
                     return new HttpStatusCodeResult(HttpStatusCode.NoContent);
@@ -83,10 +81,9 @@ namespace SocialPlatform.Controllers
 
             try
             {
-                // TODO: sa fixam ordinea
                 var users = db.Users.Where(user =>
                     (user.FirstName + " " + user.LastName).Contains(query) ||
-                    (user.LastName + " " + user.FirstName).Contains(query));
+                    (user.LastName + " " + user.FirstName).Contains(query)).OrderByDescending(usr => usr.WallId);
 
 
                 if (from < 0 || from > users.ToList().Count())
