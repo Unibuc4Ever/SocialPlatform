@@ -1,0 +1,32 @@
+﻿@model SocialPlatform.Models.Comment
+@using SocialPlatform.Models;
+@using Microsoft.AspNet.Identity
+@{
+	var db = new ApplicationDbContext();
+	var userId = User.Identity.GetUserId();
+}
+
+<li class="mdl-list__item mdl-list__item--three-line">
+	<div class="mdl-list__item-primary-content">
+		<i class="material-icons mdl-list__item-avatar">person</i>
+		<span>@Model.User.FirstName @Model.User.LastName</span>
+		<span class="mdl-list__item-text-body">
+			@Model.Content
+		</span>
+	</div>
+	<div class="mdl-list__item-secondary-content">
+		@if (Model.UserId == User.Identity.GetUserId())
+		{
+			<a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" href="/Comments/Edit/@Model.CommentId">Edit</a>
+		}
+	</div>
+	<div class="mdl-list__item-secondary-content">
+		@if (Model.UserId == User.Identity.GetUserId())
+		{
+			<form action="/Comments/Delete/@Model.CommentId" method="post">
+				@Html.HttpMethodOverride(HttpVerbs.Delete)
+				<button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" type="submit">Delete</button>
+			</form>
+		}
+	</div>
+</li>

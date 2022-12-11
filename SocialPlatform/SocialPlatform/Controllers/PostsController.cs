@@ -20,8 +20,28 @@ namespace SocialPlatform.Controllers
             // trebuie sa returneam numai posturile
             // din baza de date care sunt pe un wall
             // la care avem acces (suntem prieteni).
-            ViewBag.Posts = db.Posts;
-            return View(db.Users.Find(User.Identity.GetUserId()));
+            var user = db.Users.Find(User.Identity.GetUserId());
+            var my_groups = user.Groups.ToList();
+            var my_friends = user.Friends.ToList();
+
+            var posts = db.Posts.ToList().Where(post =>
+                post.WallId == user.WallId ||
+                post.UserId == user.Id ||
+                my_friends.Any(fr => fr.Id == post.UserId) ||
+                my_groups.Where(gr => gr.WallId == post.WallId).Count() > 0 ||
+                my_friends.Where(fr => fr.WallId == post.WallId).Count() > 0);
+
+            return View(posts.ToList());
+        }
+
+        [Authorize]
+        public ActionResult Explore()
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            // trebuie sa returneam numai posturile
+            // din baza de date care sunt pe un wall
+            // la care avem acces (suntem prieteni).
+            return View(db.Posts.ToList());
         }
 
         // HttpGet
@@ -132,11 +152,14 @@ namespace SocialPlatform.Controllers
                 Post post = db.Posts.Find(id);
                 if (post.User.Id != User.Identity.GetUserId())
                     throw new Exception();
+                db.Likes.RemoveRange(db.Likes.Where(like => like.PostId == post.PostId ||
+                                                    (like.Comment != null && like.Comment.PostId == post.PostId)));
+                db.Comments.RemoveRange(db.Comments.Where(comm => comm.PostId == post.PostId));
                 db.Posts.Remove(post);
                 db.SaveChanges();
                 TempData["message"] = "Articolul a fost sters!";
                 return RedirectToAction("Index");
-            } catch (Exception)
+            } catch (Exception e)
 			{
                 throw new HttpException(403, "Post does not exist or you don't have the required permissons!");
             }

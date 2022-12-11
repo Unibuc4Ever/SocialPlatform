@@ -1,8 +1,8 @@
 ﻿@model SocialPlatform.Models.Post
 @using SocialPlatform.Models;
 
-@{ 
-    var db = new ApplicationDbContext();
+@{
+	var db = new ApplicationDbContext();
 	var userId = User.Identity.GetUserId();
 }
 
@@ -11,112 +11,25 @@
 	ViewBag.Title = "Show";
 }
 
-<script>
-    function sendLikeForm(postId) {
-		$.ajax({
-			url: "/Likes/New",
-			type: 'POST',
-			contentType: 'application/json',
-			data: JSON.stringify({
-				PostId: postId,
-				type: "like"
-			}),
-			success: function () {
-				location.reload();
-			},
-            error: function (jqXHR, exception) {
-                alert('Error message. Failed my Like');
-            }
-        });
-	}
+<br />
+<br />
 
-    function sendUnLikeForm(likeId) {
-        $.ajax({
-            url: "/Likes/Delete",
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify({
-                LikeId: likeId
-            }),
-            success: function () {
-				location.reload();
-            },
-            error: function (jqXHR, exception) {
-                alert('Error message. Failed my Like');
-            }
-        });
-    }
-</script>
-
-<h2>Show  <a class="btn btn-primary" href="/Posts">Inapoi la News Feed</a></h2>
-
-<div class="panel panel-default" style="background-color:azure">
-
+<div class="panel panel-default">
 	@Html.Partial("ShowPost", Model)
-
-    <div class="panel-footer">
-		@{
-			var Likes = db.Likes.Where(l => (l.UserId == userId && l.PostId == Model.PostId));
-			if (Likes.Count() > 0) {
-			<button onclick="sendUnLikeForm(@Likes.First().LikeId)" class="btn btn-warning">
-				UnLike
-			</button>
-			}
-			else
-			{
-			<button onclick="sendLikeForm(@Model.PostId)" class="btn btn-warning">
-				Like
-			</button>
-			}
-			<p>Likes: @Model.Likes.Count()</p>
-		}
-
-        @if (Model.User.Id == User.Identity.GetUserId())
-        {
-            
-            <br />
-            <a class="btn btn-sm btn-success" href="/Posts/Edit/@Model.PostId">Editaza</a>
-            <div style="display: inline-block; float : left">
-                <form method="post" action="/Posts/Delete/@Model.PostId">
-                    @Html.HttpMethodOverride(HttpVerbs.Delete)
-                    <button class="btn btn-sm btn-danger" type="submit">Sterge</button>
-                </form>
-            </div>
-        }
-    </div>
 </div>
 
-<div style="position: center">
+<style>
+	.demo-list-three {
+		width: 650px;
+	}
+</style>
+
+<ul class="demo-list-three mdl-list">
 	@foreach (var comm in Model.Comments)
 	{
-		<article class="row">
-			<div class="col-md-10 col-sm-10">
-				<div class="panel panel-default arrow left">
-					<div class="panel-body">
-						<header class="text-left">
-							<div class="comment-user"><i class="fa fa-user"></i>  @comm.User.FirstName @comm.User.LastName</div>
-							<time class="comment-date" datetime="16-12-2014 01:05"><i class="fa fa-clock-o"></i>@comm.CreatedAt</time>
-						</header>
-						<div class="comment-post">
-							<p>@comm.Content</p>
-						</div>
-						@if (comm.UserId == User.Identity.GetUserId())
-						{
-							<a href="/Comments/Edit/@comm.CommentId" class="btn btn-default">Editeaza</a>
-							<div style="display: inline-block; float : left">
-								<form method="post" action="/Comments/Delete/@comm.CommentId">
-									@Html.HttpMethodOverride(HttpVerbs.Delete)
-									<button class="btn btn-danger">Sterge</button>
-								</form>
-							</div>
-						}
-						@*<p class="text-right"><a href="#" class="btn btn-default btn-sm"><i class="fa fa-reply"></i> reply</a></p>*@
-					</div>
-				</div>
-			</div>
-		</article>
+		@Html.Partial("ShowComment", comm);
 	}
-</div>
+</ul>
 
 <hr />
 
