@@ -9,7 +9,8 @@ namespace SocialPlatform.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
+            AutomaticMigrationDataLossAllowed = true;
             ContextKey = "SocialPlatform.Models.ApplicationDbContext";
         }
 

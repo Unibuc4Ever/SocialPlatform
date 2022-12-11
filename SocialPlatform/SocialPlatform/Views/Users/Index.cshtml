@@ -1,4 +1,6 @@
-﻿@model IEnumerable<SocialPlatform.Models.ApplicationUser>
+﻿@using SocialPlatform.Models
+
+@model IEnumerable<ApplicationUser>
 
 @{
     ViewBag.Title = "Index";
@@ -7,6 +9,35 @@
 <h2>Index</h2>
 
 <h3>@TempData["message"]</h3>
+
+@foreach (ApplicationUser user in Model)
+{
+    <p>Nume: @user.firstName @user.lastName</p>
+    <p>ID: @user.Id</p>
+    <h4>Friends</h4>
+    <ul>
+        @foreach (ApplicationUser friend in user.friends)
+        {
+            <li>@friend.firstName @friend.lastName  --  @friend.Id</li>
+        }
+    </ul>
+    <h4>Sent requests</h4>
+    <ul>
+        @foreach (ApplicationUser friend in user.sentFriendRequests)
+        {
+            <li>@friend.firstName @friend.lastName  --  @friend.Id</li>
+        }
+    </ul>
+    <h4>Received Requests</h4>
+    <ul>
+        @foreach (ApplicationUser friend in user.receivedFriendRequests)
+        {
+            <li>@friend.firstName @friend.lastName  --  @friend.Id</li>
+        }
+    </ul>
+    <hr />
+
+}
 
 <p>
     @Html.ActionLink("Create New", "Create")
@@ -55,53 +86,54 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-<tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.Id)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Email)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.firstName)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.EmailConfirmed)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.PasswordHash)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.SecurityStamp)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.PhoneNumber)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.PhoneNumberConfirmed)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.TwoFactorEnabled)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.LockoutEndDateUtc)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.LockoutEnabled)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.AccessFailedCount)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.UserName)
-    </td>
-    <td>
-        @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-        @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-        @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-    </td>
-</tr>
-}
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.firstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmailConfirmed)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PasswordHash)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SecurityStamp)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PhoneNumberConfirmed)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TwoFactorEnabled)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LockoutEndDateUtc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.LockoutEnabled)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AccessFailedCount)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Details", "Details", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+            </td>
+        </tr>
+    }
 
 </table>

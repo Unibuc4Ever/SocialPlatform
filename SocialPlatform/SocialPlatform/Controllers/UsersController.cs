@@ -37,10 +37,12 @@ namespace SocialPlatform.Controllers
             {
                 if (ModelState.IsValid) {
                     // ApplicationUser other = userManager.FindById(fr.otherID);
-                    
-                    user.friendRequests.Add(db.Users.Find(fr.otherID));
-                    
-                    TempData["message"] = "Now I have " + user.friendRequests.Count + " friend requests";
+                    ApplicationUser other = db.Users.Find(fr.otherID);
+                    user.sentFriendRequests.Add(other);
+                    other.receivedFriendRequests.Add(user);
+
+                    db.SaveChanges();
+                  
                     return RedirectToAction("Index");
                 }
                 else

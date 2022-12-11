@@ -10,9 +10,16 @@ namespace SocialPlatform.Models
     // You can add profile data for the user by adding more properties to your ApplicationUser class, please visit https://go.microsoft.com/fwlink/?LinkID=317594 to learn more.
     public class ApplicationUser : IdentityUser
     {
+        // Adaugam atribute specifice userilor
         public string firstName { get; set; }
+        public string lastName { get; set; }
 
-        public virtual ICollection<ApplicationUser> friendRequests { get; set; }
+        // Catre cine am dat friend request, si neacceptate
+        public virtual ICollection<ApplicationUser> sentFriendRequests { get; set; }
+        // Cine mi-a cerut mie prietenia, si nu am acceptat
+        public virtual ICollection<ApplicationUser> receivedFriendRequests { get; set; }
+        // Cine sunt prietenii mei
+        public virtual ICollection<ApplicationUser> friends { get; set; }
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {

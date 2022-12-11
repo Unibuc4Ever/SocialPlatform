@@ -186,6 +186,10 @@
     <Compile Include="Migrations\202011161429167_add-friendrequest.Designer.cs">
       <DependentUpon>202011161429167_add-friendrequest.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202011161545121_More-friendrequest-fields.cs" />
+    <Compile Include="Migrations\202011161545121_More-friendrequest-fields.Designer.cs">
+      <DependentUpon>202011161545121_More-friendrequest-fields.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\FrontendForms.cs" />
@@ -278,6 +282,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202011161429167_add-friendrequest.resx">
       <DependentUpon>202011161429167_add-friendrequest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011161545121_More-friendrequest-fields.resx">
+      <DependentUpon>202011161545121_More-friendrequest-fields.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
