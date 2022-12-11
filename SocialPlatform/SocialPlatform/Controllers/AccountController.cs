@@ -157,38 +157,36 @@ namespace SocialPlatform.Controllers
                 {
                     UserName = model.Email,
                     Email = model.Email,
-                    firstName = model.firstName,
+                    FirstName = model.FirstName,
+                    LastName = model.LastName
                 };
  
-                    var result = UserManager.Create(user, model.Password);
-                    db.SaveChanges();
-                    if (result.Succeeded)
-                    {
-                    Wall userWall = new Wall
+                var result = UserManager.Create(user, model.Password);
+                db.SaveChanges();
+                if (result.Succeeded)
+                {
+                    /* Wall userWall = new Wall
                     {
                         ID = UserManager.FindByEmail(model.Email).Id,
                         // backgroundColor = Color.Red, // now it has default value
-                        type = Wall.WType.UserW
+                        type = Wall.WType.UserW,
                     };
 
                     db.Walls.Add(userWall);
                     db.SaveChanges();
-                
-                    //user.wall = db.Walls.Find(userWall.ID);
-                    //db.SaveChanges();
+
+                    ApplicationUser u = db.Walls.Find(userWall.ID).ApplicationUser;
+                    string s = u.Id;*/
 
                     SignInManager.SignIn(user, isPersistent: false, rememberBrowser: false);
 
-                    var x = db.Walls.Find(userWall.ID);
-                    var y = UserManager.Find(userWall.ID);
-                    var z = y.Email;
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Home", "Users");
                 }
                 AddErrors(result);
             }

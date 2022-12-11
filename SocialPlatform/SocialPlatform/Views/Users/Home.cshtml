@@ -1,0 +1,25 @@
+﻿@model SocialPlatform.Models.ApplicationUser
+
+@{
+	ViewBag.Title = "Home";
+}
+
+<h2>Hello @Model.FirstName @Model.LastName!</h2>
+
+<h3>Available options:</h3>
+
+<a class="btn btn-sm btn-success" href="/Users/Index">Access Developer Page</a>
+
+<a class="btn btn-sm btn-success" href="/Users/FriendRequest">Send Friend Request</a>
+
+<a class="btn btn-sm btn-success" href="/Posts/New">Create A Post</a>
+
+<a class="btn btn-sm btn-success" href="/Posts/Index">News Feed</a>
+
+<a class="btn btn-sm btn-success" href="/Users/SentFriendRequests">View Sent Friend Requests</a>
+
+<a class="btn btn-sm btn-success" href="/Users/ReceivedFriendRequests">View Received Friend Requests</a>
+
+<a class="btn btn-sm btn-success" href="/Users/Friends">View Friend</a>
+
+<br />

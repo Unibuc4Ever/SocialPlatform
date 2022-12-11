@@ -13,28 +13,28 @@ namespace SocialPlatform.Models
     public class ApplicationUser : IdentityUser
     {
         // Adaugam atribute specifice userilor
-        public string firstName { get; set; }
-        public string lastName { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
 
-        //public Wall wall { get; set; }
-
-        [InverseProperty("author")]
-        public virtual ICollection<Comment> comments { get; set; }
+        public virtual ICollection<Post> Posts { get; set; }
+        public virtual ICollection<Comment> Comments { get; set; }
 
         // Catre cine am dat friend request, si neacceptate
-        [InverseProperty("receivedFriendRequests")]
-        public virtual ICollection<ApplicationUser> sentFriendRequests { get; set; }
+        [InverseProperty("ReceivedFriendRequests")]
+        public virtual ICollection<ApplicationUser> SentFriendRequests { get; set; }
         // Cine mi-a cerut mie prietenia, si nu am acceptat
-        [InverseProperty("sentFriendRequests")]
-        public virtual ICollection<ApplicationUser> receivedFriendRequests { get; set; }
+        [InverseProperty("SentFriendRequests")]
+        public virtual ICollection<ApplicationUser> ReceivedFriendRequests { get; set; }
 
 
         // Cine sunt prietenii mei
-        [InverseProperty("friendOf")]
-        public virtual ICollection<ApplicationUser> friends { get; set; }
+        [InverseProperty("FriendOf")]
+        public virtual ICollection<ApplicationUser> Friends { get; set; }
 
-        [InverseProperty("friends")]
-        public virtual ICollection<ApplicationUser> friendOf { get; set; }
+        [InverseProperty("Friends")]
+        public virtual ICollection<ApplicationUser> FriendOf { get; set; }
+
+
 
         public async Task<ClaimsIdentity> GenerateUserIdentityAsync(UserManager<ApplicationUser> manager)
         {
@@ -54,9 +54,7 @@ namespace SocialPlatform.Models
                 SocialPlatform.Migrations.Configuration>("DefaultConnection"));
         }
 
-        public DbSet<Wall> Walls { get; set; }
         public DbSet<Post> Posts { get; set; }
-        public DbSet<Group> Groups { get; set; }
         public DbSet<Comment> Comments { get; set; }
 
         public static ApplicationDbContext Create()

@@ -4,9 +4,8 @@
 }
 
 <h1>@ViewBag.Message</h1>
-<h2>News Feed</h2>
-
-<a class="btn btn-primary" href="/Posts/New">Creeaza Post</a>
+<h2>News Feed <a class="btn btn-primary" href="/Posts/New">Creeaza Post</a></h2>
+<br />
 <br />
 
 @foreach (SocialPlatform.Models.Post post in ViewBag.Posts)
@@ -16,7 +15,7 @@
 		@Html.Partial("ShowPost", post)
 
 		<div class="panel-footer">
-			<a class=" btn btn-sm btn btn-success" href="/Posts/Show/@post.ID">Afisare post</a>
+			<a class=" btn btn-sm btn btn-success" href="/Posts/Show/@post.PostId">Afisare post</a>
 		</div>
 	</div>
 }

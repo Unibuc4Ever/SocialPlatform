@@ -10,10 +10,10 @@
 @using (Html.BeginForm(actionName: "FriendRequest", controllerName: "Users"))
 {
     @Html.ValidationSummary(false, "", new { @class = "text-danger" })
-    @Html.Label("otherID", "ID-ul prietenului")
+    @Html.Label("OtherId", "ID-ul prietenului")
     <br />
     @Html.TextBox("otherID", null, new { @class = "form-control" })
-    @Html.ValidationMessageFor(m => m.otherID, null, new { @class = "text-danger" })
+    @Html.ValidationMessageFor(m => m.OtherId, null, new { @class = "text-danger" })
     <br />
     <br />
 

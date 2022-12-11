@@ -31,23 +31,17 @@ namespace SocialPlatform.Controllers
         [Authorize]
         public ActionResult New()
         {
-            Post post = new Post { wall = db.Walls.Find(User.Identity.GetUserId()) };
-            return View(post);
+            return View(new Post());
         }
 
         [HttpPost]
         [Authorize]
-        public ActionResult New(Post postForm)
+        public ActionResult New(Post post)
         {
             var user = db.Users.Find(User.Identity.GetUserId());
-            Post post = new Post
-            {
-                createdAt = DateTime.Now,
-                author = user,
-                wall_ID = user.Id,
-                title = postForm.title,
-                text = postForm.text
-            };
+            post.UserId = user.Id;
+            post.CreatedAt = DateTime.Now;
+			post.Comments = new HashSet<Comment>();
 
             try
             {
@@ -59,25 +53,22 @@ namespace SocialPlatform.Controllers
 
                     return RedirectToAction("Index");
                 }
-                else
-                {
-                    return View(postForm);
-                }
             }
-            catch (Exception)
-            {
-                return View(postForm);
+            catch (Exception e) {
+                var a = e.Message;
             }
+            return View(post);
         }
 
         [Authorize]
         public ActionResult Show(int id)
         {
+            var db1 = new ApplicationDbContext();
             try
             {
-                Post post = db.Posts.Find(id);
-                var coms = db.Comments.Where(x => x.post.ID == post.ID).ToList();
-                post.comments = coms;
+                Post post = db1.Posts.Find(id);
+                // var coms = db.Comments.Where(x => x.post.ID == post.ID).ToList();
+                // post.comments = coms;
                 return View(post);
             } catch (Exception)
 			{
@@ -90,7 +81,7 @@ namespace SocialPlatform.Controllers
         {
             try {
                 Post post = db.Posts.Find(id);
-                if (post.author.Id != User.Identity.GetUserId())
+                if (post.User.Id != User.Identity.GetUserId())
                     throw new Exception();
 
                 return View(post);
@@ -106,28 +97,24 @@ namespace SocialPlatform.Controllers
         {
             try
             {
-                
-
                 if (ModelState.IsValid)
                 {
                     Post old_post = db.Posts.Find(id);
-                   
-                    if (old_post.author.Id != User.Identity.GetUserId())
+
+                    if (old_post.User.Id != User.Identity.GetUserId())
                         throw new Exception();
-                    old_post.text = new_post.text;
-                    old_post.title = new_post.title;
+                    old_post.Content = new_post.Content;
+                    old_post.Title = new_post.Title;
 
                     db.SaveChanges();
                     TempData["message"] = "Articolul a fost modificat!";
                     return RedirectToAction("Index");
-                   
                 }
-                return View(new_post);
+                else
+                    return View(new_post);
             }
-            catch (Exception)
-            {
-                return View(new_post);
-            }
+            catch (Exception) { }
+            return View(new_post);
         }
 
         [HttpDelete]
@@ -136,7 +123,7 @@ namespace SocialPlatform.Controllers
         {
             try {
                 Post post = db.Posts.Find(id);
-                if (post.author.Id != User.Identity.GetUserId())
+                if (post.User.Id != User.Identity.GetUserId())
                     throw new Exception();
                 db.Posts.Remove(post);
                 db.SaveChanges();
@@ -147,5 +134,6 @@ namespace SocialPlatform.Controllers
                 throw new HttpException(403, "Post does not exist or you don't have the required permissons!");
             }
         }
+
     }
 }
