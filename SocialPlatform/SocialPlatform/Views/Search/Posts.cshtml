@@ -1,0 +1,40 @@
+﻿@using SocialPlatform.Models
+@using System.Data.Entity
+@model Post
+
+<div class="mdl-tabs mdl-js-tabs">
+    <div class="mdl-tabs__tab-bar">
+        <a href="" class="mdl-tabs__tab is-active">Posts</a>
+        <a href="/Search/Groups?query=@ViewBag.Query" class="mdl-tabs__tab">Groups</a>
+        <a href="/Search/Users?query=@ViewBag.Query" class="mdl-tabs__tab">Users</a>
+    </div>
+</div>
+
+<div class="container">
+    @if (Model != null)
+    {
+        <div class="container-item">
+            @{
+                ViewBag.ShowViewPostButton = true;
+                @Html.Partial("ShowPost", Model);
+                ViewBag.ShowViewPostButton = false;
+            }
+        </div>
+    }
+</div>
+
+<script src="https://unpkg.com/infinite-scroll@3/dist/infinite-scroll.pkgd.js"></script>
+<script>
+    $('.container').infiniteScroll({
+        path: function () {
+            var page = this.loadCount + 1
+            return '/Search/Posts?query=@ViewBag.Query&frommaybe=' + page;
+        },
+        append: '.container-item',
+        status: '.page-load-status',
+        prefill: true,
+        debug: true,
+        scrollThreshold: 2000,
+        elementScroll: '.mdl-layout__content',
+    });
+</script>
