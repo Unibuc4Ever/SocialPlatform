@@ -30,12 +30,20 @@ namespace SocialPlatform.Controllers
         // Returns the profile of a user
         // TODO: See privacy stuff
         [Authorize]
-        public ActionResult Show(string id)
+        public ActionResult Show(string id, int? frommaybe)
         {
             ApplicationDbContext db = new ApplicationDbContext();
+            int from = frommaybe ?? 0;
+
             try
 			{
                 var user = db.Users.Find(id);
+
+                if (user.Posts.Count() < from || from < 0)
+                    throw new Exception();
+
+                ViewBag.PostNr = from;
+
                 return View(user);
 			}
             catch(Exception e)
