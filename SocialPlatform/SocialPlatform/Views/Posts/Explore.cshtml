@@ -1,0 +1,25 @@
+﻿@using SocialPlatform.Models
+@using System.Data.Entity
+@model ICollection<Post>
+
+
+@{
+	ViewBag.Title = "Index";
+}
+
+<h1>@ViewBag.Message</h1>
+<br />
+<br />
+
+@foreach (SocialPlatform.Models.Post post in Model)
+{
+	<div class="panel panel-default">
+
+		@{
+			ViewBag.ShowViewPostButton = true;
+			@Html.Partial("ShowPost", post);
+			ViewBag.ShowViewPostButton = false;
+		}
+	</div>
+}
+

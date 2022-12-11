@@ -28,36 +28,23 @@
 	@Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-	<!-- Uses a header that contracts as the page scrolls down. -->
-	<style>
-		.demo-layout-waterfall .mdl-layout__header-row .mdl-navigation__link:last-of-type {
-			padding-right: 0;
-		}
-	</style>
-
-	<div class="demo-layout-waterfall mdl-layout mdl-js-layout">
-		<header class="mdl-layout__header mdl-layout__header--waterfall">
-			<!-- Top row, always visible -->
+	<div class="mdl-layout mdl-js-layout mdl-layout--fixed-drawer
+            mdl-layout--fixed-header">
+		<header class="mdl-layout__header">
 			<div class="mdl-layout__header-row">
-				<!-- Title -->
 				<span class="mdl-layout-title">Social Platform</span>
 				<div class="mdl-layout-spacer"></div>
 				<div class="mdl-textfield mdl-js-textfield mdl-textfield--expandable
-                      mdl-textfield--floating-label mdl-textfield--align-right">
+                  mdl-textfield--floating-label mdl-textfield--align-right">
 					<label class="mdl-button mdl-js-button mdl-button--icon"
-						   for="waterfall-exp">
+						   for="fixed-header-drawer-exp">
 						<i class="material-icons">search</i>
 					</label>
 					<div class="mdl-textfield__expandable-holder">
 						<input class="mdl-textfield__input" type="text" name="sample"
-							   id="waterfall-exp">
+							   id="fixed-header-drawer-exp">
 					</div>
 				</div>
-			</div>
-			<!-- Bottom row, not visible on scroll -->
-			<div class="mdl-layout__header-row">
-				<div class="mdl-layout-spacer"></div>
-				<!-- Navigation -->
 				<nav class="mdl-navigation">
 					@if (User.Identity.IsAuthenticated)
 					{
@@ -81,14 +68,16 @@
 		<div class="mdl-layout__drawer">
 			<span class="mdl-layout-title">Shortcuts</span>
 			<nav class="mdl-navigation">
-				<a class="mdl-navigation__link" href="">My Groups</a>
-				<a class="mdl-navigation__link" href="">My Friends</a>
-				<a class="mdl-navigation__link" href="">My Wall</a>
+				<a class="mdl-navigation__link" href="/Users">My Wall</a>
+				<a class="mdl-navigation__link" href="/Group">My Groups</a>
+				<a class="mdl-navigation__link" href="/Group/Explore">Find Groups</a>
+				<a class="mdl-navigation__link" href="/Users/Friends">My Friends</a>
+				<a class="mdl-navigation__link" href="/Users/ReceivedFriendRequests">Friend Requests</a>
 				<a class="mdl-navigation__link" href="">Settings</a>
 			</nav>
 		</div>
 		<main class="mdl-layout__content">
-			<div class="page-content">
+			<div class="page-content" style="padding-left: 100px">
 				@RenderBody()
 				<hr />
 				<footer>
@@ -97,6 +86,7 @@
 			</div>
 		</main>
 	</div>
+
 
 	@Scripts.Render("~/bundles/jquery")
 	@RenderSection("scripts", required: false)
