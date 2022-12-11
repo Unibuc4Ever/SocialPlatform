@@ -35,7 +35,7 @@
 @foreach (var post in Model.Wall.Posts)
 {
 	@Html.Partial("ShowPost", post)
-	@if (post.User.Id == User.Identity.GetUserId())
+	if (post.User.Id == User.Identity.GetUserId())
 	{
 		<a class="btn btn-sm btn-success" href="/Posts/Edit/@post.PostId">Editaza</a>
 		<div style="display: inline-block; float : left">

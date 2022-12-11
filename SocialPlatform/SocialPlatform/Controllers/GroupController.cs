@@ -104,12 +104,12 @@ namespace SocialPlatform.Controllers
                     return View(group);
 
                 TempData["message"] = "Group was successfully modified!";
-                return Index();
+                return RedirectToAction("Index");
             }
             catch (Exception)
             {
                 TempData["message"] = "Group doesn't exist, or insuficient rights!";
-                return Index();
+                return RedirectToAction("Index");
             }
         }
 
