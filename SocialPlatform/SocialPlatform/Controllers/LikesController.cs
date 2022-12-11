@@ -53,5 +53,48 @@ namespace SocialPlatform.Controllers
             }
             catch (Exception) { }
         }
+
+        [Authorize]
+        [HttpPost]
+        public void DeletePostLike(int PostId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            var user = db.Users.Find(User.Identity.GetUserId());
+
+            try
+            {
+                var likes = user.Likes.Where(l => l.PostId == PostId);
+
+                var like = likes.ElementAt(0);
+
+                db.Likes.Remove(like);
+                db.SaveChanges();
+            }
+            catch (Exception) {
+                
+            }
+        }
+
+        [Authorize]
+        [HttpPost]
+        public void DeleteCommentLike(int CommentId)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            var user = db.Users.Find(User.Identity.GetUserId());
+
+            try
+            {
+                var likes = user.Likes.Where(l => l.CommentId == CommentId);
+
+                var like = likes.ElementAt(0);
+
+                db.Likes.Remove(like);
+                db.SaveChanges();
+            }
+            catch (Exception)
+            {
+
+            }
+        }
     }
 }
