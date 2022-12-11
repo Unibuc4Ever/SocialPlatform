@@ -26,6 +26,27 @@ namespace SocialPlatform.Controllers
             return View(db.Users.Find(User.Identity.GetUserId()));
 		}
 
+
+        // Returns the profile of a user
+        // TODO: See privacy stuff
+        [Authorize]
+        public ActionResult Show(string id)
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+            try
+			{
+                var user = db.Users.Find(id);
+                return View(user);
+			}
+            catch(Exception e)
+			{
+
+			}
+            ViewBag.Message = "Unable to find user!";
+            return RedirectToAction("Index");
+        }
+
+
         // GET: MakeFriendship
         // Should be deleted this controller
         [Authorize]

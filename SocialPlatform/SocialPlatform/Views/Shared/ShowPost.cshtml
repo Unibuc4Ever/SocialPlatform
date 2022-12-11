@@ -11,62 +11,6 @@
 	ViewBag.Title = "Show";
 }
 
-
-<script>
-	function sendLikeForm(postId) {
-		$.ajax({
-			url: "/Likes/New",
-			type: 'POST',
-			contentType: 'application/json',
-			data: JSON.stringify({
-				PostId: postId,
-				type: "like"
-			}),
-			success: function () {
-				location.reload();
-			},
-			error: function (jqXHR, exception) {
-				alert('Error message. Failed my Like');
-			}
-		});
-	}
-
-	function sendUnLikeForm(likeId) {
-		$.ajax({
-			url: "/Likes/Delete",
-			type: 'POST',
-			contentType: 'application/json',
-			data: JSON.stringify({
-				LikeId: likeId
-			}),
-			success: function () {
-				location.reload();
-			},
-			error: function (jqXHR, exception) {
-				alert('Error message. Failed my Like');
-			}
-		});
-	}
-</script>
-
-
-<style>
-	.demo-card-wide.mdl-card {
-		width: 512px;
-	}
-
-	.demo-card-wide > .mdl-card__title {
-		color: #fff;
-		height: 176px;
-		background: url("/Content/Images/nature.jpg") center / cover;
-	}
-
-	.demo-card-wide > .mdl-card__menu {
-		color: #fff;
-	}
-</style>
-
-
 <div class="panel-heading"></div>
 <div class="panel-body">
 	Continut post: <strong>@Model.Content</strong>
@@ -111,6 +55,7 @@
 				<button class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" type="submit">Delete</button>
 			</form>
 		}
+	</div>
 	<div class="mdl-card__menu">
 		<button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect">
 			<i class="material-icons">share</i>

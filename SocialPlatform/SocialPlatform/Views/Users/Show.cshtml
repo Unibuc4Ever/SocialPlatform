@@ -1,0 +1,26 @@
+﻿@using SocialPlatform.Models
+@using System.Data.Entity
+@model ApplicationUser
+
+
+@{
+	ViewBag.Title = "Profile";
+}
+
+<h1>@ViewBag.Message</h1>
+<br />
+<br />
+
+<p>User: @Model.FirstName @Model.LastName</p>
+
+@foreach (SocialPlatform.Models.Post post in Model.Posts)
+{
+	<div class="panel panel-default">
+
+		@{
+			ViewBag.ShowViewPostButton = true;
+			@Html.Partial("ShowPost", post);
+			ViewBag.ShowViewPostButton = false;
+		}
+	</div>
+}
