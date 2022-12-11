@@ -1,0 +1,10 @@
+﻿@model SocialPlatform.Models.Post
+
+<div class="panel-heading">@Model.title</div>
+<div class="panel-body">
+	Continut articol: <strong>@Model.text</strong>
+	<br />
+	<span class="label label-success">@Model.createdAt</span>
+	<br />
+	<p>Created by @Model.author.firstName</p>
+</div>

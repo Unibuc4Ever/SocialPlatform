@@ -1,0 +1,23 @@
+﻿
+@{
+	ViewBag.Title = "Index";
+}
+
+<h1>@ViewBag.Message</h1>
+<h2>News Feed</h2>
+
+<a class="btn btn-primary" href="/Posts/New">Creeaza Post</a>
+<br />
+
+@foreach (SocialPlatform.Models.Post post in ViewBag.Posts)
+{
+	<div class="panel panel-default">
+
+		@Html.Partial("ShowPost", post)
+
+		<div class="panel-footer">
+			<a class=" btn btn-sm btn btn-success" href="/Posts/Show/@post.ID">Afisare post</a>
+		</div>
+	</div>
+}
+

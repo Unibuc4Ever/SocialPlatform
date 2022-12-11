@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Drawing;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
@@ -17,6 +18,8 @@ namespace SocialPlatform.Controllers
     {
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
+
+        private static ApplicationDbContext db = new ApplicationDbContext();
 
         public AccountController()
         {
@@ -142,32 +145,53 @@ namespace SocialPlatform.Controllers
             return View();
         }
 
-        //
         // POST: /Account/Register
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Register(RegisterViewModel model)
+        public ActionResult Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, firstName = model.firstName };
-                var result = await UserManager.CreateAsync(user, model.Password);
-                if (result.Succeeded)
+                var user = new ApplicationUser
                 {
-                    await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    UserName = model.Email,
+                    Email = model.Email,
+                    firstName = model.firstName,
+                };
+ 
+                    var result = UserManager.Create(user, model.Password);
+                    db.SaveChanges();
+                    if (result.Succeeded)
+                    {
+                    Wall userWall = new Wall
+                    {
+                        ID = UserManager.FindByEmail(model.Email).Id,
+                        // backgroundColor = Color.Red, // now it has default value
+                        type = Wall.WType.UserW
+                    };
+
+                    db.Walls.Add(userWall);
+                    db.SaveChanges();
+                
+                    //user.wall = db.Walls.Find(userWall.ID);
+                    //db.SaveChanges();
+
+                    SignInManager.SignIn(user, isPersistent: false, rememberBrowser: false);
+
+                    var x = db.Walls.Find(userWall.ID);
+                    var y = UserManager.Find(userWall.ID);
+                    var z = y.Email;
+
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                     // var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
                     // await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
-
                     return RedirectToAction("Index", "Home");
                 }
                 AddErrors(result);
             }
-
             // If we got this far, something failed, redisplay form
             return View(model);
         }
