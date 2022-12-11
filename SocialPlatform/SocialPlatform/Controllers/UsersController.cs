@@ -35,20 +35,18 @@ namespace SocialPlatform.Controllers
             ApplicationUser user = userManager.FindById(User.Identity.GetUserId());
             try
             {
-                if (ModelState.IsValid) {
-                    // ApplicationUser other = userManager.FindById(fr.otherID);
-                    ApplicationUser other = db.Users.Find(fr.otherID);
-                    user.sentFriendRequests.Add(other);
-                    // other.receivedFriendRequests.Add(user);
+                if (ModelState.IsValid)
+                {
+                    ApplicationUser other = db.Users.Find(fr.OtherId);
+                    if (other == null)
+                        throw new Exception();
 
+                    user.SentFriendRequests.Add(other);
                     db.SaveChanges();
-                  
                     return RedirectToAction("Index");
                 }
                 else
-                {
-                    return View(fr);
-                }
+                    throw new Exception();
             }
             catch (Exception)
             {
@@ -85,25 +83,16 @@ namespace SocialPlatform.Controllers
             try
             {
                 ApplicationUser other = db.Users.Find(id);
-                if (user.receivedFriendRequests.Contains(other))
+                if (user.ReceivedFriendRequests.Contains(other))
                 {
-                    user.friends.Add(other);
-                    other.friends.Add(user);
-                    user.receivedFriendRequests.Remove(other);
-                    //other.sentFriendRequests.Remove(user);
+                    user.Friends.Add(other);
+                    other.Friends.Add(user);
+                    user.ReceivedFriendRequests.Remove(other);
                     db.SaveChanges();
-
-                    return RedirectToAction("ReceivedFriendRequests");
-                }
-                else
-                {
-                    return RedirectToAction("ReceivedFriendRequests");
                 }
             }
-            catch (Exception)
-            {
-                return RedirectToAction("ReceivedFriendRequests");
-            }
+            catch (Exception) { }
+            return RedirectToAction("ReceivedFriendRequests");
         }
 
         [HttpPut]
@@ -114,23 +103,14 @@ namespace SocialPlatform.Controllers
             try
             {
                 ApplicationUser other = db.Users.Find(id);
-                if (user.receivedFriendRequests.Contains(other))
+                if (user.ReceivedFriendRequests.Contains(other))
                 {
-                    user.receivedFriendRequests.Remove(other);
-                    //other.sentFriendRequests.Remove(user);
+                    user.ReceivedFriendRequests.Remove(other);
                     db.SaveChanges();
-
-                    return RedirectToAction("ReceivedFriendRequests");
-                }
-                else
-                {
-                    return RedirectToAction("ReceivedFriendRequests");
                 }
             }
-            catch (Exception)
-            {
-                return RedirectToAction("ReceivedFriendRequests");
-            }
+            catch (Exception) { }
+            return RedirectToAction("ReceivedFriendRequests");
         }
 
         [HttpPut]
@@ -141,23 +121,14 @@ namespace SocialPlatform.Controllers
             try
             {
                 ApplicationUser other = db.Users.Find(id);
-                if (user.sentFriendRequests.Contains(other))
+                if (user.SentFriendRequests.Contains(other))
                 {
-                    user.sentFriendRequests.Remove(other);
-                    //other.receivedFriendRequests.Remove(user);
+                    user.SentFriendRequests.Remove(other);
                     db.SaveChanges();
-
-                    return RedirectToAction("SentFriendRequests");
-                }
-                else
-                {
-                    return RedirectToAction("SentFriendRequests");
                 }
             }
-            catch (Exception)
-            {
-                return RedirectToAction("SentFriendRequests");
-            }
+            catch (Exception) { }
+            return RedirectToAction("SentFriendRequests");
         }
 
         [HttpPut]
@@ -168,23 +139,16 @@ namespace SocialPlatform.Controllers
             try
             {
                 ApplicationUser other = db.Users.Find(id);
-                if (user.friends.Contains(other))
+                if (user.Friends.Contains(other))
                 {
-                    user.friends.Remove(other);
-                    other.friends.Remove(user);
+                    user.Friends.Remove(other);
+                    other.Friends.Remove(user);
                     db.SaveChanges();
+                }
+            }
+            catch (Exception) { }
+            return RedirectToAction("Friends");
 
-                    return RedirectToAction("Friends");
-                }
-                else
-                {
-                    return RedirectToAction("Friends");
-                }
-            }
-            catch (Exception)
-            {
-                return RedirectToAction("Friends");
-            }
         }
     }
 }

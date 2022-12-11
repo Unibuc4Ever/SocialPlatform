@@ -5,22 +5,52 @@
 	ViewBag.Title = "Show";
 }
 
-<h2>Show</h2>
+<h2>Show  <a class="btn btn-primary" href="/Posts">Inapoi la News Feed</a></h2>
 
-@Html.Partial("ShowPost", @Model)
+<div class="panel panel-default">
 
-@if (Model.author.Id == User.Identity.GetUserId())
+	@Html.Partial("ShowPost", Model)
+
+	<div class="panel-footer">
+		@if (Model.User.Id == User.Identity.GetUserId())
+		{
+			<a class="btn btn-sm btn-success" href="/Posts/Edit/@Model.PostId">Editaza</a>
+			<div style="display: inline-block; float : left">
+				<form method="post" action="/Posts/Delete/@Model.PostId">
+					@Html.HttpMethodOverride(HttpVerbs.Delete)
+					<button class="btn btn-sm btn-danger" type="submit">Sterge</button>
+				</form>
+			</div>
+		}
+	</div>
+</div>
+
+@foreach (var comm in Model.Comments)
 {
-	<a class="btn btn-sm btn-success" href="/Posts/Edit/@Model.ID">Editaza</a>
-
-	<form method="post" action="/Posts/Delete/@Model.ID">
-		@Html.HttpMethodOverride(HttpVerbs.Delete)
-		<button class="btn btn-sm btn-danger" type="submit">Sterge</button>
-	</form>
+	<div style="background-color:beige">
+		<h3>Comentariu:</h3>
+		<p>@comm.Content</p>
+		@if(comm.UserId == User.Identity.GetUserId())
+		{
+		<a href="/Comments/Edit/@comm.CommentId" class="btn btn-default">Editeaza</a>
+		<div style="display: inline-block; float : left">
+			<form method="post" action="/Comments/Delete/@comm.CommentId">
+				@Html.HttpMethodOverride(HttpVerbs.Delete)
+				<button class="btn btn-danger">Sterge</button>
+			</form>
+		</div>
+		}
+	</div>
+	<hr />
 }
 
-@foreach(var comm in Model.comments)
-{
-	<p>@comm.text</p>
-	<br />
-}
+			<hr />
+
+			<form method="post" action="/Comments/New/@Model.PostId">
+				<label>Adauga un Comentariu</label>
+				<br />
+				<textarea class="form-control" name="Content"></textarea>
+				@Html.ValidationMessage("Content", "", new { @class = "text-danger" })
+				<br />
+				<button class="btn btn-success " type="submit">Adauga comentariu</button>
+			</form>

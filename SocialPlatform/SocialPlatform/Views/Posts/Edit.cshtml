@@ -9,17 +9,17 @@
 {
 	@Html.HttpMethodOverride(HttpVerbs.Put)
 	<br />
-	@*@Html.HiddenFor(m => m.ID)*@
+	@Html.HiddenFor(m => m.PostId)
 
 	@Html.Label("title", "Titlu Articol")
 	<br />
-	@Html.EditorFor(m => m.title)
+	@Html.EditorFor(m => m.Title)
 	@Html.ValidationMessage("title", null, new { @class = "text-danger" })
 	<br />
 	<br />
 	@Html.Label("text", "Continut Articol")
 	<br />
-	@Html.EditorFor(m => m.text, new { htmlAttributes = new { @class = "form-control" } })
+	@Html.EditorFor(m => m.Content, new { htmlAttributes = new { @class = "form-control" } })
 	@Html.ValidationMessage("text", null, new { @class = "text-danger" })
 	<br />
 	<br />

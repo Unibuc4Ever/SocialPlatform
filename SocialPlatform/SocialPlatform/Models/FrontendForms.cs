@@ -8,17 +8,8 @@ namespace SocialPlatform.Models
 {
     public class FriendRequest
     {
-        [Required(ErrorMessage = "Cu cine vrei sa fii priete? Pune ID")]
-        public string otherID { get; set; }
+        [Required(ErrorMessage = "Cu cine vrei sa fii prieten? Pune un ID valid!")]
+        public string OtherId { get; set; }
     }
 
-    public class PostForm
-    {
-
-        [Required(ErrorMessage = "Trebuie sa aveti un titlu!")]
-        public string title { get; set; }
-
-        [Required(ErrorMessage = "Trebuie sa aveti un continut!")]
-        public string text { get; set; }
-    }
 }
