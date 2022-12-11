@@ -24,8 +24,8 @@
             var Likes = db.Likes.Where(l => (l.UserId == userId && l.PostId == Model.PostId));
             if (userId == null)
             {
-                <a href="/Account/Login" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" style="color: black">
-                    @Model.Likes.Count() <i class="material-icons" style="font-size: 16px">thumb_up</i>
+                <a href="/Account/Login" class="like-link mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                    @Model.Likes.Count() <i class="material-icons btn-not-liked">thumb_up</i>
                 </a>
             }
             else if (Likes.Count() > 0)
