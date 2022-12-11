@@ -28,13 +28,15 @@ textarea {
 }
 
 .demo-card-wide.mdl-card {
-    width: 512px;
+    width: 100%;
+    min-height: auto;
 }
 
 .demo-card-wide > .mdl-card__title {
-    color: #fff;
-    height: 176px;
-    background: url("/Content/Images/nature.jpg") center / cover;
+    color: #3d00a8;
+    height: 60px;
+    /*    background: url("/Content/Images/nature.jpg") center / cover;*/
+    background-color: #00a8a029;
 }
 
 .demo-card-wide > .mdl-card__menu {
