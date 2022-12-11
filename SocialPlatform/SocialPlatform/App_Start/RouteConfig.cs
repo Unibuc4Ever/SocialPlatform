@@ -107,49 +107,49 @@ namespace SocialPlatform
             routes.MapRoute(
                 name: "NewGroup",
                 url: "Groups/New",
-                defaults: new { controller = "Group", action = "New" }
+                defaults: new { controller = "Groups", action = "New" }
             );
 
             routes.MapRoute(
                 name: "MyGroups",
                 url: "Groups/My",
-                defaults: new { controller = "Group", action = "Index" }
+                defaults: new { controller = "Groups", action = "Index" }
             );
 
             routes.MapRoute(
                 name: "AllGroups",
                 url: "Groups/All",
-                defaults: new { controller = "Group", action = "Explore" }
+                defaults: new { controller = "Groups", action = "Explore" }
             );
 
             routes.MapRoute(
                 name: "EditGroup",
                 url: "Groups/Edit/{Id}",
-                defaults: new { controller = "Group", action = "Edit" }
+                defaults: new { controller = "Groups", action = "Edit" }
             );
 
             routes.MapRoute(
                 name: "DeleteGroup",
                 url: "Groups/Delete/{Id}",
-                defaults: new { controller = "Group", action = "Delete" }
+                defaults: new { controller = "Groups", action = "Delete" }
             );
 
             routes.MapRoute(
                 name: "ShowGroup",
                 url: "Groups/Show/{Id}",
-                defaults: new { controller = "Group", action = "Show" }
+                defaults: new { controller = "Groups", action = "Show" }
             );
 
             routes.MapRoute(
                 name: "JoinGroup",
                 url: "Groups/Join/{Id}",
-                defaults: new { controller = "Group", action = "Join" }
+                defaults: new { controller = "Groups", action = "Join" }
             );
 
             routes.MapRoute(
                 name: "LeaveGroup",
                 url: "Groups/Leave/{Id}",
-                defaults: new { controller = "Group", action = "Leave" }
+                defaults: new { controller = "Groups", action = "Leave" }
             );
 
 
