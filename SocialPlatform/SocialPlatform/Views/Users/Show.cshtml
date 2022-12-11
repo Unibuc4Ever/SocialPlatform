@@ -11,7 +11,15 @@
             (new UserStore<ApplicationUser>(db));
 }
 
-<h3 style="color: slategray">@Model.FirstName @Model.LastName</h3>
+<br />
+<br />
+
+
+@{
+    ViewBag.ViewProfile = false;
+    @Html.Partial("UserCard", Model)
+    ViewBag.ViewProfile = null;
+}
 
 @if (User.IsInRole("Administrator"))
 {
@@ -41,31 +49,12 @@
                         <li class="mdl-menu__item" data-val="Administrator">Administrator</li>
                     </ul>
                 </div>
-
-
-
-
-                @*<select id="new_role" name="new_role">
-                        <option value="User">Normal User</option>
-                        <option value="Editor">Editor</option>
-                        <option value="Administrator">Administrator</option>
-                    </select>
-                    <input type="hidden" id="user_id" name="user_id" value="@Model.Id">*@
                 <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored" type="submit">Change Role</button>
             </form>
-
-
         </div>
-
     </div>
 
-
-
-    @*<br />*@
-
-
     <br />
-
     <hr />
 
     <h5 style="color: slategray">Send Notice message</h5>
@@ -78,46 +67,7 @@
     </form>
     <br />
 
-    <a href="/Admin/DeleteUser/@Model.Id" class="class=" mdl-button mdl-js-button mdl-button--raised mdl-button--colored">Delete User</a>
-    <br />
-
     <hr />
-}
-
-@if (user.Id != Model.Id)
-{
-    if (user.Friends.Where(usr => usr.Id == Model.Id).Count() == 1)
-    {
-        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
-                id="friend_request_button"
-                onclick="unFriend('@Model.Id');">
-            Unfriend
-        </button>
-    }
-    else if (user.SentFriendRequests.Where(usr => usr.Id == Model.Id).Count() == 1)
-    {
-        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
-                id="friend_request_button"
-                onclick="cancelFriendRequest('@Model.Id');">
-            Cancel Friend Request
-        </button>
-    }
-    else if (user.ReceivedFriendRequests.Where(usr => usr.Id == Model.Id).Count() == 1)
-    {
-        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
-                id="friend_request_button"
-                onclick="acceptFriendRequest('@Model.Id');">
-            Accept Friend Request
-        </button>
-    }
-    else
-    {
-        <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored"
-                id="friend_request_button"
-                onclick="sendFriendRequest('@Model.Id');">
-            Friend Request
-        </button>
-    }
 }
 
 <div class="container">

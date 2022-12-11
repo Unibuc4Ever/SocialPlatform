@@ -3,33 +3,16 @@
 @model ApplicationUser
 
 @{
-	ViewBag.Title = "Sent Friend Requests";
+    ViewBag.Title = "Sent Friend Requests";
 }
 
-<h2>Sent Friend Requests</h2>
-
-<h3>@TempData["message"]</h3>
-
-<a class="btn btn-sm btn-success" href="/Users/Index">Index</a>
-<a class="btn btn-sm btn-success" href=@Url.RouteUrl("ReceivedFriendRequests")>Received Friend Requests</a>
-<a class="btn btn-sm btn-success" href="/Users/Friends">Friends</a>
-
-<br />
+<h3 style="color: slategray">Sent Friend Requests</h3>
 <br />
 
 
-@foreach (ApplicationUser user in Model.SentFriendRequests)
-{
-	<h3>ID</h3>
-	<p>@user.Id</p>
-	<h3>Email</h3>
-	<p>@user.Email</p>
-	<h3>Name</h3>
-	<p>@user.FirstName @user.LastName</p>
-
-	<form method="post" action="/Users/FriendRequest/Cancel/@user.Id">
-		@Html.HttpMethodOverride(HttpVerbs.Put)
-		<button class="btn btn-sm btn-danger" type="submit">Cancel Request</button>
-	</form>
-	<hr />
-}
+<div class="my-groups-container">
+    @foreach (ApplicationUser user in Model.SentFriendRequests)
+    {
+        @Html.Partial("UserCard", user)
+    }
+</div>
