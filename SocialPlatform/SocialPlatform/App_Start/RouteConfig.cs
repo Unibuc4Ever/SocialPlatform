@@ -103,6 +103,7 @@ namespace SocialPlatform
                 defaults: new { controller = "Users", action = "Unfriend" }
             );
 
+            // Groups controller
             routes.MapRoute(
                 name: "NewGroup",
                 url: "Groups/New",
@@ -137,6 +138,18 @@ namespace SocialPlatform
                 name: "ShowGroup",
                 url: "Groups/Show/{Id}",
                 defaults: new { controller = "Group", action = "Show" }
+            );
+
+            routes.MapRoute(
+                name: "JoinGroup",
+                url: "Groups/Join/{Id}",
+                defaults: new { controller = "Group", action = "Join" }
+            );
+
+            routes.MapRoute(
+                name: "LeaveGroup",
+                url: "Groups/Leave/{Id}",
+                defaults: new { controller = "Group", action = "Leave" }
             );
 
 
