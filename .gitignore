@@ -4,3 +4,5 @@ SocialPlatform/SocialPlatform/obj/
 Debug/
 obj/
 bin/
+*.mdf
+*.ldf
