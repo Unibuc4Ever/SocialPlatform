@@ -188,6 +188,7 @@
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Like.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Notice.cs" />
     <Compile Include="Models\Post.cs" />
     <Compile Include="Models\SocialWorker.cs" />
     <Compile Include="Models\Wall.cs" />
@@ -275,6 +276,7 @@
     <Content Include="Views\Search\Users.cshtml" />
     <Content Include="Views\Search\Posts.cshtml" />
     <Content Include="Views\Search\Groups.cshtml" />
+    <Content Include="Views\Users\Notices.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Views\Likes\" />

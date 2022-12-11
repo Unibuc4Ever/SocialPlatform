@@ -25,6 +25,8 @@ namespace SocialPlatform.Models
         public virtual ICollection<Post> Posts { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
 
+        public virtual ICollection<Notice> Notices { get; set; }
+
         // Grupurile din care fac parte
         [InverseProperty("Members")]
         public virtual ICollection<Group> Groups { get; set; }
