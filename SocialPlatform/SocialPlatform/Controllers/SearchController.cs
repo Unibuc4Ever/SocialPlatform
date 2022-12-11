@@ -1,4 +1,5 @@
-﻿using SocialPlatform.Models;
+﻿using Microsoft.AspNet.Identity;
+using SocialPlatform.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,10 +19,30 @@ namespace SocialPlatform.Controllers
             if (query == null || query == "")
                 return Redirect("/");
             query = query.Trim();
+            var me = db.Users.Find(User.Identity.GetUserId());
 
             try
             {
-                var posts = db.Posts.Where(post =>
+                // trebuie sa returnam posturile publice
+                var posts = db.Posts.Where(delegate (Post post) {
+                    var users = db.Users.Where(usr => usr.WallId == post.WallId);
+                    // Posted on a group -> free to access.
+                    if (users.Count() == 0)
+                        return true;
+                    // User detaining the wall it was posted on.
+                    var user = users.First();
+
+                    // we are friends
+                    if (user.Friends.Count(usr => usr.Id == User.Identity.GetUserId()) == 1)
+                        return true;
+
+                    // my own post
+                    if (me != null && me.WallId == post.WallId)
+                        return true;
+
+                    // It is public
+                    return user.WallIsVisible;
+                }).ToList().Where(post =>
                     post.Title.Contains(query) ||
                     post.Content.Contains(query)).OrderByDescending(post => post.CreatedAt);
 

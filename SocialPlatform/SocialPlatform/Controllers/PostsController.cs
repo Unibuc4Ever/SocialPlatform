@@ -63,6 +63,7 @@ namespace SocialPlatform.Controllers
         {
             ApplicationDbContext db = new ApplicationDbContext();
             int from = frommaybe ?? 0;
+            var me = db.Users.Find(User.Identity.GetUserId());
 
             try
             {
@@ -80,7 +81,7 @@ namespace SocialPlatform.Controllers
                         return true;
 
                     // my own post
-                    if (user.WallId == post.WallId)
+                    if (me != null && me.WallId == post.WallId)
                         return true;
 
                     // It is public
