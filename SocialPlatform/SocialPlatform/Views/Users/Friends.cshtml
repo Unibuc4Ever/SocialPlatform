@@ -27,7 +27,7 @@
 	<h3>Name</h3>
 	<p>@user.FirstName @user.LastName</p>
 
-	<form method="post" action="/Users/Unfriend/@user.Id">
+	<form method="post" action="/Users/Friends/Unfriend/@user.Id">
 		@Html.HttpMethodOverride(HttpVerbs.Put)
 		<button class="btn btn-sm btn-danger" type="submit">Unfriend</button>
 	</form>

@@ -42,7 +42,7 @@ namespace SocialPlatform.Controllers
             ApplicationDbContext db = new ApplicationDbContext();
             UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>
                 (new UserStore<ApplicationUser>(db));
-        ApplicationUser user = userManager.FindById(User.Identity.GetUserId());
+            ApplicationUser user = userManager.FindById(User.Identity.GetUserId());
             try
             {
                 if (ModelState.IsValid)
@@ -50,6 +50,13 @@ namespace SocialPlatform.Controllers
                     ApplicationUser other = db.Users.Find(otherID);
                     if (other == null)
                         throw new Exception();
+
+                    if (user.SentFriendRequests.Contains(other) || user.Friends.Contains(other))
+                        return RedirectToAction("Index");
+                    
+                    if (user.ReceivedFriendRequests.Contains(other)) {
+                        return AcceptFriendRequest(otherID);
+					}
 
                     user.SentFriendRequests.Add(other);
                     db.SaveChanges();

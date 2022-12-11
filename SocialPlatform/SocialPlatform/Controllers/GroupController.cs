@@ -20,6 +20,15 @@ namespace SocialPlatform.Controllers
             return View(user.Groups);
         }
 
+        // GET: Group
+        [Authorize]
+        public ActionResult Explore()
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
+
+            return View(db.Groups);
+        }
+
         [Authorize]
         public ActionResult New()
 		{
