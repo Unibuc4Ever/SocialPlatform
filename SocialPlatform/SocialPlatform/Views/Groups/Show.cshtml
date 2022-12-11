@@ -17,20 +17,18 @@
     </div>
 
     <div class="mdl-tabs__panel is-active" id="posts-tab">
-        @foreach (var post in Model.Wall.Posts)
+        @foreach (var post in Model.Wall.Posts.OrderByDescending(p => p.CreatedAt))
         {
             @Html.Partial("ShowPost", post)
-            <hr />
         }
     </div>
 
     <div class="mdl-tabs__panel" id="members-tab">
-        <h3>Members:</h3>
+        <br />
         <div class="my-groups-container">
-@* TODO: Replace with user Card *@
             @foreach (var user in Model.Members)
             {
-                <h5>@user.FirstName @user.LastName</h5>
+                @Html.Partial("UserCard", user);
             }
         </div>
     </div>
