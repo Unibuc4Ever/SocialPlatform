@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -26,7 +27,7 @@ namespace SocialPlatform.Controllers
                     post.Content.Contains(query));
 
                 if (from < 0 || from > posts.Count())
-                    throw new Exception();
+                    return new HttpStatusCodeResult(HttpStatusCode.NoContent);
 
                 Post post_ret = null;
                 if (from != 0)
@@ -57,7 +58,7 @@ namespace SocialPlatform.Controllers
                     group.Name.Contains(query));
 
                 if (from < 0 || from > groups.Count())
-                    throw new Exception();
+                    return new HttpStatusCodeResult(HttpStatusCode.NoContent);
 
                 Group group_ret = null;
                 if (from != 0)
@@ -89,7 +90,7 @@ namespace SocialPlatform.Controllers
 
 
                 if (from < 0 || from > users.ToList().Count())
-                    throw new Exception();
+                    return new HttpStatusCodeResult(HttpStatusCode.NoContent);
 
                 ApplicationUser user_ret = null;
                 if (from != 0)
