@@ -110,6 +110,8 @@ namespace SocialPlatform.Controllers
                     TempData["message"] = "Articolul a fost modificat!";
                     return RedirectToAction("Index");
                 }
+                else
+                    return View(new_post);
             }
             catch (Exception) { }
             return View(new_post);

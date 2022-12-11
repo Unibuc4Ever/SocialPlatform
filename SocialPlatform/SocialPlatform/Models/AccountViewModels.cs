@@ -66,7 +66,8 @@ namespace SocialPlatform.Models
     {
         [Required(ErrorMessage = "Trebuie sa ai un First Name.")]
         [StringLength(30, ErrorMessage = "First name prea lung, trebuie sa aiba sub 30 caractere.")]
-        public string firstName { get; set; }
+        public string FirstName { get; set; }
+        public string LastName { get; set; }
 
         [Required]
         [EmailAddress]

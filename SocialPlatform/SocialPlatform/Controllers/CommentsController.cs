@@ -18,19 +18,24 @@ namespace SocialPlatform.Controllers
             ApplicationDbContext db = new ApplicationDbContext();
             try
             {
-                Post post = db.Posts.Find(id);
-                if (post == null)
-                    throw new Exception();
+                if (ModelState.IsValid)
+                {
+                    Post post = db.Posts.Find(id);
+                    if (post == null)
+                        throw new Exception();
 
-                var user = db.Users.Find(User.Identity.GetUserId());
-                comment.User = user;
+                    var user = db.Users.Find(User.Identity.GetUserId());
+                    comment.User = user;
 
-                comment.CreatedAt = DateTime.Now;
-                comment.PostId = id;
+                    comment.CreatedAt = DateTime.Now;
+                    comment.PostId = id;
 
-                db.Comments.Add(comment);
-                db.SaveChanges();
-                TempData["message"] = "Commentul a fost adaugat!";
+                    db.Comments.Add(comment);
+                    db.SaveChanges();
+                    TempData["message"] = "Commentul a fost adaugat!";
+                }
+                else
+                    RedirectToAction("Show", "Posts", new { id = id });
             }
             catch (Exception) { } 
             return RedirectToAction("Show", "Posts", new { id = id });
@@ -62,14 +67,19 @@ namespace SocialPlatform.Controllers
             ApplicationDbContext db = new ApplicationDbContext();
             try
             {
-                Comment old_comm = db.Comments.Find(comm.CommentId);
-                if (old_comm.UserId != User.Identity.GetUserId())
-                    throw new Exception();
+                if (ModelState.IsValid)
+                {
+                    Comment old_comm = db.Comments.Find(comm.CommentId);
+                    if (old_comm.UserId != User.Identity.GetUserId())
+                        throw new Exception();
 
-                old_comm.Content = comm.Content;
-                db.SaveChanges();
+                    old_comm.Content = comm.Content;
+                    db.SaveChanges();
 
-                return RedirectToAction("Show", "Posts", new { id = old_comm.PostId });
+                    return RedirectToAction("Show", "Posts", new { id = old_comm.PostId });
+                }
+                else
+                    return View(comm);
             }
             catch (Exception)
             {
