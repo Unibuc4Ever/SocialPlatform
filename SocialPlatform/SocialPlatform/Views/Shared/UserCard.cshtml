@@ -29,13 +29,6 @@
             </a>
         }
 
-        @if (User.IsInRole("Administrator"))
-        {
-            <a href="/Admin/DeleteUser/@Model.Id" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
-                Delete User
-            </a>
-        }
-
         @if (userId != Model.Id && userId != null)
         {
             if (user.Friends.Where(usr => usr.Id == Model.Id).Count() == 1)
@@ -74,10 +67,18 @@
         else if (userId == Model.Id)
         {
             <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect"
-                    href="/Users/Settings">
+               href="/Users/Settings">
                 Settings
             </a>
         }
+
+        @if (User.IsInRole("Administrator") && Model.Id != User.Identity.GetUserId())
+        {
+            <a href="/Admin/DeleteUser/@Model.Id" class="mdl-button mdl-js-button mdl-button--accent">
+                Delete User
+            </a>
+        }
+
     </div>
 
 </div>

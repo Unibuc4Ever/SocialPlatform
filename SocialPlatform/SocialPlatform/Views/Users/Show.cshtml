@@ -21,13 +21,13 @@
     ViewBag.ViewProfile = null;
 }
 
-@if (User.IsInRole("Administrator"))
+@if (User.IsInRole("Administrator") && Model.Id != User.Identity.GetUserId())
 {
     <hr />
 
     <h5 style="color: slategray">Change Role</h5>
 
-    <div style="display: flex; justify-content: center; align-items: center;">
+    <div style="display: flex; align-items: center;">
         <div style="margin-right: 50px">
             <span class="mdl-chip mdl-chip--contact">
                 <span class="mdl-chip__contact mdl-color--teal mdl-color-text--white">R</span>
