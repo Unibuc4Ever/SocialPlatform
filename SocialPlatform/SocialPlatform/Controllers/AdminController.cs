@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using Newtonsoft.Json;
 using SocialPlatform.Models;
 using System;
 using System.Collections.Generic;
@@ -38,6 +39,29 @@ namespace SocialPlatform.Controllers
 
             string user_wall_route = "/Users/Show/" + user_id;
             return Redirect(user_wall_route);
+        }
+
+        [Authorize(Roles = "Administrator")]
+        public ActionResult AddNotice(string id, Notice notice)
+        {
+            var db = new ApplicationDbContext();
+            try
+            {
+                notice.UserId = id;
+                notice.CreatedAt = DateTime.Now;
+                var user = db.Users.Find(id);
+                user.Notices.Add(notice);
+
+                if (ModelState.IsValid)
+                {
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception e)
+            {
+            }
+
+            return Redirect("/Users/Show/" + id);
         }
 
         [Authorize(Roles = "Administrator")]
