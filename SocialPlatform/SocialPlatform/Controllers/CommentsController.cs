@@ -13,14 +13,14 @@ namespace SocialPlatform.Controllers
     {
         [HttpPost]
         [Authorize]
-        public ActionResult New(int id, Comment comment)
+        public ActionResult New(int PostID, Comment comment)
         {
             ApplicationDbContext db = new ApplicationDbContext();
             try
             {
                 if (ModelState.IsValid)
                 {
-                    Post post = db.Posts.Find(id);
+                    Post post = db.Posts.Find(PostID);
                     if (post == null)
                         throw new Exception();
 
@@ -28,17 +28,17 @@ namespace SocialPlatform.Controllers
                     comment.User = user;
 
                     comment.CreatedAt = DateTime.Now;
-                    comment.PostId = id;
+                    comment.PostId = PostID;
 
                     db.Comments.Add(comment);
                     db.SaveChanges();
                     TempData["message"] = "Commentul a fost adaugat!";
                 }
                 else
-                    RedirectToAction("Show", "Posts", new { id = id });
+                    RedirectToAction("Show", "Posts", new { id = PostID });
             }
             catch (Exception) { } 
-            return RedirectToAction("Show", "Posts", new { id = id });
+            return RedirectToAction("Show", "Posts", new { id = PostID });
         }
 
         [HttpGet]
