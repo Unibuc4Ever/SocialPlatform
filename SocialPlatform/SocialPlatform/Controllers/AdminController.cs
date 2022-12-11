@@ -11,13 +11,16 @@ namespace SocialPlatform.Controllers
 {
     public class AdminController : Controller
     {
-        private static ApplicationDbContext db = new ApplicationDbContext();
-        private static UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new
-             UserStore<ApplicationUser>(db));
-
         // GET: Admin
         public ActionResult Index()
         {
+            ApplicationDbContext db = new ApplicationDbContext();
+            return View(db.Users);
+        }
+
+        public ActionResult Dummy()
+        {
+            ApplicationDbContext db = new ApplicationDbContext();
             return View(db.Users);
         }
     }
