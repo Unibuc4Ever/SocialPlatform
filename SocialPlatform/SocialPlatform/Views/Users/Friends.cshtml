@@ -11,8 +11,8 @@
 <h3>@TempData["message"]</h3>
 
 <a class="btn btn-sm btn-success" href="/Users/Index">Index</a>
-<a class="btn btn-sm btn-success" href="/Users/ReceivedFriendRequests">Received Friend Requests</a>
-<a class="btn btn-sm btn-success" href="/Users/SentFriendRequests">Sent Friend Requests</a>
+<a class="btn btn-sm btn-success" href=@Url.RouteUrl("ReceivedFriendRequests")>Received Friend Requests</a>
+<a class="btn btn-sm btn-success" href=@Url.RouteUrl("SentFriendRequests")>Sent Friend Requests</a>
 
 <br />
 <br />

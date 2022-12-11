@@ -10,6 +10,8 @@ namespace SocialPlatform.Controllers
     {
         public ActionResult Index()
         {
+            // Ar trebui sa verifice daca user-ul este logat
+            // Daca este logat, atunci ar trebui sa faca redirect la "/Posts"
             return View();
         }
 
