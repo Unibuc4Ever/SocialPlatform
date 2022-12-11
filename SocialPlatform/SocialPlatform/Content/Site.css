@@ -165,6 +165,12 @@ textarea {
     }
 }
 
+/* Show Post Card */
+.show-post-card > .mdl-card__title:hover {
+    cursor: pointer;
+    background-color: #00a8a049;
+}
+
 .comment-list .comment-post {
     margin-top: 6px;
 }
