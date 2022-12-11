@@ -30,23 +30,30 @@
         }
     </div>
     <div class="mdl-list__item-secondary-content">
-        @{
-            var Likes = db.Likes.Where(l => (l.UserId == userId && l.CommentId == Model.CommentId));
-            if (Likes.Count() > 0)
+       
+
+            @{ var Likes = db.Likes.Where(l => (l.UserId == userId && l.CommentId == Model.CommentId)); }
+            @if (userId == null)
+            {
+                <a href="/Account/Login" class="like-link mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                    @Model.Likes.Count() <i class="material-icons btn-not-liked">thumb_up</i>
+                </a>
+            }
+            else if (Likes.Count() > 0)
             {
                 <a onclick="javascript:sendUnLikeForm(@Likes.First().LikeId)"
-                   class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" style="color: cornflowerblue; background-color: rgba(174, 242, 248, 20); border-radius:5px;">
-                    @Model.Likes.Count() <i class="material-icons" style="font-size: 18px">thumb_up</i>
+                   class="like-link mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                    @Model.Likes.Count() <i class="material-icons btn-liked">thumb_up</i>
                 </a>
             }
             else
             {
-                <a onclick="javascript: sendCommentLikeForm(@Model.CommentId)"
-                   class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" style="color: black">
-                    @Model.Likes.Count() <i class="material-icons" style="font-size: 18px">thumb_up</i>
+                <a onclick="javascript:sendCommentLikeForm(@Model.CommentId)"
+                   class="like-link mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect">
+                    @Model.Likes.Count() <i class="material-icons btn-not-liked">thumb_up</i>
                 </a>
             }
-        }
+
     </div>
 
 

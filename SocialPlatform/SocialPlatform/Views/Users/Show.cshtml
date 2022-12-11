@@ -11,7 +11,7 @@
             (new UserStore<ApplicationUser>(db));
 }
 
-<br />
+<h3 style="color: slategrey;">Wall</h3>
 <br />
 
 
@@ -20,6 +20,7 @@
     @Html.Partial("UserCard", Model)
     ViewBag.ViewProfile = null;
 }
+
 
 @if (User.IsInRole("Administrator") && Model.Id != User.Identity.GetUserId())
 {
