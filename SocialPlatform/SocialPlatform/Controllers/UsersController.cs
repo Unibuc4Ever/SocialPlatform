@@ -60,7 +60,7 @@ namespace SocialPlatform.Controllers
             {
                 return View(user);
             }
-            return RedirectToAction("Settings");
+            return Redirect("/");
         }
 
         // Returns the profile of a user

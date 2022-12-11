@@ -19,7 +19,9 @@
     <div class="mdl-tabs__panel is-active" id="posts-tab">
         @foreach (var post in Model.Wall.Posts.OrderByDescending(p => p.CreatedAt))
         {
-            @Html.Partial("ShowPost", post)
+            ViewBag.ShowViewPostButton = true;
+            @Html.Partial("ShowPost", post);
+            ViewBag.ShowViewPostButton = false;
         }
     </div>
 
