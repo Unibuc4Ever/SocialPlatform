@@ -6,11 +6,16 @@
 
 <h2>Index</h2>
 
+<h3>@TempData["message"]</h3>
+
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
 <table class="table">
     <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.Id)
+        </th>
         <th>
             @Html.DisplayNameFor(model => model.Email)
         </th>
@@ -52,6 +57,9 @@
 
 @foreach (var item in Model) {
 <tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.Id)
+    </td>
     <td>
         @Html.DisplayFor(modelItem => item.Email)
     </td>

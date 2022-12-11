@@ -182,8 +182,13 @@
     <Compile Include="Migrations\202011161326129_add-firstname.Designer.cs">
       <DependentUpon>202011161326129_add-firstname.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202011161429167_add-friendrequest.cs" />
+    <Compile Include="Migrations\202011161429167_add-friendrequest.Designer.cs">
+      <DependentUpon>202011161429167_add-friendrequest.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\FrontendForms.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -246,6 +251,7 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
+    <Content Include="Views\Users\FriendRequest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -269,6 +275,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202011161326129_add-firstname.resx">
       <DependentUpon>202011161326129_add-firstname.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202011161429167_add-friendrequest.resx">
+      <DependentUpon>202011161429167_add-friendrequest.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
