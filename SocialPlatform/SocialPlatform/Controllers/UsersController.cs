@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
@@ -20,15 +21,49 @@ namespace SocialPlatform.Controllers
         }
 
         [Authorize]
-        public ActionResult Index()
+        public ActionResult Settings()
         {
             ApplicationDbContext db = new ApplicationDbContext();
-            return View(db.Users.Find(User.Identity.GetUserId()));
-		}
 
+            var user = db.Users.Find(User.Identity.GetUserId());
+            var reg_view = new RegisterViewModel();
+
+            reg_view.FirstName = user.FirstName;
+            reg_view.LastName = user.LastName;
+            reg_view.WallIsVisible = user.WallIsVisible;
+            reg_view.Email = user.Email;
+            reg_view.Password = "123123@#$#@$#@32423sdfdsFSDFsd";
+            reg_view.ConfirmPassword = "123123@#$#@$#@32423sdfdsFSDFsd";
+
+            return View(reg_view);
+        }
+
+        [HttpPost]
+        [Authorize]
+        public ActionResult Settings(RegisterViewModel user)
+        {
+
+            ApplicationDbContext db = new ApplicationDbContext();
+            var real_user = db.Users.Find(User.Identity.GetUserId());
+
+            try
+            {
+                real_user.FirstName = user.FirstName;
+                real_user.LastName = user.LastName;
+                real_user.WallIsVisible = user.WallIsVisible;
+                if (ModelState.IsValid)
+                    db.SaveChanges();
+                else
+                    return View(user);
+            }
+            catch (Exception e)
+            {
+                return View(user);
+            }
+            return RedirectToAction("Settings");
+        }
 
         // Returns the profile of a user
-        // TODO: See privacy stuff
         [Authorize]
         public ActionResult Show(string id, int? frommaybe)
         {
@@ -38,9 +73,13 @@ namespace SocialPlatform.Controllers
             try
 			{
                 var user = db.Users.Find(id);
-
+                
                 if (user.Posts.Count() < from || from < 0)
-                    throw new Exception();
+                    return new HttpStatusCodeResult(HttpStatusCode.NoContent);
+
+                if (from > 0 && user.Friends.Count(usr => usr.Id == User.Identity.GetUserId()) == 0
+                        && user.WallIsVisible == false)
+                    return new HttpStatusCodeResult(HttpStatusCode.NoContent);
 
                 ViewBag.PostNr = from;
 

@@ -159,7 +159,8 @@ namespace SocialPlatform.Controllers
                     UserName = model.Email,
                     Email = model.Email,
                     FirstName = model.FirstName,
-                    LastName = model.LastName
+                    LastName = model.LastName,
+                    WallIsVisible = true
                 };
                 
 

@@ -1,0 +1,64 @@
+﻿@model SocialPlatform.Models.RegisterViewModel
+
+@{
+    ViewBag.Title = "Home";
+}
+
+<h2>Hello @Model.FirstName @Model.LastName!</h2>
+
+<h3>Available options:</h3>
+
+<a class="btn btn-sm btn-success" href="/Admin/Index">Access Developer Page</a>
+
+<a class="btn btn-sm btn-success" href=@Url.RouteUrl("AddFriendRequest")>Send Friend Request</a>
+
+
+<a class="btn btn-sm btn-success" href="/Posts/Index">News Feed</a>
+
+<a class="btn btn-sm btn-success" href=@Url.RouteUrl("SentFriendRequests")>View Sent Friend Requests</a>
+
+<a class="btn btn-sm btn-success" href=@Url.RouteUrl("ReceivedFriendRequests")>View Received Friend Requests</a>
+
+<a class="btn btn-sm btn-success" href="/Users/Friends">View Friends</a>
+
+<a class="btn btn-sm btn-success" href="/Groups/My">View my Groups</a>
+
+<a class="btn btn-sm btn-success" href="/Groups/All">View All Groups</a>
+
+<a class="btn btn-sm btn-success" href="/Groups/New">Create new Group</a>
+
+<br />
+
+@using (Html.BeginForm(actionName: "Settings", controllerName: "Users"))
+{
+    <br />
+
+    @Html.ValidationSummary()
+
+    @Html.HiddenFor(m => m.Email)
+    @Html.HiddenFor(m => m.Password)
+    @Html.HiddenFor(m => m.ConfirmPassword)
+
+    @Html.Label("FirstName", "First Name")
+    <br />
+    @Html.EditorFor(m => m.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.ValidationMessage("FirstName", null, new { @class = "text-danger" })
+    <br />
+    <br />
+    @Html.Label("LastName", "Last Name")
+    <br />
+    @Html.EditorFor(m => m.LastName, new { htmlAttributes = new { @class = "form-control" } })
+    @Html.ValidationMessage("LastName", null, new { @class = "text-danger" })
+    <br />
+    <br />
+    @*<label class="mdl-switch mdl-js-switch mdl-js-ripple-effect" />*@
+    @Html.Label("WallIsVisible", "Display Wall Publicly");
+    <br />
+    @Html.CheckBoxFor(m => m.WallIsVisible, new { @class = "mdl-checkbox__input" })
+    @*<input type="checkbox" id="WallIsVisible" name="WallIsVisible" class="mdl-switch__input" value="true">*@
+        @*<span class="mdl-switch__label"></span>*@
+
+    <br />
+    <br />
+    <button class="btn btn-sm btn-success" type="submit">Save Changes</button>
+}

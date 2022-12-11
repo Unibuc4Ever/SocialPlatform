@@ -22,7 +22,13 @@
     <div class="mdl-card__actions mdl-card--border" style="display: flex">
         @{
             var Likes = db.Likes.Where(l => (l.UserId == userId && l.PostId == Model.PostId));
-            if (Likes.Count() > 0)
+            if (userId == null)
+            {
+                <a href="/Account/Login" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" style="color: black">
+                    @Model.Likes.Count() <i class="material-icons" style="font-size: 16px">thumb_up</i>
+                </a>
+            }
+            else if (Likes.Count() > 0)
             {
                 <a onclick="javascript:sendUnLikeForm(@Likes.First().LikeId)" class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" style="color: cornflowerblue; background-color: rgba(174, 242, 248, 20); border-radius:5px;">
                     @Model.Likes.Count() Likes
